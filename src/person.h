@@ -4,6 +4,7 @@
 #include <list>
 #include <string>
 #include <vector>
+#include <iostream>
 using std::string;
 using std::vector;
 
@@ -17,6 +18,7 @@ public:
     Person(string name, string sex, string telephone, string location,
            string mail_number, string email, string qq_number,
            Classes classes);
+    friend std::ostream& operator<<(std::ostream& out, const Person& p);
 
 private:
     string name_;
@@ -28,5 +30,7 @@ private:
     string qq_number_;
     Classes classes_;
 };
+
+std::ostream& operator<<(std::ostream& out, const Person& p);
 
 #endif // for ifndef PETERLITS_PERSON_H__
