@@ -1,7 +1,9 @@
 #include "units.h"
 
+#include <cstdio>
 #include <string>
 #include <regex>
+#include <iostream>
 
 using std::string;
 
@@ -35,6 +37,11 @@ bool is_email(string str) {
     } else {
         return false;
     }
+}
+
+std::istream& input(string info) {
+    std::cout << ' ' << info << " > ";
+    return std::cin;
 }
 
 }
