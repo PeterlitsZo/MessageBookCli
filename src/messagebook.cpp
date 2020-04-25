@@ -1,6 +1,8 @@
 #include "messagebook.h"
 
+#include <ostream>
 #include <string>
+#include <iostream>
 
 #include "person.h"
 
@@ -13,3 +15,10 @@ void MessageBook::addPerson(string name, string sex, string telephone, string lo
     persons.push_back(person);
 }
 
+std::ostream& operator<<(std::ostream& out, const MessageBook& mb) {
+    for(auto person: mb.persons) {
+        out << person;
+        out << '\n';
+    }
+    return out;
+}
