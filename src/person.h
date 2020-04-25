@@ -1,3 +1,6 @@
+#ifndef PETERLITS_PERSON_H__
+#define PETERLITS_PERSON_H__
+
 #include <list>
 #include <string>
 #include <vector>
@@ -22,3 +25,5 @@ private:
     string qq_number_;
     Classes classes_;
 };
+
+#endif // for ifndef PETERLITS_PERSON_H__

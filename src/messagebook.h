@@ -1,3 +1,6 @@
+#ifndef PETERLITS_MEASSAGEBOOK_H
+#define PETERLITS_MEASSAGEBOOK_H
+
 #include <string>
 #include <vector>
 #include "person.h"
@@ -14,3 +17,5 @@ public:
 private:
     vector<Person> persons;
 };
+
+#endif // for ifndef PETERLITS_MEASSAGEBOOK_H
