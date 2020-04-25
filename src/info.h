@@ -8,6 +8,7 @@ const char* meun = " Main Meun of Message Book Version(v0.0.1)\n"
                    " 3. View All Info\n"
                    " 4. Change Info\n"
                    " 5. Delete Info\n"
+                   " 6. Exit\n"
                    "\n"
                    " Please Enter a Index For Next (q for quit) > ";
 

@@ -1,17 +1,59 @@
 #include <iostream>
 #include <string>
+
 #include "info.h"
 #include "cmdline.h"
+#include "person.h"
+#include "messagebook.h"
+#include "units.h"
+
 using std::cout;
+using std::cin;
 using std::string;
 
 // ---[ unit function for main ]-----------------------------------------------
 cmdline::parser parse_cmdline(int argc, char **argv);
 
 // ---[ interaction mode's main loop ]-----------------------------------------
-bool main_meun() {
+bool main_meun(MessageBook& mb) {
+    int choose;
     cout << info::meun;
-    return false;
+    cin >> choose;
+
+    string name, sex, telephone, location, mail_number, email, qq_number, temp;
+    Classes classes;
+    switch (choose) {
+    case 1:
+        units::input("please enter name") >> name;
+        units::input("please enter sex [M/F]") >> sex;
+        units::input("please enter telephone [only include digit]") >> sex;
+        units::input("please enter location") >> sex;
+        units::input("please enter postal number") >> mail_number;
+        units::input("please enter email") >> email;
+        units::input("please enter qq number") >> qq_number;
+        units::input("please enter classes") >> temp;
+
+        mb.addPerson(name, sex, telephone, location, mail_number, email,
+                     qq_number, {temp});
+        break;
+    case 2:
+        // searchInfo();
+        break;
+    case 3:
+        // viewAll();
+        break;
+    case 4:
+        // changeInfo();
+        break;
+    case 5:
+        // DeleteInfo();
+        break;
+    case 6:
+        return false;
+    default:
+        return true;
+    }
+    return true;
 }
 
 // ---[ the main part: main function ]-----------------------------------------
@@ -28,7 +70,8 @@ int main(int argc, char **argv) {
 
     // ---[ going into the main loop ]---
     if( argc == 1 || argparser.exist("interaction") ) {
-        while(main_meun())
+        MessageBook mb;
+        while(main_meun(mb))
             ;
 
         return 0;
