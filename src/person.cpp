@@ -1,4 +1,5 @@
 #include "person.h"
+
 #include <ostream>
 #include <iostream>
 #include <string>
@@ -41,9 +42,14 @@ Person::Person(string name, string sex, string telephone, string location,
 
 }
 
+void Person::setID(int ID) {
+    ID_ = ID;
+}
+
 std::ostream& operator<<(std::ostream& out, const Person& p) {
     // output the basic infomation
-    out << " ┌- name: " << p.name_ << ", sex: " << p.sex_ << ", telephone: " << p.telephone_
+    out << " ┌---| ID: " << p.ID_ << " |-----\n";
+    out << " |  name: " << p.name_ << ", sex: " << p.sex_ << ", telephone: " << p.telephone_
         << ", mail-number: " << p.mail_number_ << '\n';
     out << " |  email: " << p.email_ << ", qq-number: " << p.qq_number_
         << ", location: " << p.location_ << '\n';

@@ -12,6 +12,7 @@ using Classes = vector<string>;
 
 class MessageBook {
 public:
+    MessageBook():lastID_(0) {};
     void addPerson(string name, string sex, string telephone, string location, 
                    string mail_number, string email, string qq_number, 
                    Classes classes);
@@ -19,6 +20,7 @@ public:
 
 private:
     vector<Person> persons;
+    int lastID_;
 };
 
 std::ostream& operator<<(std::ostream& out, const MessageBook& mb);

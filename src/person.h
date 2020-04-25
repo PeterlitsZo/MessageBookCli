@@ -13,6 +13,7 @@ using std::vector;
 
 // Class Classes
 using Str  = Value<std::string>;
+using Int  = Value<int>;
 using Classes = std::vector<std::string>;
 
 // Class Person
@@ -22,9 +23,12 @@ public:
     Person(string name, string sex, string telephone, string location,
            string mail_number, string email, string qq_number,
            Classes classes);
-    friend std::ostream& operator<<(std::ostream& out, const Person& p);
 
+    void setID(int ID);
+
+    friend std::ostream& operator<<(std::ostream& out, const Person& p);
 private:
+    Int ID_;
     Str name_;
     Str sex_;
     Str telephone_;
