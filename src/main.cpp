@@ -26,9 +26,9 @@ bool main_meun(MessageBook& mb) {
     case 1:
         units::input("please enter name") >> name;
         units::input("please enter sex [M/F]") >> sex;
-        units::input("please enter telephone [only include digit]") >> sex;
-        units::input("please enter location") >> sex;
-        units::input("please enter postal number") >> mail_number;
+        units::input("please enter telephone [only include digit]") >> telephone;
+        units::input("please enter location") >> location;
+        units::input("please enter postal number [6-length number]") >> mail_number;
         units::input("please enter email") >> email;
         units::input("please enter qq number") >> qq_number;
         units::input("please enter classes") >> temp;
@@ -41,6 +41,7 @@ bool main_meun(MessageBook& mb) {
         break;
     case 3:
         // viewAll();
+        cout << mb;
         break;
     case 4:
         // changeInfo();
