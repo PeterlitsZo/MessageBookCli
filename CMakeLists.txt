@@ -20,8 +20,9 @@ add_executable (MessageBookCli ${SRC_FILES})
 find_package (GTest REQUIRED)
 find_package (Threads REQUIRED)
 
-aux_source_directory (./test TEST_FILES)
-add_executable (Tests ${TEST_FILES})
+aux_source_directory (./src TEST_FILES)
+list (REMOVE_ITEM TEST_FILES ./src/main.cpp)
+add_executable (Tests ${TEST_FILES} ./test/test.cpp)
 
 target_link_libraries (Tests ${GTEST_BOTH_LIBRARIES})
 target_link_libraries (Tests ${CMAKE_THREAD_LIBS_INIT})
