@@ -4,6 +4,7 @@
 #include "../src/messagebook.h"
 #include "../src/units.h"
 
+// TEST: print out the meun
 TEST(Tests, MEUN) {
     EXPECT_STREQ(info::meun, " Main Meun of Message Book Version(v0.0.1)\n"
                              " 1. Add Info\n 2. Search Info\n 3. View All Info\n"
@@ -11,17 +12,22 @@ TEST(Tests, MEUN) {
                              " Please Enter a Index For Next (q for quit) > ");
 }
 
+// TEST: print the version
 TEST(Tests, VERSION) {
     EXPECT_STREQ(info::version, "ver 0.0.1\n");
 }
 
+// TEST: about the input
 TEST(Tests, Input) {
 }
 
+// TEST: Add Person
 TEST(Tests, AddPerson) {
     MessageBook mb;
     mb.addPerson("Peter", "M", "17623321234", "China",
                  "123456", "abc@abc.abc", "12345", {"men"});
+    mb.addPerson("Allen", "M", "17623325764", "China",
+                 "000000", "123@123.com", "123456", {"this"});
 }
 
 // TEST: units/is_digit
