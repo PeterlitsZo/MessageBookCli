@@ -6,8 +6,11 @@
 #include <vector>
 using std::string;
 using std::vector;
+
+// Class Classes
 using Classes = std::vector<std::string>;
 
+// Class Person
 class Person {
 public:
     Person();
