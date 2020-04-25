@@ -5,10 +5,14 @@
 #include <string>
 #include <vector>
 #include <iostream>
+
+#include "value.h"
+
 using std::string;
 using std::vector;
 
 // Class Classes
+using Str  = Value<std::string>;
 using Classes = std::vector<std::string>;
 
 // Class Person
@@ -21,13 +25,13 @@ public:
     friend std::ostream& operator<<(std::ostream& out, const Person& p);
 
 private:
-    string name_;
-    string sex_;
-    string telephone_;
-    string location_;
-    string mail_number_;
-    string email_;
-    string qq_number_;
+    Str name_;
+    Str sex_;
+    Str telephone_;
+    Str location_;
+    Str mail_number_;
+    Str email_;
+    Str qq_number_;
     Classes classes_;
 };
 

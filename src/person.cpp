@@ -1,38 +1,42 @@
 #include "person.h"
-#include "units.h"
-#include "units.h"
 #include <ostream>
 #include <iostream>
+#include <string>
+
+#include "value.h"
+#include "units.h"
+
+using std::string;
 
 Person::Person()
-              : name_("unknown"), sex_("unknown"), telephone_("unkonwn"),
-                location_("unknown"), mail_number_("unknown"), email_("unknown"),
-                qq_number_("unknown"), classes_(Classes()) {}
+              : name_(Value<string>()), sex_(Value<string>()),
+                telephone_(Value<string>()), location_(Value<string>()),
+                mail_number_(Value<string>()), email_(Value<string>()),
+                qq_number_(Value<string>()), classes_(Classes()) {}
 
-Person::Person(string name, string sex, string telephone, string location, 
-               string mail_number, string email, string qq_number,
-               Classes classes)
+Person::Person(string name, string sex, string telephone, string location,
+               string mail_number, string email, string qq_number, Classes classes)
                : name_(name), location_(location), classes_(classes)
 {
     // the sex's value should be one of "M", "F" or "unknown"
     if(sex == "M" || sex == "F") {
-        sex_ = sex;
+        sex_ = Str(sex);
     }
     // the telephone's value should be a string of digits: eg: "123456789"
     if(units::is_digit(telephone)) {
-        telephone_ = telephone;
+        telephone_ = Str(telephone);
     }
     // the mail_number should be a 6-length of a digit string: eg: "123456"
     if(units::is_digit(mail_number) && mail_number.size() == 6) {
-        mail_number_ = mail_number;
+        mail_number_ = Str(mail_number);
     }
     // the qq-number's value should be a string of digits: eg: "123456789"
     if(units::is_digit(qq_number)) {
-        qq_number_ = qq_number;
+        qq_number_ = Str(qq_number);
     }
     // the email should have the format like: "abc@abc.abc"
     if(units::is_email(email)) {
-        email_ = email;
+        email_ = Str(email);
     }
 
 }

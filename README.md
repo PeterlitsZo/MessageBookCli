@@ -5,6 +5,10 @@ Aim
 ---
 
 ``` txt
-[ ] value: valid or invalid
+[x] value: valid or invalid
+[ ] ID
+[ ] write README
+-------------------------------------------------------------------------------
+[ ] -> [.] -> [x]
 ```
 
