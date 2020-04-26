@@ -1,6 +1,7 @@
 #include "messagebook.h"
 
 #include <ostream>
+#include <sstream>
 #include <string>
 #include <iostream>
 #include <vector>
@@ -14,6 +15,37 @@
 #include "person.h"
 
 using std::string;
+
+const char* getString(rapidjson::Value& value) {
+    if(value["valid"].GetBool()) {
+        return value["value"].GetString();
+    } else {
+        return "";
+    }
+}
+
+MessageBook::MessageBook(const char* path):lastID_(0) {
+    // read all file into string
+    std::ifstream in(path);
+    std::stringstream buffer;
+    buffer << in.rdbuf();
+    std::string content(buffer.str());
+
+    // parser the json c-string
+    rapidjson::Document document;
+    document.Parse(content.c_str());
+
+    for(auto& person: document.GetArray()) {
+        addPerson(getString(person["name"]),
+                  getString(person["sex"]),
+                  getString(person["telephone"]),
+                  getString(person["location"]),
+                  getString(person["mail_number"]),
+                  getString(person["email"]),
+                  getString(person["qq_number"]),
+                  {});
+    }
+}
 
 void MessageBook::addPerson(string name, string sex, string telephone, string location, 
                             string mail_number, string email, string qq_number, 

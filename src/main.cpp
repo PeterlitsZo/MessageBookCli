@@ -72,7 +72,7 @@ int main(int argc, char **argv) {
 
     // ---[ going into the main loop ]---
     if( argc == 1 || argparser.exist("interaction") ) {
-        MessageBook mb;
+        MessageBook mb("MessageBook.json");
         while(main_meun(mb))
             ;
 

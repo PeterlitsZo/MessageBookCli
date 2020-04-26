@@ -20,8 +20,8 @@ Aim
 [x] value: valid or invalid
 [.] ID *(new: how about hash)*
 [.] write README
-[ ] write to json file
-[ ] read from json file
+[.] write to json file
+[.] read from json file
 [ ] parse command
 [ ] Classes Input
 [ ] Sreach

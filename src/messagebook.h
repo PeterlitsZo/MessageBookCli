@@ -15,6 +15,7 @@ using Classes = vector<string>;
 class MessageBook {
 public:
     MessageBook():lastID_(0) {};
+    MessageBook(const char* path);
     void addPerson(string name, string sex, string telephone, string location, 
                    string mail_number, string email, string qq_number, 
                    Classes classes);
