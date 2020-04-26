@@ -24,17 +24,7 @@ bool main_meun(MessageBook& mb) {
     Classes classes;
     switch (choose) {
     case 1:
-        units::input("please enter name") >> name;
-        units::input("please enter sex [M/F]") >> sex;
-        units::input("please enter telephone [only include digit]") >> telephone;
-        units::input("please enter location") >> location;
-        units::input("please enter postal number [6-length number]") >> mail_number;
-        units::input("please enter email") >> email;
-        units::input("please enter qq number") >> qq_number;
-        units::input("please enter classes") >> temp;
-
-        mb.addPerson(name, sex, telephone, location, mail_number, email,
-                     qq_number, {temp});
+        mb.addPerson(cin, cout);
         break;
     case 2:
         // searchInfo();
