@@ -6,6 +6,11 @@
 
 // for read and write json file
 #include "../include/rapidjson/document.h"
+#include "../include/rapidjson/stringbuffer.h"
+#include "../include/rapidjson/writer.h"
+
+// for hash
+#include "../include/digestpp/digestpp.hpp"
 
 #include "value.h"
 #include "units.h"
@@ -63,7 +68,7 @@ Person::Person(string name, string sex, string telephone, string location,
 // ---[ normal method ]--------------------------------------------------------
 // ----------------------------------------------------------------------------
 
-void Person::setID(int ID) {
+void Person::setID(string ID) {
     ID_ = ID;
 }
 
@@ -74,7 +79,7 @@ rapidjson::Value* Person::get_rapidjson_value(rapidjson::Document::AllocatorType
     v->SetObject();
 
     // objter V
-    v->AddMember("ID",          *ID_.get_rapidjson_value( allo ),          allo);
+    // v->AddMember("ID",          *ID_.get_rapidjson_value( allo ),          allo);
     v->AddMember("name",        *name_.get_rapidjson_value( allo ),        allo);
     v->AddMember("sex",         *sex_.get_rapidjson_value( allo ),         allo);
     v->AddMember("telephone",   *telephone_.get_rapidjson_value( allo ),   allo);
@@ -86,6 +91,21 @@ rapidjson::Value* Person::get_rapidjson_value(rapidjson::Document::AllocatorType
 
     // return the pointer
     return v;
+}
+
+string Person::hash() {
+    using rapidjson::StringBuffer;
+    using rapidjson::Writer;
+    using rapidjson::Document;
+    using digestpp::md5;
+
+    Document doc;
+
+    StringBuffer buffer;
+    Writer<StringBuffer> writer(buffer);
+    get_rapidjson_value(doc.GetAllocator())->Accept(writer);
+
+    return md5().absorb(buffer.GetString()).hexdigest();
 }
 
 // ----------------------------------------------------------------------------

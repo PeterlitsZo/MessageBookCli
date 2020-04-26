@@ -16,6 +16,7 @@
 
 using std::string;
 
+// units function
 const char* getString(rapidjson::Value& value) {
     if(value["valid"].GetBool()) {
         return value["value"].GetString();
@@ -24,6 +25,7 @@ const char* getString(rapidjson::Value& value) {
     }
 }
 
+// inital by the path of json file
 MessageBook::MessageBook(const char* path):lastID_(0) {
     // read all file into string
     std::ifstream in(path);
@@ -47,11 +49,12 @@ MessageBook::MessageBook(const char* path):lastID_(0) {
     }
 }
 
+// units method
 void MessageBook::addPerson(string name, string sex, string telephone, string location, 
                             string mail_number, string email, string qq_number, 
                             Classes classes) {
     Person person(name, sex, telephone, location, mail_number, email, qq_number, classes);
-    person.setID(++lastID_);
+    person.setID(person.hash());
     persons.push_back(person);
 }
 

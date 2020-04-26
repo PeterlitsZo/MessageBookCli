@@ -27,13 +27,14 @@ public:
            string mail_number, string email, string qq_number,
            Classes classes);
 
-    void setID(int ID);
+    void setID(string ID);
+    std::string hash();
 
     rapidjson::Value* get_rapidjson_value(rapidjson::Document::AllocatorType& allo);
 
     friend std::ostream& operator<<(std::ostream& out, const Person& p);
 private:
-    Int ID_;
+    string ID_;
     Str name_;
     Str sex_;
     Str telephone_;

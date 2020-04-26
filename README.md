@@ -23,6 +23,7 @@ Aim
 [.] write to json file
 [.] read from json file
 [x] value's length should bigger than 0
+[ ] pertty output for person
 [ ] parse command
 [ ] Classes Input
 [ ] Sreach
