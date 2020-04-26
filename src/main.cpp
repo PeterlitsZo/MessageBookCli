@@ -54,7 +54,7 @@ bool main_meun(MessageBook& mb) {
     default:
         return true;
     }
-    mb.save("MessageBook.json");
+    mb.save();
     return true;
 }
 

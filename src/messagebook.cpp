@@ -26,25 +26,30 @@ const char* getString(rapidjson::Value& value) {
 }
 
 // inital by the path of json file
-MessageBook::MessageBook(const char* path):lastID_(0) {
+MessageBook::MessageBook(const char* path) {
+    path_ = path;
     // read all file into string
     std::ifstream in(path);
+    // open failed!
+    if(!in) {
+        return;
+    }
     std::stringstream buffer;
     buffer << in.rdbuf();
     std::string content(buffer.str());
 
     // parser the json c-string
-    rapidjson::Document document;
-    document.Parse(content.c_str());
+    rapidjson::Document doc;
+    doc.Parse(content.c_str());
 
-    for(auto& person: document.GetArray()) {
-        addPerson(getString(person["name"]),
-                  getString(person["sex"]),
-                  getString(person["telephone"]),
-                  getString(person["location"]),
-                  getString(person["mail_number"]),
-                  getString(person["email"]),
-                  getString(person["qq_number"]),
+    for(auto it = doc.MemberBegin(); it != doc.MemberEnd(); ++it) {
+        addPerson(getString(it->value["name"]),
+                  getString(it->value["sex"]),
+                  getString(it->value["telephone"]),
+                  getString(it->value["location"]),
+                  getString(it->value["mail_number"]),
+                  getString(it->value["email"]),
+                  getString(it->value["qq_number"]),
                   {});
     }
 }
@@ -55,23 +60,22 @@ void MessageBook::addPerson(string name, string sex, string telephone, string lo
                             Classes classes) {
     Person person(name, sex, telephone, location, mail_number, email, qq_number, classes);
     person.setID(person.hash());
-    persons.push_back(person);
+    persons[person.hash()] = person;
 }
 
-void MessageBook::save(const char* path) {
+void MessageBook::save() {
     using rapidjson::StringBuffer;
     using rapidjson::Writer;
+    using rapidjson::Value;
+
     // d -> Null Array
     rapidjson::Document d;
     rapidjson::Document::AllocatorType& allocator = d.GetAllocator();
-    d.SetArray();
+    d.SetObject();
 
-    // v -> Null Array
-    // rapidjson::Value v(rapidjson::kArrayType);
-
-    for (auto &person: persons) {
+    for (auto &&[key, person]: persons) {
         rapidjson::Value* value = person.get_rapidjson_value(allocator);
-        d.PushBack(*value, allocator);
+        d.AddMember(Value(key.c_str(), allocator).Move(), *value, allocator);
         delete value;
     }
 
@@ -79,12 +83,12 @@ void MessageBook::save(const char* path) {
     Writer<StringBuffer> writer(buffer);
     d.Accept(writer);
 
-    std::ofstream out(path);
+    std::ofstream out(path_.c_str());
     out << buffer.GetString();
 }
 
 std::ostream& operator<<(std::ostream& out, const MessageBook& mb) {
-    for(auto person: mb.persons) {
+    for(auto &&[key, person]: mb.persons) {
         out << person;
         out << '\n';
     }
