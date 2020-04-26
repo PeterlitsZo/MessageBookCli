@@ -15,7 +15,9 @@ public:
     friend std::istream& operator>>(std::ostream& out, Cls& self);
 
     std::vector<std::string>::iterator begin();
+    std::vector<std::string>::const_iterator cbegin() const;
     std::vector<std::string>::iterator end();
+    std::vector<std::string>::const_iterator cend() const;
 private:
     std::vector<std::string> Classes_;
 };

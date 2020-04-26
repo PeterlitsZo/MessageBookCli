@@ -22,8 +22,7 @@ Cls::Cls(vector<string> vec_str) {
 }
 
 ostream& operator<<(ostream& out, const Cls& self) {
-    auto& cls = self.Classes_;
-    out << units::repr(cls.begin(), cls.end());
+    out << units::repr(self.cbegin(), self.cend());
     return out;
 }
 
@@ -41,6 +40,14 @@ vector<string>::iterator Cls::begin() {
     return Classes_.begin();
 }
 
+vector<string>::const_iterator Cls::cbegin() const {
+    return Classes_.cbegin();
+}
+
 vector<string>::iterator Cls::end() {
     return Classes_.end();
+}
+
+vector<string>::const_iterator Cls::cend() const {
+    return Classes_.cend();
 }
