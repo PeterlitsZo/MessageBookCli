@@ -6,6 +6,8 @@
 #include <ostream>
 #include <vector>
 
+#include "../include/rapidjson/document.h"
+
 #include "units.h"
 
 using std::ostream;
@@ -13,6 +15,9 @@ using std::istream;
 using std::string;
 using std::getline;
 using std::vector;
+
+using rapidjson::Value;
+using rapidjson::Document;
 
 Cls::Cls() {
 }
@@ -34,6 +39,16 @@ istream& operator>>(istream& in, Cls& self) {
     auto elements = units::split(str);
     self.extend(elements.begin(), elements.end());
     return in;
+}
+
+Value* Cls::get_rapidjson_value(Document::AllocatorType& allo) {
+    Value* v = new Value();
+    v->SetArray();
+
+    for(auto& i: Classes_) {
+        v->PushBack(Value(i.c_str(), allo).Move(), allo);
+    }
+    return v;
 }
 
 vector<string>::iterator Cls::begin() {
