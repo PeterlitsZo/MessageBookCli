@@ -1,8 +1,13 @@
 #include <gtest/gtest.h>
 #include <gtest/gtest_pred_impl.h>
+
+#include <vector>
+
 #include "../src/info.h"
 #include "../src/messagebook.h"
 #include "../src/units.h"
+
+using std::vector;
 
 // ----------------------------------------------------------------------------
 // ---[ print and info ]-------------------------------------------------------
@@ -13,7 +18,7 @@ TEST(Tests, MEUN) {
     EXPECT_STREQ(info::meun, " Main Meun of Message Book Version(v0.0.1)\n"
                              " 1. Add Info\n 2. Search Info\n 3. View All Info\n"
                              " 4. Change Info\n 5. Delete Info\n 6. Exit\n\n"
-                             " Please Enter a Index For Next (q for quit) > ");
+                             " Please Enter a Index For Next > ");
 }
 
 // TEST: print the version
@@ -66,6 +71,17 @@ TEST(Tests, Units_is_not_empty) {
     EXPECT_EQ(units::is_not_empty("this"), true);
     EXPECT_EQ(units::is_not_empty("!"), true);
     EXPECT_EQ(units::is_not_empty("~"), true);
+}
+
+// TEST: units/repr
+TEST(Tests, Units_repr) {
+    EXPECT_EQ(units::repr(1), "1");
+    EXPECT_EQ(units::repr(123), "123");
+    EXPECT_EQ(units::repr("123"), "\'123\'");
+    vector<int> temp_01{1, 2, 3, 4};
+    EXPECT_EQ(units::repr(temp_01.begin(), temp_01.end()), "[1, 2, 3, 4]");
+    vector<int> temp_02{};
+    EXPECT_EQ(units::repr(temp_02.begin(), temp_02.end()), "[]");
 }
 
 int main(int argc, char **argv) {
