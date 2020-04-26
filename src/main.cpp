@@ -40,7 +40,6 @@ bool main_meun(MessageBook& mb) {
         // searchInfo();
         break;
     case 3:
-        // viewAll();
         cout << mb;
         break;
     case 4:
@@ -50,10 +49,12 @@ bool main_meun(MessageBook& mb) {
         // DeleteInfo();
         break;
     case 6:
+        // Break the loop;
         return false;
     default:
         return true;
     }
+    mb.save("MessageBook.json");
     return true;
 }
 
