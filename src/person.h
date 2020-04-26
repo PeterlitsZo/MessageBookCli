@@ -2,6 +2,7 @@
 #define PETERLITS_PERSON_H__
 
 #include <list>
+#include <ostream>
 #include <string>
 #include <vector>
 #include <iostream>
@@ -26,6 +27,7 @@ public:
     Person(string name, string sex, string telephone, string location,
            string mail_number, string email, string qq_number,
            Cls classes);
+    Person(std::istream& in, std::ostream& out);
 
     void setID(string ID);
     std::string hash();
@@ -34,6 +36,9 @@ public:
 
     friend std::ostream& operator<<(std::ostream& out, const Person& p);
 private:
+    void init(string name, string sex, string telephone, string location,
+              string mail_number, string email, string qq_number, Cls classes);
+
     string ID_;
     Str name_;
     Str sex_;

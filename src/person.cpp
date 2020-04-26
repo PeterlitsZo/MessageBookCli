@@ -3,6 +3,7 @@
 #include <ostream>
 #include <iostream>
 #include <string>
+#include <vector>
 
 // for read and write json file
 #include "../include/rapidjson/document.h"
@@ -17,22 +18,17 @@
 #include "classes.h"
 
 using std::string;
+using std::istream;
+using std::ostream;
 
 // ----------------------------------------------------------------------------
 // ---[ initialy the object ]--------------------------------------------------
 // ----------------------------------------------------------------------------
 
-// initialy as default.
-Person::Person()
-              : name_(Value<string>()), sex_(Value<string>()),
-                telephone_(Value<string>()), location_(Value<string>()),
-                mail_number_(Value<string>()), email_(Value<string>()),
-                qq_number_(Value<string>()), classes_(Cls()) {}
-
 // initialy with a lot of argrument
-Person::Person(string name, string sex, string telephone, string location,
-               string mail_number, string email, string qq_number,
-               Cls classes): classes_(classes)
+void Person::init(string name, string sex, string telephone, string location,
+                  string mail_number, string email, string qq_number,
+                  Cls classes)
 {
     // the name's value should not be a empty string
     if(units::is_not_empty(name)) {
@@ -62,7 +58,43 @@ Person::Person(string name, string sex, string telephone, string location,
     if(units::is_email(email)) {
         email_ = Str(email);
     }
+    // copy classes to classes_
+    classes_ = classes;
+}
 
+// initialy as default.
+Person::Person()
+              : name_(Value<string>()), sex_(Value<string>()),
+                telephone_(Value<string>()), location_(Value<string>()),
+                mail_number_(Value<string>()), email_(Value<string>()),
+                qq_number_(Value<string>()), classes_(Cls()) {}
+
+// initialy with a lot of argrument
+Person::Person(string name, string sex, string telephone, string location,
+               string mail_number, string email, string qq_number,
+               Cls classes)
+{
+    init(name, sex, telephone, location, mail_number, email, qq_number,
+         classes);
+}
+
+Person::Person(istream& in, ostream& out) {
+    units::Input input(in, out);
+    string name, sex, telephone, location, mail_number, email, qq_number, temp;
+
+    input("please enter name") >> name;
+    input("please enter sex [M/F]") >> sex;;
+    input("please enter telephone [only include digit]") >> telephone;
+    input("please enter location") >> location;
+    input("please enter postal number [6-length number]") >> mail_number;
+    input("please enter email") >> email;
+    input("please enter qq number") >> qq_number;
+    input("please enter classes") >> temp;
+
+    init(
+        name, sex, telephone, location, mail_number, email, qq_number,
+        vector<string>{temp}
+    );
 }
 
 // ----------------------------------------------------------------------------
