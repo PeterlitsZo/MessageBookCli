@@ -39,6 +39,10 @@ bool is_email(string str) {
     }
 }
 
+bool is_not_empty(string str) {
+    return str.size() != 0;
+}
+
 std::istream& input(string info) {
     std::cout << ' ' << info << " > ";
     return std::cin;

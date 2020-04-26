@@ -10,6 +10,7 @@ namespace units {
 bool is_digit(char ch);
 bool is_digit(std::string str);
 bool is_email(std::string str);
+bool is_not_empty(std::string str);
 
 std::istream& input(std::string info);
 
