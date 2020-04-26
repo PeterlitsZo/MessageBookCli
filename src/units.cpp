@@ -11,6 +11,8 @@ using std::string;
 using std::strstream;
 using std::vector;
 using std::regex;
+using std::istream;
+using std::ostream;
 
 namespace units {
 
@@ -102,9 +104,14 @@ vector<string> split(string str) {
 // ----------------------------------------------------------------------------
 // ---[ function for input ]---------------------------------------------------
 // ----------------------------------------------------------------------------
-std::istream& input(string info) {
+istream& input(string info) {
     std::cout << ' ' << info << " > ";
     return std::cin;
+}
+
+istream& input(ostream& out, istream& in, string info) {
+    out << ' ' << info << " > ";
+    return in;
 }
 
 }

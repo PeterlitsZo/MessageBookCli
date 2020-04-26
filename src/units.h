@@ -50,6 +50,7 @@ std::vector<std::string> split(std::string str);
 
 // function for input
 std::istream& input(std::string info);
+std::istream& input(std::ostream& out, std::string info);
 
 }
 
