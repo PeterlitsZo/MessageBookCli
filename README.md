@@ -17,22 +17,22 @@ Aim
 ---
 
 ``` txt
-[x] value: valid or invalid
-[x] ID *(new: how about hash)*
+[W] value: valid or invalid
+[W] ID *(new: how about hash)*
 [.] write README
-[.] write to json file
-[.] read from json file
-[x] value's length should bigger than 0
-[ ] use map instead of vector
-[ ] pertty output for person
+[=] write to json file
+[=] read from json file
+[=] value's length should bigger than 0
+[=] use map instead of vector
+[=] pertty output for person
 [ ] parse command
-[ ] Classes Input
+[.] Classes Input
 [ ] Sreach
 [ ] Sort
 [ ] Change
 [ ] Delete
 -------------------------------------------------------------------------------
-[ ] -> [.] -> [x]
+[ ] -> [.] -> [=] -> [W]
 ```
 
 Git Comment Style
