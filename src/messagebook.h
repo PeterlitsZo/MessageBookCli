@@ -19,6 +19,7 @@ public:
     void addPerson(string name, string sex, string telephone, string location, 
                    string mail_number, string email, string qq_number, 
                    Classes classes);
+    void addPerson(std::istream& in, std::ostream& out);
     friend std::ostream& operator<<(std::ostream& out, const MessageBook& mb);
     void save();
 

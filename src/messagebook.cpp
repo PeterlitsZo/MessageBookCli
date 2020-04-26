@@ -15,6 +15,8 @@
 #include "person.h"
 
 using std::string;
+using std::istream;
+using std::ostream;
 
 // units function
 const char* getString(rapidjson::Value& value) {
@@ -63,6 +65,12 @@ void MessageBook::addPerson(string name, string sex, string telephone, string lo
     persons[person.hash()] = person;
 }
 
+void MessageBook::addPerson(istream& in, ostream& out) {
+    Person person(in, out);
+    person.setID(person.hash());
+    persons[person.hash()] = person;
+}
+
 void MessageBook::save() {
     using rapidjson::StringBuffer;
     using rapidjson::Writer;
@@ -94,3 +102,4 @@ std::ostream& operator<<(std::ostream& out, const MessageBook& mb) {
     }
     return out;
 }
+
