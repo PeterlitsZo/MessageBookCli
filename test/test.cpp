@@ -12,7 +12,7 @@
 TEST(Tests, MEUN) {
     EXPECT_STREQ(info::meun, " Main Meun of Message Book Version(v0.0.1)\n"
                              " 1. Add Info\n 2. Search Info\n 3. View All Info\n"
-                             " 4. Change Info\n 5. Delete Info\n\n"
+                             " 4. Change Info\n 5. Delete Info\n 6. Exit\n\n"
                              " Please Enter a Index For Next (q for quit) > ");
 }
 
@@ -60,7 +60,13 @@ TEST(Tests, Units_is_email) {
     EXPECT_EQ(units::is_email("abcabcabc"),   false);
 }
 
-// TEST: 
+// TEST: units/is_not_empty
+TEST(Tests, Units_is_not_empty) {
+    EXPECT_EQ(units::is_not_empty(""), false);
+    EXPECT_EQ(units::is_not_empty("this"), true);
+    EXPECT_EQ(units::is_not_empty("!"), true);
+    EXPECT_EQ(units::is_not_empty("~"), true);
+}
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
