@@ -26,11 +26,12 @@ Aim
 [=] use map instead of vector
 [=] pertty output for person
 [ ] parse command
-[.] Classes Input
+[=] Classes Input
 [ ] Sreach
 [ ] Sort
 [ ] Change
 [ ] Delete
+[ ] A lot of Waring when make
 -------------------------------------------------------------------------------
 [ ] -> [.] -> [=] -> [W]
 ```

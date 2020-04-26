@@ -81,6 +81,7 @@ Person::Person(string name, string sex, string telephone, string location,
 Person::Person(istream& in, ostream& out) {
     units::Input input(in, out);
     string name, sex, telephone, location, mail_number, email, qq_number, temp;
+    Cls classes;
 
     input("please enter name") >> name;
     input("please enter sex [M/F]") >> sex;;
@@ -89,11 +90,10 @@ Person::Person(istream& in, ostream& out) {
     input("please enter postal number [6-length number]") >> mail_number;
     input("please enter email") >> email;
     input("please enter qq number") >> qq_number;
-    input("please enter classes") >> temp;
+    input("please enter classes") >> classes;
 
     init(
-        name, sex, telephone, location, mail_number, email, qq_number,
-        vector<string>{temp}
+        name, sex, telephone, location, mail_number, email, qq_number, classes
     );
 }
 

@@ -27,12 +27,12 @@ ostream& operator<<(ostream& out, const Cls& self) {
 }
 
 istream& operator>>(istream& in, Cls& self) {
+    // sync a in-stream and then read a line into str;
     string str;
-    getline(in, str);
+    getline(in >> std::ws, str);
+    // split str into elements
     auto elements = units::split(str);
-    // for(auto it = elements.begin(), it != elements.end(); ++it) {
-    //     self.Classes_.push_back(*it);
-    // }
+    self.extend(elements.begin(), elements.end());
     return in;
 }
 
