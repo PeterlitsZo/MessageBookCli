@@ -23,7 +23,7 @@ TEST(Tests, VERSION) {
 
 // TEST: Add Person
 TEST(Tests, AddPerson) {
-    MessageBook mb;
+    MessageBook mb("TEST.json");
     mb.addPerson("Peter", "M", "17623321234", "China",
                  "123456", "abc@abc.abc", "12345", {"men"});
     mb.addPerson("Allen", "M", "17623325764", "China",
