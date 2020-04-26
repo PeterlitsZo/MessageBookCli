@@ -14,6 +14,7 @@
 
 #include "value.h"
 #include "units.h"
+#include "classes.h"
 
 using std::string;
 
@@ -26,12 +27,12 @@ Person::Person()
               : name_(Value<string>()), sex_(Value<string>()),
                 telephone_(Value<string>()), location_(Value<string>()),
                 mail_number_(Value<string>()), email_(Value<string>()),
-                qq_number_(Value<string>()), classes_(Classes()) {}
+                qq_number_(Value<string>()), classes_(Cls()) {}
 
 // initialy with a lot of argrument
 Person::Person(string name, string sex, string telephone, string location,
                string mail_number, string email, string qq_number,
-               Classes classes): classes_(classes)
+               Cls classes): classes_(classes)
 {
     // the name's value should not be a empty string
     if(units::is_not_empty(name)) {
@@ -122,12 +123,6 @@ std::ostream& operator<<(std::ostream& out, const Person& p) {
     out << " | email: "             << p.email_          <<
                ", qq-number: "      << p.qq_number_      <<
                ", location: "       << p.location_       << '\n';
-    out << " └ classes: ";
-    // output its classes
-    for(auto cls: p.classes_) {
-        out << cls;
-    }
-    //output newline
-    out << '\n';
+    out << " └ classes: "           << p.classes_        << '\n';
     return out;
 }
