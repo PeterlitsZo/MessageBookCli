@@ -4,19 +4,29 @@
 #include <iostream>
 #include <string>
 
+// for read and write json file
+#include "../include/rapidjson/document.h"
+
 #include "value.h"
 #include "units.h"
 
 using std::string;
 
+// ----------------------------------------------------------------------------
+// ---[ initialy the object ]--------------------------------------------------
+// ----------------------------------------------------------------------------
+
+// initialy as default.
 Person::Person()
               : name_(Value<string>()), sex_(Value<string>()),
                 telephone_(Value<string>()), location_(Value<string>()),
                 mail_number_(Value<string>()), email_(Value<string>()),
                 qq_number_(Value<string>()), classes_(Classes()) {}
 
+// initialy with a lot of argrument
 Person::Person(string name, string sex, string telephone, string location,
-               string mail_number, string email, string qq_number, Classes classes)
+               string mail_number, string email, string qq_number,
+               Classes classes)
                : name_(name), location_(location), classes_(classes)
 {
     // the sex's value should be one of "M", "F" or "unknown"
@@ -42,18 +52,50 @@ Person::Person(string name, string sex, string telephone, string location,
 
 }
 
+// ----------------------------------------------------------------------------
+// ---[ normal method ]--------------------------------------------------------
+// ----------------------------------------------------------------------------
+
 void Person::setID(int ID) {
     ID_ = ID;
 }
 
+// [WARNING]: remember to delete it! (should I?)
+rapidjson::Value* Person::get_rapidjson_value(rapidjson::Document::AllocatorType& allo) {
+    // initial as a Null Object
+    rapidjson::Value* v = new rapidjson::Value();
+    v->SetObject();
+
+    // objter V
+    v->AddMember("ID",          *ID_.get_rapidjson_value( allo ),          allo);
+    v->AddMember("name",        *name_.get_rapidjson_value( allo ),        allo);
+    v->AddMember("sex",         *sex_.get_rapidjson_value( allo ),         allo);
+    v->AddMember("telephone",   *telephone_.get_rapidjson_value( allo ),   allo);
+    v->AddMember("mail_number", *mail_number_.get_rapidjson_value( allo ), allo);
+    v->AddMember("email",       *email_.get_rapidjson_value( allo ),       allo);
+    v->AddMember("qq_number",   *qq_number_.get_rapidjson_value( allo ),   allo);
+    v->AddMember("location",    *location_.get_rapidjson_value( allo ),    allo);
+    // TODO: classes
+
+    // return the pointer
+    return v;
+}
+
+// ----------------------------------------------------------------------------
+// ---[ friend function ]------------------------------------------------------
+// ----------------------------------------------------------------------------
+
 std::ostream& operator<<(std::ostream& out, const Person& p) {
     // output the basic infomation
-    out << " ┌---| ID: " << p.ID_ << " |-----\n";
-    out << " |  name: " << p.name_ << ", sex: " << p.sex_ << ", telephone: " << p.telephone_
-        << ", mail-number: " << p.mail_number_ << '\n';
-    out << " |  email: " << p.email_ << ", qq-number: " << p.qq_number_
-        << ", location: " << p.location_ << '\n';
-    out << " └- classes: ";
+    out << " ┌-----| ID: " << p.ID_    << " |-------"         << '\n';
+    out << " | name: "              << p.name_           <<
+               ", sex: "            << p.sex_            <<
+               ", telephone: "      << p.telephone_      <<
+               ", mail-number: "    << p.mail_number_    << '\n';
+    out << " | email: "             << p.email_          <<
+               ", qq-number: "      << p.qq_number_      <<
+               ", location: "       << p.location_       << '\n';
+    out << " └ classes: ";
     // output its classes
     for(auto cls: p.classes_) {
         out << cls;

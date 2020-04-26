@@ -6,6 +6,9 @@
 #include <vector>
 #include <iostream>
 
+// for json object;
+#include "../include/rapidjson/document.h"
+
 #include "value.h"
 
 using std::string;
@@ -25,6 +28,8 @@ public:
            Classes classes);
 
     void setID(int ID);
+
+    rapidjson::Value* get_rapidjson_value(rapidjson::Document::AllocatorType& allo);
 
     friend std::ostream& operator<<(std::ostream& out, const Person& p);
 private:
