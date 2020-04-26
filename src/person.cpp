@@ -26,9 +26,12 @@ Person::Person()
 // initialy with a lot of argrument
 Person::Person(string name, string sex, string telephone, string location,
                string mail_number, string email, string qq_number,
-               Classes classes)
-               : name_(name), location_(location), classes_(classes)
+               Classes classes): classes_(classes)
 {
+    // the name's value should not be a empty string
+    if(units::is_not_empty(name)) {
+        name_ = name;
+    }
     // the sex's value should be one of "M", "F" or "unknown"
     if(sex == "M" || sex == "F") {
         sex_ = Str(sex);
@@ -36,6 +39,10 @@ Person::Person(string name, string sex, string telephone, string location,
     // the telephone's value should be a string of digits: eg: "123456789"
     if(units::is_digit(telephone)) {
         telephone_ = Str(telephone);
+    }
+    // the location's value should not be a empty string
+    if(units::is_not_empty(location)) {
+        location_ = location;
     }
     // the mail_number should be a 6-length of a digit string: eg: "123456"
     if(units::is_digit(mail_number) && mail_number.size() == 6) {

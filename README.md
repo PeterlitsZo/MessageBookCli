@@ -22,6 +22,7 @@ Aim
 [.] write README
 [.] write to json file
 [.] read from json file
+[x] value's length should bigger than 0
 [ ] parse command
 [ ] Classes Input
 [ ] Sreach
