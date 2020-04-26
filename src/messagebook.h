@@ -5,7 +5,9 @@
 #include <string>
 #include <vector>
 #include <iostream>
+
 #include "person.h"
+
 using std::string;
 using std::vector;
 using Classes = vector<string>;
@@ -17,6 +19,7 @@ public:
                    string mail_number, string email, string qq_number, 
                    Classes classes);
     friend std::ostream& operator<<(std::ostream& out, const MessageBook& mb);
+    void save(const char* path);
 
 private:
     vector<Person> persons;
