@@ -4,6 +4,10 @@
 #include "../src/messagebook.h"
 #include "../src/units.h"
 
+// ----------------------------------------------------------------------------
+// ---[ print and info ]-------------------------------------------------------
+// ----------------------------------------------------------------------------
+
 // TEST: print out the meun
 TEST(Tests, MEUN) {
     EXPECT_STREQ(info::meun, " Main Meun of Message Book Version(v0.0.1)\n"
@@ -17,10 +21,6 @@ TEST(Tests, VERSION) {
     EXPECT_STREQ(info::version, "ver 0.0.1\n");
 }
 
-// TEST: about the input
-TEST(Tests, Input) {
-}
-
 // TEST: Add Person
 TEST(Tests, AddPerson) {
     MessageBook mb;
@@ -29,6 +29,10 @@ TEST(Tests, AddPerson) {
     mb.addPerson("Allen", "M", "17623325764", "China",
                  "000000", "123@123.com", "123456", {"this"});
 }
+
+// ----------------------------------------------------------------------------
+// ---[ units ]----------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
 // TEST: units/is_digit
 TEST(Tests, Units_is_digit) {
@@ -55,6 +59,8 @@ TEST(Tests, Units_is_email) {
     EXPECT_EQ(units::is_email("abc@abcabc"),  false);
     EXPECT_EQ(units::is_email("abcabcabc"),   false);
 }
+
+// TEST: 
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
