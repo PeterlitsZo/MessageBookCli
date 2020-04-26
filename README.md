@@ -35,3 +35,15 @@ Aim
 [ ] -> [.] -> [x]
 ```
 
+Git Comment Style
+-----------------
+
+``` txt
+feat: new feature
+fix : fix bug
+docs: about document
+stl : code style
+rfc : refactor code
+test: about test
+chor: about chore
+```
