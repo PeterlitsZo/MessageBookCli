@@ -17,6 +17,7 @@
 using std::string;
 using std::istream;
 using std::ostream;
+using std::vector;
 
 // units function
 const char* getString(rapidjson::Value& value) {
@@ -25,6 +26,14 @@ const char* getString(rapidjson::Value& value) {
     } else {
         return "";
     }
+}
+
+vector<string> getVecString(rapidjson::Value& value) {
+    vector<string> result;
+    for(auto it = value.Begin(); it != value.End(); ++it) {
+        result.push_back(it->GetString());
+    }
+    return result;
 }
 
 // inital by the path of json file
@@ -52,7 +61,8 @@ MessageBook::MessageBook(const char* path) {
                   getString(it->value["mail_number"]),
                   getString(it->value["email"]),
                   getString(it->value["qq_number"]),
-                  {});
+                  // {});
+                  getVecString(it->value["classes"]));
     }
 }
 

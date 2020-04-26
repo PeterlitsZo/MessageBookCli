@@ -6,6 +6,8 @@
 #include <string>
 #include <iostream>
 
+#include "../include/rapidjson/document.h"
+
 class Cls {
 public:
     Cls();
@@ -16,6 +18,8 @@ public:
 
     template<typename T>
     void extend(T begin, T end);
+
+    rapidjson::Value* get_rapidjson_value(rapidjson::Document::AllocatorType& allo);
 
     std::vector<std::string>::iterator begin();
     std::vector<std::string>::const_iterator cbegin() const;

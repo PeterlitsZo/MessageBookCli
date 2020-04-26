@@ -112,7 +112,6 @@ rapidjson::Value* Person::get_rapidjson_value(rapidjson::Document::AllocatorType
     v->SetObject();
 
     // objter V
-    // v->AddMember("ID",          *ID_.get_rapidjson_value( allo ),          allo);
     v->AddMember("name",        *name_.get_rapidjson_value( allo ),        allo);
     v->AddMember("sex",         *sex_.get_rapidjson_value( allo ),         allo);
     v->AddMember("telephone",   *telephone_.get_rapidjson_value( allo ),   allo);
@@ -120,7 +119,7 @@ rapidjson::Value* Person::get_rapidjson_value(rapidjson::Document::AllocatorType
     v->AddMember("email",       *email_.get_rapidjson_value( allo ),       allo);
     v->AddMember("qq_number",   *qq_number_.get_rapidjson_value( allo ),   allo);
     v->AddMember("location",    *location_.get_rapidjson_value( allo ),    allo);
-    // TODO: classes
+    v->AddMember("classes",     *classes_.get_rapidjson_value( allo ),     allo);
 
     // return the pointer
     return v;
