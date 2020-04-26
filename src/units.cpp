@@ -1,6 +1,7 @@
 #include "units.h"
 
 #include <cstdio>
+#include <istream>
 #include <string>
 #include <regex>
 #include <iostream>
@@ -83,11 +84,22 @@ string repr(string str) {
             temp_int = (4 - result.size())?(4 - result.size()):4;
             result += string(temp_int, ' ');
             break;
+        default:
+            result += *it;
+            break;
         }
     }
 
     result += "\'";
     return result;
+}
+
+string repr(char* str) {
+    return repr(string(str));
+}
+
+string repr(const char* str) {
+    return repr(string(str));
 }
 
 // ----------------------------------------------------------------------------
@@ -104,6 +116,13 @@ vector<string> split(string str) {
 // ----------------------------------------------------------------------------
 // ---[ function for input ]---------------------------------------------------
 // ----------------------------------------------------------------------------
+Input::Input(istream& in, ostream& out) :in_(in), out_(out) {}
+
+istream& Input::operator() (string info) {
+    out_ << ' ' << info << " > ";
+    return in_;
+}
+
 istream& input(string info) {
     std::cout << ' ' << info << " > ";
     return std::cin;
@@ -114,4 +133,4 @@ istream& input(ostream& out, istream& in, string info) {
     return in;
 }
 
-}
+} // for namespace units

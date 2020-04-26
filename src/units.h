@@ -18,8 +18,11 @@ bool is_not_empty(std::string str);
 // function for repr-output
 std::string repr(std::string str);
 
+std::string repr(char* str);
+std::string repr(const char* str);
+
 template <typename T>
-std::string repr(T value) {
+std::string repr(const T& value) {
     std::strstream ss;
     ss << value;
     std::string result;
@@ -29,7 +32,13 @@ std::string repr(T value) {
 }
 
 template <typename T>
-std::string repr(T begin, T end) {
+std::string repr(const T& begin, const T& end) {
+    // if the size == 0:
+    if(end - begin == 0) {
+        return "[]";
+    }
+
+    // else the size != 0:
     std::string result;
     result += "[";
 
@@ -37,7 +46,7 @@ std::string repr(T begin, T end) {
     T it;
     for(it = begin; it != end - 1; ++it) {
         result += repr(*it);
-        result += " ,";
+        result += ", ";
     }
     result += repr(*it);
 
@@ -49,6 +58,14 @@ std::string repr(T begin, T end) {
 std::vector<std::string> split(std::string str);
 
 // function for input
+class Input {
+public:
+    Input(std::istream& in, std::ostream& out);
+    std::istream& operator() (std::string info);
+private:
+    std::istream& in_;
+    std::ostream& out_;
+};
 std::istream& input(std::string info);
 std::istream& input(std::ostream& out, std::string info);
 
