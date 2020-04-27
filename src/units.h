@@ -5,7 +5,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
-#include <strstream>
+#include <sstream>
 
 namespace units {
 
@@ -23,7 +23,7 @@ std::string repr(const char* str);
 
 template <typename T>
 std::string repr(const T& value) {
-    std::strstream ss;
+    std::stringstream ss;
     ss << value;
     std::string result;
     ss >> result;

@@ -5,11 +5,9 @@
 #include <string>
 #include <regex>
 #include <iostream>
-#include <strstream>
 #include <vector>
 
 using std::string;
-using std::strstream;
 using std::vector;
 using std::regex;
 using std::istream;
