@@ -10,6 +10,9 @@ PersonPtr::PersonPtr(MessageBook& mb, string ID):mb_(mb), ID_(ID)
     {}
 
 void PersonPtr::change(string key, string value) {
-    // TODO: ID change
-    mb_.get_raw(ID_).change(key, value);
+    auto person = mb_.get_raw(ID_);
+    person.change(key, value);
+    mb_.remove(ID_);
+    mb_.addPerson(person);
+    ID_ = person.ID();
 }

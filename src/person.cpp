@@ -66,6 +66,7 @@ void Person::init(string name, string sex, string telephone, string location,
     if(vaild_email(email))             email_ = Str(email);
 
     classes_ = classes;
+    ID_ = hash();
 }
 
 // initialy as default.
@@ -111,6 +112,10 @@ void Person::setID(string ID) {
     ID_ = ID;
 }
 
+string Person::ID() {
+    return ID_;
+}
+
 void Person::change(string key, string value) {
     if(key == "name")
         name_ =        vaild_name(value) ? value: Str();
@@ -128,6 +133,8 @@ void Person::change(string key, string value) {
         location_ =    vaild_locaition(value) ? value: Str();
     else if(key == "classes")
         classes_ =     Cls(value);
+
+    ID_ = hash();
     // ELSE: raise error
 }
 
@@ -161,6 +168,9 @@ string Person::hash() {
 
     StringBuffer buffer;
     Writer<StringBuffer> writer(buffer);
+    // auto value = get_rapidjson_value(doc.GetAllocator());
+    // value->Accept(writer);
+    // delete value;
     get_rapidjson_value(doc.GetAllocator())->Accept(writer);
 
     return md5().absorb(buffer.GetString()).hexdigest();
@@ -172,7 +182,7 @@ string Person::hash() {
 
 std::ostream& operator<<(std::ostream& out, const Person& p) {
     // output the basic infomation
-    out << " ┌-----| ID: " << p.ID_    << " |-------"         << '\n';
+    out << " ┌-----| ID: " << p.ID_ << " |-------"       << '\n';
     out << " | name: "              << p.name_           <<
                ", sex: "            << p.sex_            <<
                ", telephone: "      << p.telephone_      <<

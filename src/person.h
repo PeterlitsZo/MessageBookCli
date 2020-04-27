@@ -30,6 +30,7 @@ public:
     Person(std::istream& in, std::ostream& out);
 
     void setID(string ID);
+    std::string ID();
     std::string hash();
     void change(std::string key, std::string value);
 
