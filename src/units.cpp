@@ -35,7 +35,7 @@ bool is_digit(string str) {
         }
     }
     // if all char is digit then the string is digit
-    return true;
+    return true && str.size() != 0;
 }
 
 bool is_email(string str) {
