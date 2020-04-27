@@ -133,4 +133,11 @@ istream& input(ostream& out, istream& in, string info) {
     return in;
 }
 
+// ----------------------------------------------------------------------------
+// ---[ string function ]------------------------------------------------------
+// ----------------------------------------------------------------------------
+bool start_with(string full, string sub) {
+    return full.find(sub) == 0 ? true: false;
+}
+
 } // for namespace units

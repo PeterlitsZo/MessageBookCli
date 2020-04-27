@@ -69,7 +69,9 @@ private:
 std::istream& input(std::string info);
 std::istream& input(std::ostream& out, std::string info);
 
-}
+bool start_with(std::string full, std::string sub);
+
+} // for namespace units
 
 // ----------------------------------------------------------------------------
 
