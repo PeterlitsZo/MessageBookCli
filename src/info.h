@@ -1,17 +1,13 @@
 // info's const setting
+#ifndef PETERLITS_INFO_H__
+#define PETERLITS_INFO_H__
 
 namespace info {
 
-const char* meun = " Main Meun of Message Book Version(v0.0.1)\n"
-                   " 1. Add Info\n"
-                   " 2. Search Info\n"
-                   " 3. View All Info\n"
-                   " 4. Change Info\n"
-                   " 5. Delete Info\n"
-                   " 6. Exit\n"
-                   "\n"
-                   " Please Enter a Index For Next > ";
-
-const char* version = "ver 0.0.1\n";
+extern const char* meun;
+extern const char* version;
+extern const char* help_doc;
 
 }
+
+#endif // for PETERLITS_INFO_H__
