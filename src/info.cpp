@@ -10,7 +10,7 @@ const char* meun = " Main Meun of Message Book Version(v0.0.1)\n"
                    "\n"
                    " Please Enter a Index For Next > ";
 
-const char* version = "ver 0.0.1\n";
+const char* version = "ver 0.0.1";
 
 const char* help_doc =
     "---[ help doc for * ]-----------------------------------------------------\n"

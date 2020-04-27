@@ -57,6 +57,8 @@ bool main_meun(MessageBook& mb) {
 }
 
 void interaction() {
+    cout << "\nMessageBookCli " << info::version << std::endl;
+    cout << "Enter command `help' for help\n" << std::endl;
     cout << ">>> ";
     yyparse();
 }
@@ -68,18 +70,13 @@ int main(int argc, char **argv) {
 
     // ---[ output the version info ]---
     if( argparser.exist("version") ) {
-        cout << info::version;
-
+        cout << info::version << std::endl;
         return 0;
     }
 
     // ---[ going into the main loop ]---
     if( argc == 1 || argparser.exist("interaction") ) {
-        // MessageBook mb("MessageBook.json");
-        // while(main_meun(mb))
-        //     ;
         interaction();
-
         return 0;
     }
 }
