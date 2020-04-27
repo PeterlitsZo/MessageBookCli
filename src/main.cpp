@@ -2,7 +2,7 @@
 #include <string>
 
 #include "info.h"
-#include "cmdline.h"
+#include "../include/cmdline/cmdline.h"
 #include "person.h"
 #include "messagebook.h"
 #include "units.h"
