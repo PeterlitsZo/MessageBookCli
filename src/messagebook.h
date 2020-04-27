@@ -24,6 +24,8 @@ public:
                    Classes classes);
     void addPerson(std::istream& in, std::ostream& out);
     void addPerson(Person p);
+    std::string addPerson(void);
+
     void remove(std::string ID);
 
     void save();

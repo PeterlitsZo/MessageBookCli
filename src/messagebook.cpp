@@ -16,6 +16,7 @@
 #include "person.h"
 #include "units.h"
 #include "person_ptr.h"
+#include "value.h"
 
 using std::string;
 using std::istream;
@@ -95,6 +96,12 @@ void MessageBook::addPerson(istream& in, ostream& out) {
 
 void MessageBook::addPerson(Person p) {
     persons[p.ID()] = p;
+}
+
+string MessageBook::addPerson(void) {
+    Person person;
+    persons[person.hash()] = person;
+    return person.hash();
 }
 
 void MessageBook::save() {
