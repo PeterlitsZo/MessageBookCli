@@ -1,5 +1,6 @@
 #include "messagebook.h"
 
+#include <alloca.h>
 #include <ostream>
 #include <sstream>
 #include <string>
@@ -20,6 +21,8 @@ using std::string;
 using std::istream;
 using std::ostream;
 using std::vector;
+
+using rapidjson::Document;
 
 // ----------------------------------------------------------------------------
 // ---[ units function ]-------------------------------------------------------
@@ -104,9 +107,9 @@ void MessageBook::save() {
     rapidjson::Document::AllocatorType& allocator = d.GetAllocator();
     d.SetObject();
 
-    for (auto &&[key, person]: persons) {
-        rapidjson::Value* value = person.get_rapidjson_value(allocator);
-        d.AddMember(Value(key.c_str(), allocator).Move(), *value, allocator);
+    for (auto it = persons.begin(); it != persons.end(); ++it) {
+        rapidjson::Value* value = it->second.get_rapidjson_value(allocator);
+        d.AddMember(Value(it->first.c_str(), allocator).Move(), *value, allocator);
         delete value;
     }
 
@@ -131,8 +134,8 @@ PersonPtr MessageBook::get(std::string ID) {
 }
 
 std::ostream& operator<<(std::ostream& out, const MessageBook& mb) {
-    for(auto &&[key, person]: mb.persons) {
-        out << person;
+    for (auto it = mb.persons.begin(); it != mb.persons.end(); ++it) {
+        out << it->second;
         out << '\n';
     }
     return out;
