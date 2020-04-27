@@ -49,20 +49,33 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    HELP = 258,
-    LIST = 259,
-    ADD = 260,
-    DELETE = 261,
-    EXIT = 262,
-    NEWLINE = 263,
-    HEX_STRING = 264,
-    TOKEN = 265
+    PER_L = 258,
+    PER_R = 259,
+    HELP = 260,
+    LIST = 261,
+    ADD = 262,
+    DELETE = 263,
+    EXIT = 264,
+    NEWLINE = 265,
+    TOKEN = 266,
+    HEX_ID = 267
   };
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+
+union YYSTYPE
+{
+#line 20 "./src/parser/parser.y" /* yacc.c:1921  */
+
+    std::string* strp;
+    PersonPtr*   pptr;
+
+#line 76 "/home/peter/proj/MessageBookCli/src/parser/parser.h" /* yacc.c:1921  */
+};
+
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
