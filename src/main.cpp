@@ -43,7 +43,8 @@ bool main_meun(MessageBook& mb) {
         mb.get(temp).change(temp1, temp2);
         break;
     case 5:
-        // DeleteInfo();
+        input("please enter info's ID") >> temp;
+        mb.get(temp).remove();
         break;
     case 6:
         // Break the loop;

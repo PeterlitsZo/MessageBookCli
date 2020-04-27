@@ -16,21 +16,30 @@ $ make
 Aim
 ---
 
+### current
+
 ``` txt
 [.] write README
-[=] use map instead of vector
 [=] pertty output for person
 [ ] parse command
 [ ] Sreach
-[ ] Sort
+[ ] Sort(need I sort it...)
 [=] Change
 [=] Change person's Cls
-[ ] Delete
+[=] Delete
 [ ] A lot of Waring when make
 [ ] delete what you new
 [ ] change class Value's name
 [ ] delete some using in header file.
 [ ] do not make others use hash funtion of person
+[W] use map instead of vector
+-------------------------------------------------------------------------------
+[ ] -> [.] -> [=] -> [W]
+```
+
+### history
+
+``` txt
 [W] value: valid or invalid
 [W] ID *(new: how about hash)*
 [W] write to json file
