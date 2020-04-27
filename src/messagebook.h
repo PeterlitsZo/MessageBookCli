@@ -9,19 +9,16 @@
 
 #include "person.h"
 
-using std::string;
-using std::vector;
-using Classes = vector<string>;
-
 class PersonPtr;
 
 class MessageBook {
 public:
     MessageBook(const char* path);
 
-    void addPerson(string name, string sex, string telephone, string location, 
-                   string mail_number, string email, string qq_number, 
-                   Classes classes);
+    void addPerson(std::string name, std::string sex, std::string telephone,
+                   std::string location, std::string mail_number,
+                   std::string email, std::string qq_number, 
+                   std::vector<std::string> classes);
     void addPerson(std::istream& in, std::ostream& out);
     void addPerson(Person p);
     std::string addPerson(void);
@@ -38,7 +35,7 @@ public:
 
 private:
     std::string getfullID(std::string ID);
-    string path_;
+    std::string path_;
     std::map<std::string, Person> persons;
 };
 

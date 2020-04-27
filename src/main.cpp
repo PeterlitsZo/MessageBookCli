@@ -1,13 +1,15 @@
 #include <iostream>
 #include <string>
 
-#include "info.h"
 #include "../include/cmdline/cmdline.h"
-#include "./parser/parser.h"
-#include "person.h"
-#include "messagebook.h"
+
 #include "units.h"
+#include "info.h"
 #include "person_ptr.h"
+#include "messagebook.h"
+#include "person.h"
+
+#include "./parser/parser.h"
 
 using std::cout;
 using std::cin;

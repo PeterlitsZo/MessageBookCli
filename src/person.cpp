@@ -58,12 +58,12 @@ void Person::init(string name, string sex, string telephone, string location,
                   Cls classes)
 {
     if(vaild_name(name))               name_ = name;
-    if(vaild_sex(sex))                 sex_ = Str(sex);
-    if(vaild_telephone(telephone))     telephone_ = Str(telephone);
+    if(vaild_sex(sex))                 sex_ = Value<string>(sex);
+    if(vaild_telephone(telephone))     telephone_ = Value<string>(telephone);
     if(vaild_locaition(location))      location_ = location;
-    if(vaild_mail_number(mail_number)) mail_number_ = Str(mail_number);
-    if(vaild_qq_number(qq_number))     qq_number_ = Str(qq_number);
-    if(vaild_email(email))             email_ = Str(email);
+    if(vaild_mail_number(mail_number)) mail_number_ = Value<string>(mail_number);
+    if(vaild_qq_number(qq_number))     qq_number_ = Value<string>(qq_number);
+    if(vaild_email(email))             email_ = Value<string>(email);
 
     classes_ = classes;
     ID_ = hash();
@@ -122,19 +122,19 @@ string Person::ID() {
 
 void Person::change(string key, string value) {
     if(key == "name")
-        name_ =        vaild_name(value) ? value: Str();
+        name_ =        vaild_name(value) ? value: Value<string>();
     else if(key == "sex")
-        sex_ =         vaild_sex(value) ? value: Str();
+        sex_ =         vaild_sex(value) ? value: Value<string>();
     else if(key == "telephone")
-        telephone_ =   vaild_telephone(value) ? value: Str();
+        telephone_ =   vaild_telephone(value) ? value: Value<string>();
     else if(key == "mail_number")
-        mail_number_ = vaild_mail_number(value) ? value: Str();
+        mail_number_ = vaild_mail_number(value) ? value: Value<string>();
     else if(key == "email")
-        email_ =       vaild_email(value) ? value: Str();
+        email_ =       vaild_email(value) ? value: Value<string>();
     else if(key == "qq_number")
-        qq_number_ =   vaild_qq_number(value) ? value: Str();
+        qq_number_ =   vaild_qq_number(value) ? value: Value<string>();
     else if(key == "location")
-        location_ =    vaild_locaition(value) ? value: Str();
+        location_ =    vaild_locaition(value) ? value: Value<string>();
     else if(key == "classes")
         classes_ =     Cls(value);
 

@@ -18,4 +18,5 @@ private:
 
 };
 
+
 #endif // for ifndef PETERLITS_PERSON_PTR__

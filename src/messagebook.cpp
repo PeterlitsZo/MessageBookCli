@@ -82,7 +82,7 @@ MessageBook::MessageBook(const char* path) {
 // ---[ units method ]---------------------------------------------------------
 void MessageBook::addPerson(string name, string sex, string telephone, string location, 
                             string mail_number, string email, string qq_number, 
-                            Classes classes) {
+                            vector<string> classes) {
     Person person(name, sex, telephone, location, mail_number, email, qq_number, classes);
     person.setID(person.hash());
     persons[person.hash()] = person;

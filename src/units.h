@@ -74,7 +74,5 @@ bool start_with(std::string full, std::string sub);
 
 } // for namespace units
 
-// ----------------------------------------------------------------------------
-
 #endif // for PETERLITS_UNITS_H__
 
