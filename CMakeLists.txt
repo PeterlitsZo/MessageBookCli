@@ -20,7 +20,8 @@ FLEX_TARGET (MessageBookCli_lexer ./src/parser/parser.l
              ${CMAKE_SOURCE_DIR}/src/parser/lexer.cpp)
 
 set (PARSER_FILES ${CMAKE_SOURCE_DIR}/src/parser/lexer.cpp
-                  ${CMAKE_SOURCE_DIR}/src/parser/parser.cpp)
+                  ${CMAKE_SOURCE_DIR}/src/parser/parser.cpp
+                  ${CMAKE_SOURCE_DIR}/src/parser/interface.cpp)
 
 ADD_FLEX_BISON_DEPENDENCY(MessageBookCli_lexer MessageBookCli_parser)
 

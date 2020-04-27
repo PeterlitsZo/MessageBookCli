@@ -1,29 +1,12 @@
 %{
 
-#include <iostream>
-#include <string>
-
-// for C function
-#include <stdio.h>
-#include "../messagebook.h"
-#include "../info.h"
-
-using std::cout;
-using std::cerr;
-using std::string;
+#include "interface.h"
 
 MessageBook mb("MessageBook.json");
 
-void end_command(void);
-void print_command(string str);
-void print_command(void);
-
-string help(void);
-string add(void);
-string list(void);
+extern void yyerror(const char *s);
 
 extern "C" {
-    void yyerror(const char *s);
     extern int yylex(void);
 }
 
@@ -37,22 +20,26 @@ extern "C" {
 
 commands : // empty
          | commands command NEWLINE {
-            end_command();
+            print_next_arraw();
+         }
+         | commands NEWLINE {
+            // nothing input
+            print_next_arraw();
          }
          | error NEWLINE {
             yyerrok;
-            end_command();
+            print_next_arraw();
          }
          ;
 
 command  : HELP {
-            print_command(help());
+            print_command(help(mb));
          }
          | LIST {
-            print_command(list());
+            print_command(list(mb));
          }
          | ADD {
-            print_command(add());
+            print_command(add(mb));
          }
          | EXIT {
             return 0;
@@ -61,43 +48,3 @@ command  : HELP {
          ;
 
 %%
-
-void yyerror(const char *s) {
-    cerr << "^^^ [syntax error]: " << s << std::endl;
-}
-
-// ----------------------------------------------------------------------------
-
-void end_command(void) {
-    cout << ">>> ";
-}
-
-void print_command(string str) {
-    cout << "||| ";
-    for(auto it = str.begin(); it != str.end(); ++it) {
-        if(*it == '\n') {
-            cout << "\n||| ";
-        } else {
-            cout << *it;
-        }
-    }
-    cout << '\n';
-}
-
-void print_command(void) {
-    cout << "||| ";
-}
-
-// ----------------------------------------------------------------------------
-
-string help(void) {
-    return info::help_doc;
-}
-
-string add(void) {
-    return "New empty person object's hash: " + mb.addPerson();
-}
-
-string list(void) {
-    return mb.str();
-}
