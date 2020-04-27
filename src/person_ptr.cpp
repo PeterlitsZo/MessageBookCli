@@ -21,3 +21,8 @@ void PersonPtr::remove() {
     mb_.remove(ID_);
     ID_ = "";
 }
+
+string PersonPtr::str() {
+    auto person = mb_.get_raw(ID_);
+    return person.str();
+}

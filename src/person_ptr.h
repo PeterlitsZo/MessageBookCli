@@ -12,6 +12,8 @@ public:
     void change(std::string key, std::string value);
     void remove();
 
+    std::string str();
+
 private:
     MessageBook& mb_;
     std::string ID_;
