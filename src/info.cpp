@@ -30,15 +30,17 @@ const char* help_doc =
     "command `add'! Use it like this following:                                \n"
     "                                                                          \n"
     "   >>> add                                                                \n"
-    "   |||                                                                    \n"
+    "   ||| New empty person object's hash: b81d80d9a7822507301ead965c748cc0   \n"
+    "                                                                          \n"
+    "So how to use it? go to card of comamnd `link' and `=' for more help.     \n"
     "                                                                          \n"
     "[EXIT]                                                                exit\n"
     "--------------------------------------------------------------------------\n"
     "So the next question is how to exit. the answer is short: command `exit'  \n"
     "                                                                          \n"
-    "                                                                          \n"
-    "                                                                          \n"
-    "                                                                          \n"
+    "[LIST]                                                                list\n"
+    "--------------------------------------------------------------------------\n"
+    "use list to get all pertty output of messagebook                          \n"
     "                                                                          \n"
     "                                                                          \n"
     "                                                                          \n"
@@ -50,3 +52,6 @@ const char* help_doc =
 ;
 
 }
+
+
+

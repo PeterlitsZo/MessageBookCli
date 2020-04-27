@@ -89,6 +89,7 @@ void print_command(void);
 
 string help(void);
 string add(void);
+string list(void);
 
 extern "C" {
     void yyerror(const char *s);
@@ -96,7 +97,7 @@ extern "C" {
 }
 
 
-#line 100 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:337  */
+#line 101 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:337  */
 # ifndef YY_NULLPTR
 #  if defined __cplusplus
 #   if 201103L <= __cplusplus
@@ -448,7 +449,7 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    37,    37,    38,    41,    47,    50,    51,    54,    57
+       0,    38,    38,    39,    42,    48,    51,    54,    57,    60
 };
 #endif
 
@@ -1229,48 +1230,56 @@ yyreduce:
   switch (yyn)
     {
         case 3:
-#line 38 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 39 "./src/parser/parser.y" /* yacc.c:1652  */
     {
             end_command();
          }
-#line 1237 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1238 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 4:
-#line 41 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 42 "./src/parser/parser.y" /* yacc.c:1652  */
     {
             yyerrok;
             end_command();
          }
-#line 1246 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1247 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 5:
-#line 47 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 48 "./src/parser/parser.y" /* yacc.c:1652  */
     {
             print_command(help());
          }
-#line 1254 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1255 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+    break;
+
+  case 6:
+#line 51 "./src/parser/parser.y" /* yacc.c:1652  */
+    {
+            print_command(list());
+         }
+#line 1263 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 7:
-#line 51 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 54 "./src/parser/parser.y" /* yacc.c:1652  */
     {
             print_command(add());
          }
-#line 1262 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1271 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 8:
-#line 54 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 57 "./src/parser/parser.y" /* yacc.c:1652  */
     {
             return 0;
          }
-#line 1270 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1279 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
 
-#line 1274 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1283 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1501,7 +1510,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 60 "./src/parser/parser.y" /* yacc.c:1918  */
+#line 63 "./src/parser/parser.y" /* yacc.c:1918  */
 
 
 void yyerror(const char *s) {
@@ -1538,4 +1547,8 @@ string help(void) {
 
 string add(void) {
     return "New empty person object's hash: " + mb.addPerson();
+}
+
+string list(void) {
+    return mb.str();
 }

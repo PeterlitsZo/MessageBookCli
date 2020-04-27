@@ -20,6 +20,7 @@ void print_command(void);
 
 string help(void);
 string add(void);
+string list(void);
 
 extern "C" {
     void yyerror(const char *s);
@@ -47,7 +48,9 @@ commands : // empty
 command  : HELP {
             print_command(help());
          }
-         | LIST
+         | LIST {
+            print_command(list());
+         }
          | ADD {
             print_command(add());
          }
@@ -93,4 +96,8 @@ string help(void) {
 
 string add(void) {
     return "New empty person object's hash: " + mb.addPerson();
+}
+
+string list(void) {
+    return mb.str();
 }
