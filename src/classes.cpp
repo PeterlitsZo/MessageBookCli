@@ -22,6 +22,11 @@ using rapidjson::Document;
 Cls::Cls() {
 }
 
+Cls::Cls(string str) {
+    auto elements = units::split(str);
+    extend(elements.begin(), elements.end());
+}
+
 Cls::Cls(vector<string> vec_str) {
     Classes_ = vec_str;
 }

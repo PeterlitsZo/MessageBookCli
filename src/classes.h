@@ -11,6 +11,7 @@
 class Cls {
 public:
     Cls();
+    Cls(std::string str);
     Cls(std::vector<std::string> vec_str);
 
     friend std::ostream& operator<<(std::ostream& out, const Cls& self);
