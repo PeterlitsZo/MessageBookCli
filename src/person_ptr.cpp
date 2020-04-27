@@ -16,3 +16,8 @@ void PersonPtr::change(string key, string value) {
     mb_.addPerson(person);
     ID_ = person.ID();
 }
+
+void PersonPtr::remove() {
+    mb_.remove(ID_);
+    ID_ = "";
+}

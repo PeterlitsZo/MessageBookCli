@@ -10,9 +10,12 @@ public:
     PersonPtr(MessageBook& mb, std::string str);
 
     void change(std::string key, std::string value);
+    void remove();
+
 private:
     MessageBook& mb_;
     std::string ID_;
+
 };
 
 #endif // for ifndef PETERLITS_PERSON_PTR__
