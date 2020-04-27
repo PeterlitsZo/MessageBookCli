@@ -140,11 +140,21 @@ PersonPtr MessageBook::get(std::string ID) {
     return PersonPtr(*this, getfullID(ID));
 }
 
-std::ostream& operator<<(std::ostream& out, const MessageBook& mb) {
-    for (auto it = mb.persons.begin(); it != mb.persons.end(); ++it) {
-        out << it->second;
-        out << '\n';
+string MessageBook::str() const {
+    string result;
+    for (auto it = persons.begin(); it != persons.end(); ++it) {
+        result += it->second.str();
+        result += '\n';
     }
+    return result;
+}
+
+std::ostream& operator<<(std::ostream& out, const MessageBook& mb) {
+    // for (auto it = mb.persons.begin(); it != mb.persons.end(); ++it) {
+    //     out << it->second;
+    //     out << '\n';
+    // }
+    out << mb.str();
     return out;
 }
 

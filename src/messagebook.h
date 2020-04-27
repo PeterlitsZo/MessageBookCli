@@ -32,6 +32,8 @@ public:
     Person& get_raw(std::string ID);
     PersonPtr get(std::string ID);
 
+    std::string str() const;
+
     friend std::ostream& operator<<(std::ostream& out, const MessageBook& mb);
 
 private:
