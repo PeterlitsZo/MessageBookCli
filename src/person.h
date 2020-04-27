@@ -41,6 +41,7 @@ public:
 private:
     void init(string name, string sex, string telephone, string location,
               string mail_number, string email, string qq_number, Cls classes);
+    void init();
 
     string ID_;
     Str name_;

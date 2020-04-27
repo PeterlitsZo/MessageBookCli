@@ -69,12 +69,16 @@ void Person::init(string name, string sex, string telephone, string location,
     ID_ = hash();
 }
 
+// initialy with empty argument
+void Person::init()
+{
+    ID_ = hash();
+}
+
 // initialy as default.
-Person::Person()
-              : name_(Value<string>()), sex_(Value<string>()),
-                telephone_(Value<string>()), location_(Value<string>()),
-                mail_number_(Value<string>()), email_(Value<string>()),
-                qq_number_(Value<string>()), classes_(Cls()) {}
+Person::Person() {
+    init();
+}
 
 // initialy with a lot of argrument
 Person::Person(string name, string sex, string telephone, string location,

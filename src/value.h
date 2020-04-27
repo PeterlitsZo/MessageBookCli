@@ -61,7 +61,7 @@ std::ostream& operator<<(std::ostream& out, const Value<S>& it) {
     if (it.is_valid_) {
         out << it.value_;
     } else {
-        out << "[invaild value]";
+        out << "[invaild]";
     }
     return out;
 }

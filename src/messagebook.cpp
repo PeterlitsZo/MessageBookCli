@@ -150,10 +150,6 @@ string MessageBook::str() const {
 }
 
 std::ostream& operator<<(std::ostream& out, const MessageBook& mb) {
-    // for (auto it = mb.persons.begin(); it != mb.persons.end(); ++it) {
-    //     out << it->second;
-    //     out << '\n';
-    // }
     out << mb.str();
     return out;
 }
