@@ -21,10 +21,10 @@ Aim
 [=] use map instead of vector
 [=] pertty output for person
 [ ] parse command
-[W] Classes Input
 [ ] Sreach
 [ ] Sort
-[ ] Change
+[.] Change
+[ ] Change person's Cls
 [ ] Delete
 [ ] A lot of Waring when make
 [ ] delete what you new
@@ -34,6 +34,7 @@ Aim
 [W] write to json file
 [W] read from json file
 [W] value's length should bigger than 0
+[W] Classes Input
 -------------------------------------------------------------------------------
 [ ] -> [.] -> [=] -> [W]
 ```
