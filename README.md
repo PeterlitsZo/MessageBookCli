@@ -21,7 +21,10 @@ Aim
 ``` txt
 [.] write README
 [=] pertty output for person
-[ ] parse command
+[.] parse command
+    [.] help
+    [ ] exit
+    [ ] add
 [ ] Sreach
 [ ] Sort(need I sort it...?)
 [=] A lot of Waring when make

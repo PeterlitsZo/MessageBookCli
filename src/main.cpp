@@ -3,6 +3,7 @@
 
 #include "info.h"
 #include "../include/cmdline/cmdline.h"
+#include "./parser/parser.h"
 #include "person.h"
 #include "messagebook.h"
 #include "units.h"
@@ -25,7 +26,6 @@ bool main_meun(MessageBook& mb) {
     string name, sex, telephone, location, mail_number, email, qq_number, temp;
     // [WRANING] this is not a good name;
     string temp1, temp2;
-    Classes classes;
     switch (choose) {
     case 1:
         mb.addPerson(cin, cout);
@@ -56,6 +56,11 @@ bool main_meun(MessageBook& mb) {
     return true;
 }
 
+void interaction() {
+    cout << ">>> ";
+    yyparse();
+}
+
 // ---[ the main part: main function ]-----------------------------------------
 int main(int argc, char **argv) {
     // parse the command line
@@ -70,9 +75,10 @@ int main(int argc, char **argv) {
 
     // ---[ going into the main loop ]---
     if( argc == 1 || argparser.exist("interaction") ) {
-        MessageBook mb("MessageBook.json");
-        while(main_meun(mb))
-            ;
+        // MessageBook mb("MessageBook.json");
+        // while(main_meun(mb))
+        //     ;
+        interaction();
 
         return 0;
     }
