@@ -198,16 +198,36 @@ string Person::hash() {
 // ---[ friend function ]------------------------------------------------------
 // ----------------------------------------------------------------------------
 
+string Person::str() const {
+    using units::repr;
+    string result;
+    result += " ┌-----| id: "   + repr(ID_) + " |-------"
+           +  '\n';
+    result += " | name: "       + repr(name_)
+           +  ", sex: "         + repr(sex_)
+           +  ", telephone: "   + repr(telephone_)
+           +  ", mail-number: " + repr(mail_number_)
+           +  '\n';
+    result += " | email: "      + repr(email_)
+           +  ", qq-number: "   + repr(qq_number_)
+           +  ", location: "    + repr(location_)
+           +  '\n';
+    result += " └ classes: "    + repr(classes_)
+           +  '\n';
+    return result;
+}
+
 std::ostream& operator<<(std::ostream& out, const Person& p) {
     // output the basic infomation
-    out << " ┌-----| ID: " << p.ID_ << " |-------"       << '\n';
-    out << " | name: "              << p.name_           <<
-               ", sex: "            << p.sex_            <<
-               ", telephone: "      << p.telephone_      <<
-               ", mail-number: "    << p.mail_number_    << '\n';
-    out << " | email: "             << p.email_          <<
-               ", qq-number: "      << p.qq_number_      <<
-               ", location: "       << p.location_       << '\n';
-    out << " └ classes: "           << p.classes_        << '\n';
+    // out << " ┌-----| id: " << p.ID_ << " |-------"       << '\n';
+    // out << " | name: "              << p.name_           <<
+    //            ", sex: "            << p.sex_            <<
+    //            ", telephone: "      << p.telephone_      <<
+    //            ", mail-number: "    << p.mail_number_    << '\n';
+    // out << " | email: "             << p.email_          <<
+    //            ", qq-number: "      << p.qq_number_      <<
+    //            ", location: "       << p.location_       << '\n';
+    // out << " └ classes: "           << p.classes_        << '\n';
+    out << p.str();
     return out;
 }

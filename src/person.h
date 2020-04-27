@@ -36,6 +36,7 @@ public:
 
     rapidjson::Value* get_rapidjson_value(rapidjson::Document::AllocatorType& allo);
 
+    std::string str() const;
     friend std::ostream& operator<<(std::ostream& out, const Person& p);
 private:
     void init(string name, string sex, string telephone, string location,
