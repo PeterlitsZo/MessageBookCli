@@ -23,8 +23,11 @@ Aim
 [=] pertty output for person
 [.] parse command
     [.] help
-    [ ] exit
-    [ ] add
+    [=] exit
+    [=] add
+    [ ] useful error msg
+    [ ] let
+    [ ] [ hash ]
 [ ] Sreach
 [ ] Sort(need I sort it...?)
 [=] A lot of Waring when make
