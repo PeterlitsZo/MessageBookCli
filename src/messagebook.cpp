@@ -13,6 +13,8 @@
 #include "../include/rapidjson/stringbuffer.h"
 
 #include "person.h"
+#include "units.h"
+#include "person_ptr.h"
 
 using std::string;
 using std::istream;
@@ -112,11 +114,28 @@ void MessageBook::save() {
     out << buffer.GetString();
 }
 
+Person& MessageBook::get_raw(string ID) {
+    return persons[ID];
+}
+
+PersonPtr MessageBook::get(std::string ID) {
+    return PersonPtr(*this, getfullID(ID));
+}
+
 std::ostream& operator<<(std::ostream& out, const MessageBook& mb) {
     for(auto &&[key, person]: mb.persons) {
         out << person;
         out << '\n';
     }
     return out;
+}
+
+string MessageBook::getfullID(string ID) {
+    for(auto it = persons.begin(); it != persons.end(); ++it) {
+        if( units::start_with(it->first, ID) ) {
+            return it->first;
+        }
+    }
+    return "";
 }
 
