@@ -16,6 +16,7 @@ MessageBook mb("MessageBook.json");
 
 void end_command(void);
 void print_command(string str);
+void print_command(void);
 
 string help(void);
 string add(void);
@@ -28,13 +29,17 @@ extern "C" {
 %}
 
 
-%token HELP LIST ADD DELETE NEWLINE
+%token HELP LIST ADD DELETE EXIT NEWLINE
 %token HEX_STRING TOKEN
 
 %%
 
 commands : // empty
          | commands command NEWLINE {
+            end_command();
+         }
+         | error NEWLINE {
+            yyerrok;
             end_command();
          }
          ;
@@ -46,13 +51,16 @@ command  : HELP {
          | ADD {
             print_command(add());
          }
+         | EXIT {
+            return 0;
+         }
          | DELETE HEX_STRING
          ;
 
 %%
 
 void yyerror(const char *s) {
-    cerr << "[syntax error]: " << s << std::endl;
+    cerr << "^^^ [syntax error]: " << s << std::endl;
 }
 
 // ----------------------------------------------------------------------------
@@ -72,6 +80,11 @@ void print_command(string str) {
     }
     cout << '\n';
 }
+
+void print_command(void) {
+    cout << "||| ";
+}
+
 // ----------------------------------------------------------------------------
 
 string help(void) {

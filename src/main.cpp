@@ -57,7 +57,7 @@ bool main_meun(MessageBook& mb) {
 }
 
 void interaction() {
-    cout << "\nMessageBookCli " << info::version << std::endl;
+    cout << "MessageBookCli " << info::version << std::endl;
     cout << "Enter command `help' for help\n" << std::endl;
     cout << ">>> ";
     yyparse();

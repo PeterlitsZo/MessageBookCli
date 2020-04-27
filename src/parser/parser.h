@@ -53,9 +53,10 @@ extern int yydebug;
     LIST = 259,
     ADD = 260,
     DELETE = 261,
-    NEWLINE = 262,
-    HEX_STRING = 263,
-    TOKEN = 264
+    EXIT = 262,
+    NEWLINE = 263,
+    HEX_STRING = 264,
+    TOKEN = 265
   };
 #endif
 

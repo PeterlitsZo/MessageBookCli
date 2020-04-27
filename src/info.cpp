@@ -32,6 +32,21 @@ const char* help_doc =
     "   >>> add                                                                \n"
     "   |||                                                                    \n"
     "                                                                          \n"
+    "[EXIT]                                                                exit\n"
+    "--------------------------------------------------------------------------\n"
+    "So the next question is how to exit. the answer is short: command `exit'  \n"
+    "                                                                          \n"
+    "                                                                          \n"
+    "                                                                          \n"
+    "                                                                          \n"
+    "                                                                          \n"
+    "                                                                          \n"
+    "                                                                          \n"
+    "                                                                          \n"
+    "                                                                          \n"
+    "                                                                          \n"
+    "                                                                          \n"
+    "                                                                          \n"
 ;
 
 }
