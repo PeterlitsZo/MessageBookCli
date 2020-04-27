@@ -35,10 +35,6 @@ Aim
 [ ] delete some using statement in header file.
 [ ] do not make others use hash funtion of person
 [=] use for..begin..end statement instead of for &&[key, value]
-[W] delete what you new
-[W] Change
-[W] Change person's Cls
-[W] Delete
 -------------------------------------------------------------------------------
 [ ] -> [.] -> [=] -> [W]
 ```
@@ -46,6 +42,14 @@ Aim
 ### history
 
 ``` txt
+[W] delete what you new
+[W] delete what you new
+[W] Change
+[W] Change person's Cls
+[W] Delete
+[W] Change
+[W] Change person's Cls
+[W] Delete
 [W] use map instead of vector
 [W] value: valid or invalid
 [W] ID *(new: how about hash)*
