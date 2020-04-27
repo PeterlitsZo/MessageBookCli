@@ -25,8 +25,9 @@ template <typename T>
 std::string repr(const T& value) {
     std::stringstream ss;
     ss << value;
+
     std::string result;
-    ss >> result;
+    std::getline(ss >> std::ws, result);
 
     return result;
 }
