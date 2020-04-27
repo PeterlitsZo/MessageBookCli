@@ -23,6 +23,9 @@ public:
                    string mail_number, string email, string qq_number, 
                    Classes classes);
     void addPerson(std::istream& in, std::ostream& out);
+    void addPerson(Person p);
+    void remove(std::string ID);
+
     void save();
     Person& get_raw(std::string ID);
     PersonPtr get(std::string ID);

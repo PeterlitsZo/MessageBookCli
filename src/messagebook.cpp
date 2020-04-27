@@ -90,6 +90,10 @@ void MessageBook::addPerson(istream& in, ostream& out) {
     persons[person.hash()] = person;
 }
 
+void MessageBook::addPerson(Person p) {
+    persons[p.ID()] = p;
+}
+
 void MessageBook::save() {
     using rapidjson::StringBuffer;
     using rapidjson::Writer;
@@ -112,6 +116,10 @@ void MessageBook::save() {
 
     std::ofstream out(path_.c_str());
     out << buffer.GetString();
+}
+
+void MessageBook::remove(string ID) {
+    persons.erase(ID);
 }
 
 Person& MessageBook::get_raw(string ID) {
