@@ -28,10 +28,11 @@ Aim
 [=] Change person's Cls
 [=] Delete
 [ ] A lot of Waring when make
-[ ] delete what you new
+[=] delete what you new
 [ ] change class Value's name
 [ ] delete some using in header file.
 [ ] do not make others use hash funtion of person
+[ ] use for..begin..end statement instead of for &&[key, value]
 [W] use map instead of vector
 -------------------------------------------------------------------------------
 [ ] -> [.] -> [=] -> [W]

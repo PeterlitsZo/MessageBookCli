@@ -145,14 +145,32 @@ rapidjson::Value* Person::get_rapidjson_value(rapidjson::Document::AllocatorType
     v->SetObject();
 
     // objter V
-    v->AddMember("name",        *name_.get_rapidjson_value( allo ),        allo);
-    v->AddMember("sex",         *sex_.get_rapidjson_value( allo ),         allo);
-    v->AddMember("telephone",   *telephone_.get_rapidjson_value( allo ),   allo);
-    v->AddMember("mail_number", *mail_number_.get_rapidjson_value( allo ), allo);
-    v->AddMember("email",       *email_.get_rapidjson_value( allo ),       allo);
-    v->AddMember("qq_number",   *qq_number_.get_rapidjson_value( allo ),   allo);
-    v->AddMember("location",    *location_.get_rapidjson_value( allo ),    allo);
-    v->AddMember("classes",     *classes_.get_rapidjson_value( allo ),     allo);
+    auto name_obj        = name_.get_rapidjson_value( allo );
+    auto sex_obj         = sex_.get_rapidjson_value( allo );
+    auto telephone_obj   = telephone_.get_rapidjson_value( allo );
+    auto mail_number_obj = mail_number_.get_rapidjson_value( allo );
+    auto email_obj       = email_.get_rapidjson_value( allo );
+    auto qq_number_obj   = qq_number_.get_rapidjson_value( allo );
+    auto location_obj    = location_.get_rapidjson_value( allo );
+    auto classes_obj     = classes_.get_rapidjson_value( allo );
+
+    v->AddMember("name",        *name_obj,        allo);
+    v->AddMember("sex",         *sex_obj,         allo);
+    v->AddMember("telephone",   *telephone_obj,   allo);
+    v->AddMember("mail_number", *mail_number_obj, allo);
+    v->AddMember("email",       *email_obj,       allo);
+    v->AddMember("qq_number",   *qq_number_obj,   allo);
+    v->AddMember("location",    *location_obj,    allo);
+    v->AddMember("classes",     *classes_obj,     allo);
+
+    delete name_obj;
+    delete sex_obj;
+    delete telephone_obj;
+    delete mail_number_obj;
+    delete email_obj;
+    delete qq_number_obj;
+    delete location_obj;
+    delete classes_obj;
 
     // return the pointer
     return v;
