@@ -19,7 +19,9 @@ using std::istream;
 using std::ostream;
 using std::vector;
 
-// units function
+// ----------------------------------------------------------------------------
+// ---[ units function ]-------------------------------------------------------
+// ----------------------------------------------------------------------------
 const char* getString(rapidjson::Value& value) {
     if(value["valid"].GetBool()) {
         return value["value"].GetString();
@@ -35,6 +37,12 @@ vector<string> getVecString(rapidjson::Value& value) {
     }
     return result;
 }
+
+// ----------------------------------------------------------------------------
+// ---[ method part ]----------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+// ---[ inital method ]--------------------------------------------------------
 
 // inital by the path of json file
 MessageBook::MessageBook(const char* path) {
@@ -61,12 +69,11 @@ MessageBook::MessageBook(const char* path) {
                   getString(it->value["mail_number"]),
                   getString(it->value["email"]),
                   getString(it->value["qq_number"]),
-                  // {});
                   getVecString(it->value["classes"]));
     }
 }
 
-// units method
+// ---[ units method ]---------------------------------------------------------
 void MessageBook::addPerson(string name, string sex, string telephone, string location, 
                             string mail_number, string email, string qq_number, 
                             Classes classes) {
