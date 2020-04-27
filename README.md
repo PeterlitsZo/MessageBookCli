@@ -23,17 +23,16 @@ Aim
 [=] pertty output for person
 [ ] parse command
 [ ] Sreach
-[ ] Sort(need I sort it...)
-[=] Change
-[=] Change person's Cls
-[=] Delete
-[ ] A lot of Waring when make
-[=] delete what you new
+[ ] Sort(need I sort it...?)
+[=] A lot of Waring when make
 [ ] change class Value's name
-[ ] delete some using in header file.
+[ ] delete some using statement in header file.
 [ ] do not make others use hash funtion of person
-[ ] use for..begin..end statement instead of for &&[key, value]
-[W] use map instead of vector
+[=] use for..begin..end statement instead of for &&[key, value]
+[W] delete what you new
+[W] Change
+[W] Change person's Cls
+[W] Delete
 -------------------------------------------------------------------------------
 [ ] -> [.] -> [=] -> [W]
 ```
@@ -41,6 +40,7 @@ Aim
 ### history
 
 ``` txt
+[W] use map instead of vector
 [W] value: valid or invalid
 [W] ID *(new: how about hash)*
 [W] write to json file
