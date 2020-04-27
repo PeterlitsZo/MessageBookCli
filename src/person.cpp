@@ -1,5 +1,7 @@
 #include "person.h"
 
+#include <bits/pthreadtypes-arch.h>
+#include <cstdarg>
 #include <ostream>
 #include <iostream>
 #include <string>
@@ -21,6 +23,31 @@ using std::string;
 using std::istream;
 using std::ostream;
 
+// ---[ units function ]-------------------------------------------------------
+
+// the name's value should not be a empty string
+bool vaild_name(string name) {return units::is_not_empty(name);}
+
+// the sex's value should be one of "M", "F" or "unknown"
+bool vaild_sex(string sex) {return (sex == "M" || sex == "F");}
+
+// the telephone's value should be a string of digits: eg: "123456789"
+bool vaild_telephone(string telephone) {return units::is_digit(telephone);}
+
+// the location's value should not be a empty string
+bool vaild_locaition(string location) {return units::is_not_empty(location);}
+
+// the mail_number should be a 6-length of a digit string: eg: "123456"
+bool vaild_mail_number(string mail_number) {
+    return units::is_digit(mail_number) && mail_number.size() == 6;
+}
+
+// the qq-number's value should be a string of digits: eg: "123456789"
+bool vaild_qq_number(string qq_number) {return units::is_digit(qq_number);}
+
+// the email should have the format like: "abc@abc.abc"
+bool vaild_email(string email) {return units::is_email(email);}
+
 // ----------------------------------------------------------------------------
 // ---[ initialy the object ]--------------------------------------------------
 // ----------------------------------------------------------------------------
@@ -30,35 +57,14 @@ void Person::init(string name, string sex, string telephone, string location,
                   string mail_number, string email, string qq_number,
                   Cls classes)
 {
-    // the name's value should not be a empty string
-    if(units::is_not_empty(name)) {
-        name_ = name;
-    }
-    // the sex's value should be one of "M", "F" or "unknown"
-    if(sex == "M" || sex == "F") {
-        sex_ = Str(sex);
-    }
-    // the telephone's value should be a string of digits: eg: "123456789"
-    if(units::is_digit(telephone)) {
-        telephone_ = Str(telephone);
-    }
-    // the location's value should not be a empty string
-    if(units::is_not_empty(location)) {
-        location_ = location;
-    }
-    // the mail_number should be a 6-length of a digit string: eg: "123456"
-    if(units::is_digit(mail_number) && mail_number.size() == 6) {
-        mail_number_ = Str(mail_number);
-    }
-    // the qq-number's value should be a string of digits: eg: "123456789"
-    if(units::is_digit(qq_number)) {
-        qq_number_ = Str(qq_number);
-    }
-    // the email should have the format like: "abc@abc.abc"
-    if(units::is_email(email)) {
-        email_ = Str(email);
-    }
-    // copy classes to classes_
+    if(vaild_name(name))               name_ = name;
+    if(vaild_sex(sex))                 sex_ = Str(sex);
+    if(vaild_telephone(telephone))     telephone_ = Str(telephone);
+    if(vaild_locaition(location))      location_ = location;
+    if(vaild_mail_number(mail_number)) mail_number_ = Str(mail_number);
+    if(vaild_qq_number(qq_number))     qq_number_ = Str(qq_number);
+    if(vaild_email(email))             email_ = Str(email);
+
     classes_ = classes;
 }
 
@@ -103,6 +109,26 @@ Person::Person(istream& in, ostream& out) {
 
 void Person::setID(string ID) {
     ID_ = ID;
+}
+
+void Person::change(string key, string value) {
+    if(key == "name")
+        name_ =        vaild_name(value) ? value: Str();
+    else if(key == "sex")
+        sex_ =         vaild_sex(value) ? value: Str();
+    else if(key == "telephone")
+        telephone_ =   vaild_telephone(value) ? value: Str();
+    else if(key == "mail_number")
+        mail_number_ = vaild_mail_number(value) ? value: Str();
+    else if(key == "email")
+        email_ =       vaild_email(value) ? value: Str();
+    else if(key == "qq_number")
+        qq_number_ =   vaild_qq_number(value) ? value: Str();
+    else if(key == "location")
+        location_ =    vaild_locaition(value) ? value: Str();
+    else if(key == "classes")
+        classes_ =     Cls(value);
+    // ELSE: raise error
 }
 
 // [WARNING]: remember to delete it! (should I?)

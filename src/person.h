@@ -31,6 +31,7 @@ public:
 
     void setID(string ID);
     std::string hash();
+    void change(std::string key, std::string value);
 
     rapidjson::Value* get_rapidjson_value(rapidjson::Document::AllocatorType& allo);
 
