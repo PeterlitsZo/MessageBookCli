@@ -17,21 +17,23 @@ Aim
 ---
 
 ``` txt
-[W] value: valid or invalid
-[W] ID *(new: how about hash)*
 [.] write README
-[=] write to json file
-[=] read from json file
-[=] value's length should bigger than 0
 [=] use map instead of vector
 [=] pertty output for person
 [ ] parse command
-[=] Classes Input
+[W] Classes Input
 [ ] Sreach
 [ ] Sort
 [ ] Change
 [ ] Delete
 [ ] A lot of Waring when make
+[ ] delete what you new
+[ ] change class Value's name
+[W] value: valid or invalid
+[W] ID *(new: how about hash)*
+[W] write to json file
+[W] read from json file
+[W] value's length should bigger than 0
 -------------------------------------------------------------------------------
 [ ] -> [.] -> [=] -> [W]
 ```
