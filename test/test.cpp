@@ -2,12 +2,15 @@
 #include <gtest/gtest_pred_impl.h>
 
 #include <vector>
+#include <iostream>
 
 #include "../src/info.h"
 #include "../src/messagebook.h"
+#include "../src/person_ptr.h"
 #include "../src/units.h"
 
 using std::vector;
+using std::cout;
 
 // ----------------------------------------------------------------------------
 // ---[ print and info ]-------------------------------------------------------
@@ -26,6 +29,10 @@ TEST(Tests, VERSION) {
     EXPECT_STREQ(info::version, "ver 0.0.1\n");
 }
 
+// ----------------------------------------------------------------------------
+// ---[ MessageBook ]----------------------------------------------------------
+// ----------------------------------------------------------------------------
+
 // TEST: Add Person
 TEST(Tests, AddPerson) {
     MessageBook mb("TEST.json");
@@ -33,6 +40,16 @@ TEST(Tests, AddPerson) {
                  "123456", "abc@abc.abc", "12345", {"men"});
     mb.addPerson("Allen", "M", "17623325764", "China",
                  "000000", "123@123.com", "123456", {"this"});
+}
+
+// TEST: Change Person
+TEST(Tests, ChangePerson) {
+    MessageBook mb("TEST.json");
+    mb.addPerson("Peter", "M", "17623321234", "China",
+                 "123456", "abc@abc.abc", "12345", {"men"});
+    cout << mb;
+    mb.get("86a111").change("name", "marry");
+    cout << mb;
 }
 
 // ----------------------------------------------------------------------------
