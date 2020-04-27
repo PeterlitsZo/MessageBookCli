@@ -23,12 +23,14 @@ Aim
 [ ] parse command
 [ ] Sreach
 [ ] Sort
-[.] Change
-[ ] Change person's Cls
+[=] Change
+[=] Change person's Cls
 [ ] Delete
 [ ] A lot of Waring when make
 [ ] delete what you new
 [ ] change class Value's name
+[ ] delete some using in header file.
+[ ] do not make others use hash funtion of person
 [W] value: valid or invalid
 [W] ID *(new: how about hash)*
 [W] write to json file

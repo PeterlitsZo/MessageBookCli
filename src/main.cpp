@@ -6,6 +6,7 @@
 #include "person.h"
 #include "messagebook.h"
 #include "units.h"
+#include "person_ptr.h"
 
 using std::cout;
 using std::cin;
@@ -16,11 +17,14 @@ cmdline::parser parse_cmdline(int argc, char **argv);
 
 // ---[ interaction mode's main loop ]-----------------------------------------
 bool main_meun(MessageBook& mb) {
+    units::Input input(cin, cout);
     int choose;
     cout << info::meun;
     cin >> choose;
 
     string name, sex, telephone, location, mail_number, email, qq_number, temp;
+    // [WRANING] this is not a good name;
+    string temp1, temp2;
     Classes classes;
     switch (choose) {
     case 1:
@@ -33,7 +37,10 @@ bool main_meun(MessageBook& mb) {
         cout << mb;
         break;
     case 4:
-        // changeInfo();
+        input("please enter info's ID") >> temp;
+        input("please enter info's key") >> temp1;
+        input("please enter info's value") >> temp2;
+        mb.get(temp).change(temp1, temp2);
         break;
     case 5:
         // DeleteInfo();
