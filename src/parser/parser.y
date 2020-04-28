@@ -27,14 +27,12 @@ extern "C" {
 }
 
 %token PER_L PER_R
-
-%token HELP LIST NEW DELETE EXIT NEWLINE UNKNOWED
-
+%token HELP LIST NEW DELETE EXIT LET NEWLINE UNKNOWED
 %token TOKEN
-
 %token <strp> STRING;
+
 %type  <pptr> PERSON;
-%type  <strp> EXPR;
+%type  <strp> EXPR_RESULT;
 
 %%
 
@@ -61,11 +59,13 @@ command
         return 0;
     }
     | DELETE PERSON NEWLINE {
-        // print_command(*$2);
+        $2->remove();
+        // [delete]: PERSON
         delete $2;
     }
-    | EXPR NEWLINE {
+    | EXPR_RESULT NEWLINE {
         print_command(*$1);
+        // [delete]: EXPR
         delete $1;
     }
     | NEWLINE {
@@ -73,10 +73,11 @@ command
     }
     ;
 
-/* need delete */
-EXPR     
+/* need delete, type: string*: mean: return output */
+EXPR_RESULT
     : PERSON {
         $$ = new std::string($1->str());
+        // [delete]: PERSON
         delete $1;
     }
     | STRING {
@@ -84,7 +85,7 @@ EXPR
     }
     ;
 
-/* need delete */
+/* need delete, type: personPtr* */
 PERSON
     : PER_L STRING PER_R {
         $$ = new PersonPtr(mb, *$2);

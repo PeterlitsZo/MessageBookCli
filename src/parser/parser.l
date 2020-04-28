@@ -57,6 +57,11 @@ extern "C" {
     return EXIT;
 }
 
+(let) {
+    ln.update(yytext);
+    return LET;
+}
+
 
     /* ---[ comments ]------------------------------------------------------- */
 (;) {
