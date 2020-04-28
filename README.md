@@ -22,7 +22,9 @@ Aim
 [.] write README
 [=] parse command
     [=] help
-    [ ] let
+        [=] help comamnd
+        [ ] help STRING command
+    [.] let
     [=] [ hash ]
     [ ] interaction mode
     [W] exit
