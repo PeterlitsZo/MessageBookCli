@@ -1,8 +1,10 @@
 Help Doc for *
 ===============================================================================
 
-Command `help`
+Basic Command
 -------------------------------------------------------------------------------
+
+### Help
 
 Want to get a usage for this programme or some command, use like this:
 
@@ -11,6 +13,20 @@ Want to get a usage for this programme or some command, use like this:
    ||| ...(this doc)
 
 If want to get usage about other command, use `help <command>`.
+
+### exit
+
+Use command `exit` to exit this programme.
+
+### delete
+
+Use command like `delete <person>`, see more to `Basic type::Person`.
+
+For example, we know that `expr` new and `[<hash-id>]` has type of person, so
+we can do with:
+
+   >>> delete new; delete the person whose hash is 'b18d80...‘.
+   >>> delete ['123456']; try to get a person and then to delete it.
 
 Basic type
 -------------------------------------------------------------------------------
@@ -40,10 +56,7 @@ like `[<hash-ID-string>]` to get it. For example:
 
 A string is include by two quotation marks, such as `"this"`, or like `'this'`
 
-Command `exit`
 -------------------------------------------------------------------------------
-
-Use command `exit` to exit this programme.
 
 
 

@@ -21,13 +21,13 @@ Aim
 ``` txt
 [.] write README
 [=] parse command
-    [.] help
-    [W] exit
-    [=] add -> new
-    [W] useful error msg
+    [=] help
     [ ] let
-    [ ] [ hash ]
+    [=] [ hash ]
     [ ] interaction mode
+    [W] exit
+    [W] useful error msg
+    [W] add -> new
 [ ] Sreach
 [ ] Sort(need I sort it...?)
 [ ] change class Value's name
