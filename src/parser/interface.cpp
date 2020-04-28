@@ -5,6 +5,7 @@
 #include <typeinfo>
 
 #include "lineno.h"
+#include "../help/help.h"
 #include "../info.h"
 #include "../messagebook.h"
 
@@ -20,7 +21,7 @@ Lineno ln(cin);
 // ---[ command ]--------------------------------------------------------------
 
 string help(MessageBook& mb) {
-    return info::help_doc;
+    return HELP::HELP;
 }
 
 string list(MessageBook& mb) {
@@ -83,7 +84,7 @@ string parse_str(string str) {
         } else {
             if (*it == edge_token) {
                 // it must be at the last one index.
-                assert(it - str.begin() == str.size() - 1);
+                // assert(it - str.begin() == str.size() - 1);
                 return ss.str();
             } else if (*it == '\\') {
                 IN_ESCAPE = true;

@@ -47,8 +47,6 @@ commands
     | commands error NEWLINE {
         yyerrok;
         print_next_arraw();
-        // reflash
-        // ln.getNextLine();
     }
     ;
 

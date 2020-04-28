@@ -455,8 +455,8 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    41,    41,    43,    47,    56,    59,    62,    65,    69,
-      73,    80,    84,    91,    94
+       0,    41,    41,    43,    47,    54,    57,    60,    63,    67,
+      71,    78,    82,    89,    92
 };
 #endif
 
@@ -1258,97 +1258,95 @@ yyreduce:
     {
         yyerrok;
         print_next_arraw();
-        // reflash
-        // ln.getNextLine();
     }
-#line 1265 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1263 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 5:
-#line 56 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 54 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         print_command(help(mb));
     }
-#line 1273 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1271 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 6:
-#line 59 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 57 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         print_command(list(mb));
     }
-#line 1281 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1279 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 7:
-#line 62 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 60 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         return 0;
     }
-#line 1289 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1287 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 8:
-#line 65 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 63 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         // print_command(*$2);
         delete (yyvsp[-1].pptr);
     }
-#line 1298 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1296 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 9:
-#line 69 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 67 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         print_command(*(yyvsp[-1].strp));
         delete (yyvsp[-1].strp);
     }
-#line 1307 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1305 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 10:
-#line 73 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 71 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         // nothing input
     }
-#line 1315 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1313 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 11:
-#line 80 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 78 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         (yyval.strp) = new std::string((yyvsp[0].pptr)->str());
         delete (yyvsp[0].pptr);
     }
-#line 1324 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1322 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 12:
-#line 84 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 82 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         (yyval.strp) = (yyvsp[0].strp);
     }
-#line 1332 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1330 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 13:
-#line 91 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 89 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         (yyval.pptr) = new PersonPtr(mb, *(yyvsp[-1].strp));
     }
-#line 1340 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1338 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 14:
-#line 94 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 92 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         (yyval.pptr) = mb.addPerson();
     }
-#line 1348 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1346 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
 
-#line 1352 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1350 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1579,5 +1577,5 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 99 "./src/parser/parser.y" /* yacc.c:1918  */
+#line 97 "./src/parser/parser.y" /* yacc.c:1918  */
 
