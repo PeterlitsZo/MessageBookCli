@@ -57,8 +57,9 @@ extern int yydebug;
     DELETE = 263,
     EXIT = 264,
     NEWLINE = 265,
-    TOKEN = 266,
-    HEX_ID = 267
+    UNKNOWED = 266,
+    TOKEN = 267,
+    HEX_ID = 268
   };
 #endif
 
@@ -67,12 +68,12 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 20 "./src/parser/parser.y" /* yacc.c:1921  */
+#line 24 "./src/parser/parser.y" /* yacc.c:1921  */
 
     std::string* strp;
     PersonPtr*   pptr;
 
-#line 76 "/home/peter/proj/MessageBookCli/src/parser/parser.h" /* yacc.c:1921  */
+#line 77 "/home/peter/proj/MessageBookCli/src/parser/parser.h" /* yacc.c:1921  */
 };
 
 typedef union YYSTYPE YYSTYPE;

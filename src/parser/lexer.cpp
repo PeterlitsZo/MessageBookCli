@@ -352,8 +352,8 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 15
-#define YY_END_OF_BUFFER 16
+#define YY_NUM_RULES 16
+#define YY_END_OF_BUFFER 17
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -363,7 +363,7 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[52] =
     {   0,
-        0,    0,    0,    0,   16,   15,   14,   11,   15,   15,
+        0,    0,    0,    0,   17,   15,   14,   11,   15,   15,
         6,   10,   12,   13,   10,   10,   10,   10,   10,    8,
         7,   14,    0,    0,   10,   10,   10,   10,   10,   10,
         0,    0,    3,   10,   10,   10,   10,    0,    0,   10,
@@ -479,6 +479,7 @@ char *yytext;
 #include "../messagebook.h"
 #include "../person_ptr.h"
 
+#include "interface.h"
 #include "parser.h"
 
 extern "C" {
@@ -486,9 +487,19 @@ extern "C" {
     int yylex(void);
 }
 
-#line 490 "/home/peter/proj/MessageBookCli/src/parser/lexer.cpp"
+// ---[ defines ]--------------------------------------------------------------
 
-#line 492 "/home/peter/proj/MessageBookCli/src/parser/lexer.cpp"
+// better YY_INPUT
+#define YY_INPUT(buf, result, max_size) {      \
+    result = ln.getNextChar(buf, max_size);    \
+    /* means failed, false: */                 \
+    if (result == 0 )                          \
+        result = YY_NULL;                      \
+}
+
+#line 501 "/home/peter/proj/MessageBookCli/src/parser/lexer.cpp"
+
+#line 503 "/home/peter/proj/MessageBookCli/src/parser/lexer.cpp"
 
 #define INITIAL 0
 #define COMMENT 1
@@ -706,13 +717,13 @@ YY_DECL
 		}
 
 	{
-#line 18 "./src/parser/parser.l"
+#line 29 "./src/parser/parser.l"
 
 
-#line 21 "./src/parser/parser.l"
+#line 32 "./src/parser/parser.l"
     /* ---[ key words ]------------------------------------------------------ */
 
-#line 716 "/home/peter/proj/MessageBookCli/src/parser/lexer.cpp"
+#line 727 "/home/peter/proj/MessageBookCli/src/parser/lexer.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -771,68 +782,78 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 23 "./src/parser/parser.l"
+#line 34 "./src/parser/parser.l"
 {
+    ln.update(yytext);
     return HELP;
 }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 27 "./src/parser/parser.l"
+#line 39 "./src/parser/parser.l"
 {
+    ln.update(yytext);
     return LIST;
 }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 31 "./src/parser/parser.l"
+#line 44 "./src/parser/parser.l"
 {
+    ln.update(yytext);
     return ADD;
 }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 35 "./src/parser/parser.l"
+#line 49 "./src/parser/parser.l"
 {
+    ln.update(yytext);
     return DELETE;
 }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 39 "./src/parser/parser.l"
+#line 54 "./src/parser/parser.l"
 {
+    ln.update(yytext);
     return EXIT;
 }
 	YY_BREAK
 /* ---[ comments ]------------------------------------------------------- */
 case 6:
 YY_RULE_SETUP
-#line 45 "./src/parser/parser.l"
+#line 61 "./src/parser/parser.l"
 {
+    ln.update(yytext);
     BEGIN COMMENT;
 }
 	YY_BREAK
 case 7:
 /* rule 7 can match eol */
 YY_RULE_SETUP
-#line 49 "./src/parser/parser.l"
+#line 66 "./src/parser/parser.l"
 {
+    ln.update(yytext);
     BEGIN INITIAL;
     return NEWLINE;
 }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 54 "./src/parser/parser.l"
+#line 72 "./src/parser/parser.l"
 {
+    ln.update(yytext);
     // ignore all character but newline
 }
 	YY_BREAK
 /* ---[ others ]--------------------------------------------------------- */
 case 9:
 YY_RULE_SETUP
-#line 60 "./src/parser/parser.l"
+#line 79 "./src/parser/parser.l"
 {
+    ln.update(yytext);
+
     std::string temp_string(yytext);
     yylval.strp = new std::string(
         temp_string.substr(1, temp_string.size() - 2)
@@ -842,46 +863,59 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 68 "./src/parser/parser.l"
+#line 89 "./src/parser/parser.l"
 {
+    ln.update(yytext);
     return TOKEN;
 }
 	YY_BREAK
 case 11:
 /* rule 11 can match eol */
 YY_RULE_SETUP
-#line 72 "./src/parser/parser.l"
+#line 94 "./src/parser/parser.l"
 {
+    ln.update(yytext);
     return NEWLINE;
 }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 76 "./src/parser/parser.l"
+#line 99 "./src/parser/parser.l"
 {
+    ln.update(yytext);
     return PER_L;
 }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 80 "./src/parser/parser.l"
+#line 104 "./src/parser/parser.l"
 {
+    ln.update(yytext);
     return PER_R;
 }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 84 "./src/parser/parser.l"
+#line 109 "./src/parser/parser.l"
 {
+    ln.update(yytext);
     // skip when meet white space (but not newline)
 }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 89 "./src/parser/parser.l"
+#line 114 "./src/parser/parser.l"
+{
+    // error
+    return UNKNOWED;
+}
+	YY_BREAK
+case 16:
+YY_RULE_SETUP
+#line 120 "./src/parser/parser.l"
 ECHO;
 	YY_BREAK
-#line 885 "/home/peter/proj/MessageBookCli/src/parser/lexer.cpp"
+#line 919 "/home/peter/proj/MessageBookCli/src/parser/lexer.cpp"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(COMMENT):
 	yyterminate();
@@ -1887,7 +1921,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 89 "./src/parser/parser.l"
+#line 120 "./src/parser/parser.l"
 
 
 int yywrap(void) {

@@ -9,11 +9,15 @@
 
 MessageBook mb("MessageBook.json");
 
+#define YYERROR_VERBOSE
+
 extern void yyerror(const char *s);
 
 extern "C" {
     extern int yylex(void);
 }
+
+// ---[ better error msg ]-----------------------------------------------------
 
 %}
 
@@ -24,7 +28,7 @@ extern "C" {
 
 %token PER_L PER_R
 
-%token HELP LIST ADD DELETE EXIT NEWLINE
+%token HELP LIST ADD DELETE EXIT NEWLINE UNKNOWED
 
 %token TOKEN
 
@@ -36,40 +40,41 @@ extern "C" {
 %%
 
 commands
-    : // empty
-    | commands command NEWLINE {
+    : // *empty*
+    | commands command {
         print_next_arraw();
     }
-    | commands NEWLINE {
-        // nothing input
-        print_next_arraw();
-    }
-    | error NEWLINE {
+    | commands error NEWLINE {
         yyerrok;
         print_next_arraw();
+        // reflash
+        // ln.getNextLine();
     }
     ;
 
 command
-    : HELP {
+    : HELP NEWLINE {
         print_command(help(mb));
     }
-    | LIST {
+    | LIST NEWLINE {
         print_command(list(mb));
     }
-    | ADD {
+    | ADD NEWLINE {
         print_command(add(mb));
     }
-    | EXIT {
+    | EXIT NEWLINE {
         return 0;
     }
-    | DELETE HEX_ID {
+    | DELETE HEX_ID NEWLINE {
         print_command(*$2);
         delete $2;
     }
-    | EXPR {
+    | EXPR NEWLINE {
         print_command(*$1);
         delete $1;
+    }
+    | NEWLINE {
+        // nothing input
     }
     ;
 

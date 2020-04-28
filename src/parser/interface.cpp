@@ -1,8 +1,10 @@
 #include "interface.h"
 
+#include <sstream>
 #include <string>
 #include <typeinfo>
 
+#include "lineno.h"
 #include "../info.h"
 #include "../messagebook.h"
 
@@ -10,6 +12,9 @@ using std::string;
 using std::cin;
 using std::cout;
 using std::cerr;
+using std::endl;
+
+Lineno ln(cin);
 
 // ---[ command ]--------------------------------------------------------------
 
@@ -52,6 +57,24 @@ void print_next_arraw() {
 }
 
 // ---[ print error ]----------------------------------------------------------
-void yyerror(const char* s) {
-    cerr << "^^^ [syntzx error]: " << s << std::endl;
+static string errormsg(string s) {
+    // cout << ln.start() << " " << ln.next() << '\n';
+    string temp;
+    std::stringstream ss(temp);
+    ss << "  | ";
+    for (int i = 0; i < ln.start() - 1 ; i++ ) {
+        ss << ' ';
+    }
+    for (int i = ln.start(); i < ln.next(); i++ ) {
+        ss << '^';
+    }
+    ss << "\n" << "  | " << "line " << ln.lineno() << "," 
+       << ln.start() << ": " << s;
+    return ss.str();
 }
+
+void yyerror(const char* s) {
+    cerr << errormsg(s) << endl;
+}
+
+

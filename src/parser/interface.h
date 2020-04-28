@@ -3,8 +3,11 @@
 
 #include <string>
 
+#include "lineno.h"
 #include "../messagebook.h"
 #include "../info.h"
+
+extern Lineno ln;
 
 std::string help(MessageBook& mb);
 std::string add (MessageBook& mb);
