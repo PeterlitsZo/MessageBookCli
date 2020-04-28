@@ -3,11 +3,13 @@
 #include <string>
 
 #include "interface.h"
+#include "idmap.h"
 #include "../messagebook.h"
 #include "../person_ptr.h"
 #include "../units.h"
 
-MessageBook mb("MessageBook.json");
+Idmap       im;                       // use to hold all variable
+MessageBook mb("MessageBook.json");   // use to handle date
 
 #define YYERROR_VERBOSE
 
@@ -28,7 +30,8 @@ extern "C" {
 
 %token PER_L PER_R
 %token HELP LIST NEW DELETE EXIT LET NEWLINE UNKNOWED
-%token TOKEN
+
+%token <strp> TOKEN
 %token <strp> STRING;
 
 %type  <pptr> PERSON;
@@ -68,6 +71,24 @@ command
         // [delete]: EXPR
         delete $1;
     }
+    | LET TOKEN STRING NEWLINE {
+        IdmapValue temp;
+        temp.type    = IdmapValue::TYPE::STRING;
+        temp.value.s = $3;
+        im[*($2)] = temp;
+        // [delete]: TOKEN
+        delete $2;
+        // [do not delete]: STRING, because im handle it
+    }
+    | LET TOKEN PERSON NEWLINE {
+        IdmapValue temp;
+        temp.type    = IdmapValue::TYPE::PERSON;
+        temp.value.p = $3;
+        im[*($2)] = temp;
+        // [delete]: TOKEN
+        delete $2;
+        // [do not delete]: PERSON, because im handle it
+    }
     | NEWLINE {
         // nothing input
     }
@@ -82,6 +103,11 @@ EXPR_RESULT
     }
     | STRING {
         $$ = $1;
+    }
+    | TOKEN {
+        $$ = new std::string(im[*($1)].str());
+        // [delete]: TOKEN
+        delete $1;
     }
     ;
 

@@ -95,6 +95,7 @@ extern "C" {
 
 ([a-zA-Z_][a-zA-Z0-9_]*) {
     ln.update(yytext);
+    yylval.strp = new std::string(yytext);
     return TOKEN;
 }
 

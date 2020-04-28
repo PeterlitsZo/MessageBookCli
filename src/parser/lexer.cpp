@@ -875,13 +875,14 @@ YY_RULE_SETUP
 #line 97 "./src/parser/parser.l"
 {
     ln.update(yytext);
+    yylval.strp = new std::string(yytext);
     return TOKEN;
 }
 	YY_BREAK
 case 12:
 /* rule 12 can match eol */
 YY_RULE_SETUP
-#line 102 "./src/parser/parser.l"
+#line 103 "./src/parser/parser.l"
 {
     ln.update(yytext);
     return NEWLINE;
@@ -889,7 +890,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 107 "./src/parser/parser.l"
+#line 108 "./src/parser/parser.l"
 {
     ln.update(yytext);
     return PER_L;
@@ -897,7 +898,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 112 "./src/parser/parser.l"
+#line 113 "./src/parser/parser.l"
 {
     ln.update(yytext);
     return PER_R;
@@ -905,7 +906,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 117 "./src/parser/parser.l"
+#line 118 "./src/parser/parser.l"
 {
     ln.update(yytext);
     // skip when meet white space (but not newline)
@@ -913,7 +914,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 122 "./src/parser/parser.l"
+#line 123 "./src/parser/parser.l"
 {
     // error
     return UNKNOWED;
@@ -921,10 +922,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 128 "./src/parser/parser.l"
+#line 129 "./src/parser/parser.l"
 ECHO;
 	YY_BREAK
-#line 928 "/home/peter/proj/MessageBookCli/src/parser/lexer.cpp"
+#line 929 "/home/peter/proj/MessageBookCli/src/parser/lexer.cpp"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(COMMENT):
 	yyterminate();
@@ -1893,7 +1894,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 128 "./src/parser/parser.l"
+#line 129 "./src/parser/parser.l"
 
 
 int yywrap(void) {

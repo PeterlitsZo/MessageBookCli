@@ -69,7 +69,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 24 "./src/parser/parser.y" /* yacc.c:1921  */
+#line 26 "./src/parser/parser.y" /* yacc.c:1921  */
 
     std::string* strp;
     PersonPtr*   pptr;
