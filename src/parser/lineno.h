@@ -18,11 +18,11 @@ public:
 
 private:
     // ---[ data ]-------------------------------------------------------------
-    int           lineno_;       // the index of line;
-    int           start_;        // this word's start index
-    int           next_;         // the next word's start index
+    size_t        lineno_;       // the index of line;
+    size_t        start_;        // this word's start index
+    size_t        next_;         // the next word's start index
 
-    int           pos_;          // the postion of scanner (in line)
+    size_t        pos_;          // the postion of scanner (in line)
     std::string   line_;         // the line string
     std::istream& file_;         // the file object
 };
