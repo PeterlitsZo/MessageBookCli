@@ -84,24 +84,24 @@ void MessageBook::addPerson(string name, string sex, string telephone, string lo
                             string mail_number, string email, string qq_number, 
                             vector<string> classes) {
     Person person(name, sex, telephone, location, mail_number, email, qq_number, classes);
-    person.setID(person.hash());
-    persons[person.hash()] = person;
+    // person.setID(person.hash());
+    persons_[person.hash()] = person;
 }
 
 void MessageBook::addPerson(istream& in, ostream& out) {
     Person person(in, out);
-    person.setID(person.hash());
-    persons[person.hash()] = person;
+    // person.setID(person.hash());
+    persons_[person.hash()] = person;
 }
 
 void MessageBook::addPerson(Person p) {
-    persons[p.ID()] = p;
+    persons_[p.ID()] = p;
 }
 
 string MessageBook::addPerson(void) {
     Person person;
-    persons[person.hash()] = person;
-    return person.hash();
+    persons_[person.hash()] = person;
+    return person.str();
 }
 
 void MessageBook::save() {
@@ -114,7 +114,7 @@ void MessageBook::save() {
     rapidjson::Document::AllocatorType& allocator = d.GetAllocator();
     d.SetObject();
 
-    for (auto it = persons.begin(); it != persons.end(); ++it) {
+    for (auto it = persons_.begin(); it != persons_.end(); ++it) {
         rapidjson::Value* value = it->second.get_rapidjson_value(allocator);
         d.AddMember(Value(it->first.c_str(), allocator).Move(), *value, allocator);
         delete value;
@@ -129,11 +129,11 @@ void MessageBook::save() {
 }
 
 void MessageBook::remove(string ID) {
-    persons.erase(ID);
+    persons_.erase(ID);
 }
 
 Person& MessageBook::get_raw(string ID) {
-    return persons[ID];
+    return persons_[ID];
 }
 
 PersonPtr MessageBook::get(std::string ID) {
@@ -142,7 +142,7 @@ PersonPtr MessageBook::get(std::string ID) {
 
 string MessageBook::str() const {
     string result;
-    for (auto it = persons.begin(); it != persons.end(); ++it) {
+    for (auto it = persons_.begin(); it != persons_.end(); ++it) {
         result += it->second.str();
         result += '\n';
     }
@@ -155,7 +155,7 @@ std::ostream& operator<<(std::ostream& out, const MessageBook& mb) {
 }
 
 string MessageBook::getfullID(string ID) {
-    for(auto it = persons.begin(); it != persons.end(); ++it) {
+    for(auto it = persons_.begin(); it != persons_.end(); ++it) {
         if( units::start_with(it->first, ID) ) {
             return it->first;
         }

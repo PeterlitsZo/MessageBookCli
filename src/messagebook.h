@@ -6,6 +6,7 @@
 #include <vector>
 #include <iostream>
 #include <map>
+#include <list>
 
 #include "person.h"
 
@@ -35,8 +36,10 @@ public:
 
 private:
     std::string getfullID(std::string ID);
+
     std::string path_;
-    std::map<std::string, Person> persons;
+    std::map<std::string, Person> persons_;
+    std::list<std::string> order_;
 };
 
 std::ostream& operator<<(std::ostream& out, const MessageBook& mb);
