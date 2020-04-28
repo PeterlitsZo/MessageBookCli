@@ -20,21 +20,21 @@ Aim
 
 ``` txt
 [.] write README
-[=] pertty output for person
-[.] parse command
+[=] parse command
     [.] help
-    [=] exit
-    [=] add
+    [W] exit
+    [=] add -> new
     [W] useful error msg
     [ ] let
     [ ] [ hash ]
 [ ] Sreach
 [ ] Sort(need I sort it...?)
-[=] A lot of Waring when make
 [ ] change class Value's name
-[ ] delete some using statement in header file.
+[=] delete some using statement in header file.
 [ ] do not make others use hash funtion of person
-[=] use for..begin..end statement instead of for &&[key, value]
+[W] A lot of Waring when make
+[W] use for..begin..end statement instead of for &&[key, value]
+[W] pertty output for person
 -------------------------------------------------------------------------------
 [ ] -> [.] -> [=] -> [W]
 ```
@@ -43,10 +43,6 @@ Aim
 
 ``` txt
 [W] delete what you new
-[W] delete what you new
-[W] Change
-[W] Change person's Cls
-[W] Delete
 [W] Change
 [W] Change person's Cls
 [W] Delete
