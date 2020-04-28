@@ -53,13 +53,13 @@ extern int yydebug;
     PER_R = 259,
     HELP = 260,
     LIST = 261,
-    ADD = 262,
+    NEW = 262,
     DELETE = 263,
     EXIT = 264,
     NEWLINE = 265,
     UNKNOWED = 266,
     TOKEN = 267,
-    HEX_ID = 268
+    STRING = 268
   };
 #endif
 

@@ -28,12 +28,11 @@ extern "C" {
 
 %token PER_L PER_R
 
-%token HELP LIST ADD DELETE EXIT NEWLINE UNKNOWED
+%token HELP LIST NEW DELETE EXIT NEWLINE UNKNOWED
 
 %token TOKEN
 
-%token <strp> HEX_ID;
-%type  <strp> STRING;
+%token <strp> STRING;
 %type  <pptr> PERSON;
 %type  <strp> EXPR;
 
@@ -43,6 +42,7 @@ commands
     : // *empty*
     | commands command {
         print_next_arraw();
+        save(mb);
     }
     | commands error NEWLINE {
         yyerrok;
@@ -59,14 +59,14 @@ command
     | LIST NEWLINE {
         print_command(list(mb));
     }
-    | ADD NEWLINE {
+    | NEW NEWLINE {
         print_command(add(mb));
     }
     | EXIT NEWLINE {
         return 0;
     }
-    | DELETE HEX_ID NEWLINE {
-        print_command(*$2);
+    | DELETE PERSON NEWLINE {
+        // print_command(*$2);
         delete $2;
     }
     | EXPR NEWLINE {
@@ -78,6 +78,7 @@ command
     }
     ;
 
+/* need delete */
 EXPR     
     : PERSON {
         $$ = new std::string($1->str());
@@ -88,14 +89,9 @@ EXPR
     }
     ;
 
-STRING
-    : HEX_ID {
-        $$ = $1;
-    }
-    ;
-
+/* need delete */
 PERSON
-    : PER_L HEX_ID PER_R {
+    : PER_L STRING PER_R {
         $$ = new PersonPtr(mb, *$2);
     }
     ;

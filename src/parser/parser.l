@@ -26,6 +26,8 @@ extern "C" {
 
 %x COMMENT
 
+%option nounput
+
 %%
 
     /* ---[ key words ]------------------------------------------------------ */
@@ -40,9 +42,9 @@ extern "C" {
     return LIST;
 }
 
-(add) {
+(new) {
     ln.update(yytext);
-    return ADD;
+    return NEW;
 }
 
 (delete) {
@@ -75,14 +77,15 @@ extern "C" {
 
 
     /* ---[ others ]--------------------------------------------------------- */
-(\"[0-9a-fA-F]{4,}\"|\'[0-9a-fA-F]{4,}\') {
+(\"([^\"]*(\\\")*)*\"|\'([^\']*(\\\')*)*\') {
+    // means: string
     ln.update(yytext);
 
     std::string temp_string(yytext);
     yylval.strp = new std::string(
         temp_string.substr(1, temp_string.size() - 2)
     );
-    return HEX_ID;
+    return STRING;
 }
 
 ([a-zA-Z_][a-zA-Z0-9_]*) {

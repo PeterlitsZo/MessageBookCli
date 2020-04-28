@@ -9,6 +9,7 @@
 #include "../messagebook.h"
 
 using std::string;
+using std::stringstream;
 using std::cin;
 using std::cout;
 using std::cerr;
@@ -54,6 +55,48 @@ void print_command(string str) {
 
 void print_next_arraw() {
     cout << ">>> ";
+}
+
+// ---[ parse ]----------------------------------------------------------------
+
+string parse_str(string str) {
+    assert(str.size() >= 2);
+    stringstream ss;
+
+    char edge_token = str[0];
+    bool IN_ESCAPE  = false;
+    for(auto it = str.begin(); it != str.end(); ++it) {
+        if (IN_ESCAPE) {
+            switch(*it) {
+            case '\\': /* fail down */
+            case '\"': /* fail down */
+            case '\'': /* fail down */
+            case '?':  ss << *it; break;
+
+            case 't':  ss << '\t'; break;
+            case 'n':  ss << '\n'; break;
+            case 'r':  ss << '\r'; break;
+            case 'a':  ss << '\a'; break;
+            case 'b':  ss << '\b'; break;
+            case 'f':  ss << '\f'; break;
+            case 'v':  ss << '\v'; break;
+
+            default:   ss << "\\" << *it;
+            }
+            IN_ESCAPE = false;
+        } else {
+            if (*it == edge_token) {
+                // it must be at the last one index.
+                assert(it - str.begin() == str.size() - 1);
+                return ss.str();
+            } else if (*it == '\\') {
+                IN_ESCAPE = true;
+            } else {
+                ss << *it;
+            }
+        }
+    }
+    return ss.str();
 }
 
 // ---[ print error ]----------------------------------------------------------
