@@ -25,7 +25,7 @@ Aim
     [.] help
     [=] exit
     [=] add
-    [ ] useful error msg
+    [W] useful error msg
     [ ] let
     [ ] [ hash ]
 [ ] Sreach
