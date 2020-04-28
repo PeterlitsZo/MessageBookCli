@@ -52,6 +52,7 @@ endif ()
 set (PARSER_FILES ${CMAKE_SOURCE_DIR}/src/parser/lexer.cpp
                   ${CMAKE_SOURCE_DIR}/src/parser/parser.cpp
                   ${CMAKE_SOURCE_DIR}/src/parser/interface.cpp
+                  ${CMAKE_SOURCE_DIR}/src/parser/idmap.cpp
                   ${CMAKE_SOURCE_DIR}/src/parser/lineno.cpp)
 
 ADD_FLEX_BISON_DEPENDENCY (MessageBookCli_lexer MessageBookCli_parser)
