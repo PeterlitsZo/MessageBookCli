@@ -23,10 +23,6 @@ string help(MessageBook& mb) {
     return info::help_doc;
 }
 
-string add (MessageBook& mb) {
-    return "New empty person object's hash: " + mb.addPerson();
-}
-
 string list(MessageBook& mb) {
     return mb.str();
 }

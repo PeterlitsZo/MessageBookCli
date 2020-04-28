@@ -59,9 +59,6 @@ command
     | LIST NEWLINE {
         print_command(list(mb));
     }
-    | NEW NEWLINE {
-        print_command(add(mb));
-    }
     | EXIT NEWLINE {
         return 0;
     }
@@ -93,6 +90,9 @@ EXPR
 PERSON
     : PER_L STRING PER_R {
         $$ = new PersonPtr(mb, *$2);
+    }
+    | NEW {
+        $$ = mb.addPerson();
     }
     ;
 

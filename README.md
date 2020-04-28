@@ -27,14 +27,12 @@ Aim
     [W] useful error msg
     [ ] let
     [ ] [ hash ]
+    [ ] interaction mode
 [ ] Sreach
 [ ] Sort(need I sort it...?)
 [ ] change class Value's name
-[=] delete some using statement in header file.
-[ ] do not make others use hash funtion of person
-[W] A lot of Waring when make
-[W] use for..begin..end statement instead of for &&[key, value]
-[W] pertty output for person
+[W] delete some using statement in header file.
+[ ] do not make others use hash funtion of person -> should i?
 -------------------------------------------------------------------------------
 [ ] -> [.] -> [=] -> [W]
 ```
@@ -42,6 +40,9 @@ Aim
 ### history
 
 ``` txt
+[W] A lot of Waring when make
+[W] use for..begin..end statement instead of for &&[key, value]
+[W] pertty output for person
 [W] delete what you new
 [W] Change
 [W] Change person's Cls

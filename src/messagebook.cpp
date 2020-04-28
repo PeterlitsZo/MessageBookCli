@@ -98,10 +98,10 @@ void MessageBook::addPerson(Person p) {
     persons_[p.ID()] = p;
 }
 
-string MessageBook::addPerson(void) {
+PersonPtr* MessageBook::addPerson(void) {
     Person person;
     persons_[person.hash()] = person;
-    return person.str();
+    return new PersonPtr(*this, person.hash());
 }
 
 void MessageBook::save() {

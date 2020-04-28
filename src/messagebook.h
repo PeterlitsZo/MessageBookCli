@@ -22,7 +22,7 @@ public:
                    std::vector<std::string> classes);
     void addPerson(std::istream& in, std::ostream& out);
     void addPerson(Person p);
-    std::string addPerson(void);
+    PersonPtr* addPerson(void);
 
     void remove(std::string ID);
 
