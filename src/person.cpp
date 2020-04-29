@@ -142,6 +142,25 @@ void Person::change(string key, string value) {
     // ELSE: raise error
 }
 
+string Person::attr(string a) const {
+    if(a == "name")
+        return  name_.get();
+    else if(a == "sex")
+       return  sex_.get();
+    else if(a == "telephone")
+       return  telephone_.get();
+    else if(a =="mail_number")
+       return  mail_number_.get();
+    else if(a == "email")
+       return  email_.get();
+    else if(a == "qq_number")
+       return  qq_number_.get();
+    else if(a == "location")
+       return  location_.get();
+    else
+        return "";
+}
+
 // [WARNING]: remember to delete it! (should I?)
 rapidjson::Value* Person::get_rapidjson_value(rapidjson::Document::AllocatorType& allo) {
     // initial as a Null Object
@@ -190,9 +209,6 @@ string Person::hash() {
 
     StringBuffer buffer;
     Writer<StringBuffer> writer(buffer);
-    // auto value = get_rapidjson_value(doc.GetAllocator());
-    // value->Accept(writer);
-    // delete value;
     get_rapidjson_value(doc.GetAllocator())->Accept(writer);
 
     return md5().absorb(buffer.GetString()).hexdigest();

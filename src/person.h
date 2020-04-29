@@ -25,6 +25,7 @@ public:
     void setID(std::string ID);
     std::string ID();
     std::string hash();
+    std::string attr(std::string at) const;
     void change(std::string key, std::string value);
 
     rapidjson::Value* get_rapidjson_value(rapidjson::Document::AllocatorType& allo);
