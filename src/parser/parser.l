@@ -66,7 +66,14 @@ extern "C" {
     ln.update(yytext);
     return INIT;
 }
-
+(sort) {
+    ln.update(yytext);
+    return SORT;
+}
+(sreach) {
+    ln.update(yytext);
+    return SREACH;
+}
 
     /* ---[ comments ]------------------------------------------------------- */
 (;) {
@@ -87,7 +94,7 @@ extern "C" {
 
 
     /* ---[ others ]--------------------------------------------------------- */
-(\"([^\"]*(\\\")*)*\"|\'([^\']*(\\\')*)*\') {
+(\"([^\"\n]*(\\\")*)*\"|\'([^\'\n]*(\\\')*)*\') {
     // means: string
     ln.update(yytext);
 
@@ -107,6 +114,11 @@ extern "C" {
 (\n) {
     ln.update(yytext);
     return NEWLINE;
+}
+
+(\.) {
+    ln.update(yytext);
+    return DOT;
 }
 
 ("[") {

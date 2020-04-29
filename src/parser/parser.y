@@ -29,7 +29,7 @@ extern "C" {
 }
 
 %token PER_L PER_R
-%token HELP LIST NEW DELETE EXIT LET NEWLINE INIT UNKNOWED
+%token HELP LIST NEW DELETE EXIT LET NEWLINE INIT UNKNOWED SORT DOT SREACH
 
 %token <strp> TOKEN
 %token <strp> STRING;
@@ -61,6 +61,9 @@ command
     | EXIT NEWLINE {
         return 0;
     }
+    | SORT STRING NEWLINE {
+        mb.sort(*$2);
+    }
     | DELETE PERSON NEWLINE {
         if ($2) {
             if (not $2->remove()) {
@@ -75,7 +78,7 @@ command
     | INIT PERSON NEWLINE {
         if ($2) {
             if (not $2->init()) {
-                yyerror("runtime error: try to delete a [NULL person] person");
+                yyerror("runtime error: try to init a [NULL person] person");
             }
         } else {
             yyerror("runtime error: try to delete a nil");
@@ -97,6 +100,12 @@ command
         // [delete]: TOKEN
         delete $2;
         // [do not delete]: PERSON, because im handle it, im will delete it auto
+    }
+    | LET PERSON DOT TOKEN STRING NEWLINE {
+        $2 -> change(*$4, *$5);
+    }
+    | SREACH TOKEN STRING NEWLINE {
+        print_command(mb.sreach(*$2, *$3));
     }
     | NEWLINE {
         // nothing input
