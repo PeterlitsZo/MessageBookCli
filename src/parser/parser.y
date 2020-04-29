@@ -29,7 +29,7 @@ extern "C" {
 }
 
 %token PER_L PER_R
-%token HELP LIST NEW DELETE EXIT LET NEWLINE UNKNOWED
+%token HELP LIST NEW DELETE EXIT LET NEWLINE INIT UNKNOWED
 
 %token <strp> TOKEN
 %token <strp> STRING;
@@ -71,6 +71,15 @@ command
         }
         // [delete]: PERSON
         delete $2;
+    }
+    | INIT PERSON NEWLINE {
+        if ($2) {
+            if (not $2->init()) {
+                yyerror("runtime error: try to delete a [NULL person] person");
+            }
+        } else {
+            yyerror("runtime error: try to delete a nil");
+        }
     }
     | EXPR_RESULT NEWLINE {
         print_command(*$1);

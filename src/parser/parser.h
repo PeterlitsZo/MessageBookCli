@@ -58,9 +58,10 @@ extern int yydebug;
     EXIT = 264,
     LET = 265,
     NEWLINE = 266,
-    UNKNOWED = 267,
-    TOKEN = 268,
-    STRING = 269
+    INIT = 267,
+    UNKNOWED = 268,
+    TOKEN = 269,
+    STRING = 270
   };
 #endif
 
@@ -74,7 +75,7 @@ union YYSTYPE
     std::string* strp;
     PersonPtr*   pptr;
 
-#line 78 "/home/peter/proj/MessageBookCli/src/parser/parser.h" /* yacc.c:1921  */
+#line 79 "/home/peter/proj/MessageBookCli/src/parser/parser.h" /* yacc.c:1921  */
 };
 
 typedef union YYSTYPE YYSTYPE;
