@@ -1898,6 +1898,7 @@ void yyfree (void * ptr )
 
 
 int yywrap(void) {
+    // means: only one file
     return 1;
 }
 

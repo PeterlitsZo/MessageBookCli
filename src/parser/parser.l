@@ -128,6 +128,7 @@ extern "C" {
 %%
 
 int yywrap(void) {
+    // means: only one file
     return 1;
 }
 

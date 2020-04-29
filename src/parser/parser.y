@@ -62,7 +62,13 @@ command
         return 0;
     }
     | DELETE PERSON NEWLINE {
-        $2->remove();
+        if ($2) {
+            if (not $2->remove()) {
+                yyerror("runtime error: try to delete a [NULL person] person");
+            }
+        } else {
+            yyerror("runtime error: try to delete a nil");
+        }
         // [delete]: PERSON
         delete $2;
     }
@@ -72,22 +78,16 @@ command
         delete $1;
     }
     | LET TOKEN STRING NEWLINE {
-        IdmapValue temp;
-        temp.type    = IdmapValue::TYPE::STRING;
-        temp.value.s = $3;
-        im[*($2)] = temp;
+        im.update(*($2), new Val($3));
         // [delete]: TOKEN
         delete $2;
-        // [do not delete]: STRING, because im handle it
+        // [do not delete]: STRING, because im handle it, im will delete auto
     }
     | LET TOKEN PERSON NEWLINE {
-        IdmapValue temp;
-        temp.type    = IdmapValue::TYPE::PERSON;
-        temp.value.p = $3;
-        im[*($2)] = temp;
+        im.update(*($2), new Val($3));
         // [delete]: TOKEN
         delete $2;
-        // [do not delete]: PERSON, because im handle it
+        // [do not delete]: PERSON, because im handle it, im will delete it auto
     }
     | NEWLINE {
         // nothing input
@@ -105,7 +105,7 @@ EXPR_RESULT
         $$ = $1;
     }
     | TOKEN {
-        $$ = new std::string(im[*($1)].str());
+        $$ = new std::string(im.get(*($1))->str());
         // [delete]: TOKEN
         delete $1;
     }
@@ -114,10 +114,13 @@ EXPR_RESULT
 /* need delete, type: personPtr* */
 PERSON
     : PER_L STRING PER_R {
-        $$ = new PersonPtr(mb, *$2);
+        $$ = new PersonPtr(mb.get(*$2));
     }
     | NEW {
         $$ = mb.addPerson();
+    }
+    | TOKEN {
+        $$ = im.get(*($1))->getPersonPtr();
     }
     ;
 
