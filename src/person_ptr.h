@@ -10,7 +10,7 @@ public:
     PersonPtr(MessageBook& mb, std::string str);
 
     void change(std::string key, std::string value);
-    void remove();
+    bool remove();
 
     std::string str();
 
