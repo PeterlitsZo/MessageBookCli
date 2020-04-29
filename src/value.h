@@ -32,6 +32,12 @@ public:
     Value(string value): is_valid_(true), value_(value){};
     Value(): is_valid_(false), value_(""){};
     void operator=(string value) {value_ = value; is_valid_ = true;}
+    string get() const {
+        if(is_valid_)
+            return value_;
+        else
+            return "[ in vaild ]";
+    }
 
     rapidjson::Value* get_rapidjson_value(rapidjson::Document::AllocatorType& allo) {
         rapidjson::Value* v = new rapidjson::Value();
