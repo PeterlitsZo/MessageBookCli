@@ -155,6 +155,9 @@ PersonPtr MessageBook::get(std::string ID) {
 // str
 
 string MessageBook::str() const {
+    if (persons_.size() == 0 ) {
+        return "[ empty list ]";
+    }
     string result;
     for (auto it = persons_.begin(); it != persons_.end(); ++it) {
         result += it->second.str();
