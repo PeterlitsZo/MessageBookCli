@@ -7,6 +7,8 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <algorithm>
+#include <utility>
 
 // for read and write json file
 #include "../include/rapidjson/writer.h"
@@ -22,6 +24,7 @@ using std::string;
 using std::istream;
 using std::ostream;
 using std::vector;
+using std::list;
 
 using rapidjson::Document;
 
@@ -89,21 +92,25 @@ void MessageBook::addPerson(string name, string sex, string telephone, string lo
     Person person(name, sex, telephone, location, mail_number, email, qq_number, classes);
     // person.setID(person.hash());
     persons_[person.hash()] = person;
+    order_.push_back(person.ID());
 }
 
 void MessageBook::addPerson(istream& in, ostream& out) {
     Person person(in, out);
     // person.setID(person.hash());
     persons_[person.hash()] = person;
+    order_.push_back(person.ID());
 }
 
 void MessageBook::addPerson(Person p) {
     persons_[p.ID()] = p;
+    order_.push_back(p.ID());
 }
 
 PersonPtr* MessageBook::addPerson(void) {
     Person person;
     persons_[person.hash()] = person;
+    order_.push_back(person.ID());
     return new PersonPtr(*this, person.hash());
 }
 
@@ -137,6 +144,19 @@ void MessageBook::save() {
 
 void MessageBook::remove(string ID) {
     persons_.erase(ID);
+    auto ID_iter = std::find(order_.begin(), order_.end(), ID);
+    order_.erase(ID_iter);
+}
+
+// sreach
+
+string MessageBook::sreach(string at, string thing) {
+    auto it = std::find_if(persons_.begin(), persons_.end(),
+        [&](const std::pair<string, Person>& pair) {
+            // return true;
+            return pair.second.attr(at) == thing;
+        });
+    return it->second.str();
 }
 
 // get_raw
@@ -159,8 +179,8 @@ string MessageBook::str() const {
         return "[ empty list ]";
     }
     string result;
-    for (auto it = persons_.begin(); it != persons_.end(); ++it) {
-        result += it->second.str();
+    for (auto it = order_.begin(); it != order_.end(); ++it) {
+        result += persons_.find(*it)->second.str();
         result += '\n';
     }
     return result;
@@ -182,5 +202,13 @@ string MessageBook::getfullID(string ID) {
         }
     }
     return "";
+}
+
+// sort
+
+void MessageBook::sort(string at) {
+    order_.sort([&](const string& a, const string& b) {
+        return get_raw(a).attr(at) < get_raw(b).attr(at);
+    });
 }
 

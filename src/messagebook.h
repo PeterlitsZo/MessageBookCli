@@ -25,6 +25,8 @@ public:
     PersonPtr* addPerson(void);
 
     void remove(std::string ID);
+    void sort(std::string attr);
+    std::string sreach(std::string token, std::string thing);
 
     void save();
     Person& get_raw(std::string ID);
