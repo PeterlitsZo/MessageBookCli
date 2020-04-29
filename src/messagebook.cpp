@@ -80,6 +80,9 @@ MessageBook::MessageBook(const char* path) {
 }
 
 // ---[ units method ]---------------------------------------------------------
+
+// addPerson
+
 void MessageBook::addPerson(string name, string sex, string telephone, string location, 
                             string mail_number, string email, string qq_number, 
                             vector<string> classes) {
@@ -103,6 +106,8 @@ PersonPtr* MessageBook::addPerson(void) {
     persons_[person.hash()] = person;
     return new PersonPtr(*this, person.hash());
 }
+
+// save
 
 void MessageBook::save() {
     using rapidjson::StringBuffer;
@@ -128,17 +133,26 @@ void MessageBook::save() {
     out << buffer.GetString();
 }
 
+// remove
+
 void MessageBook::remove(string ID) {
     persons_.erase(ID);
 }
+
+// get_raw
 
 Person& MessageBook::get_raw(string ID) {
     return persons_[ID];
 }
 
+// get
+
 PersonPtr MessageBook::get(std::string ID) {
+    // what will happen if cannot find anything? -> a ID = "" personptr!
     return PersonPtr(*this, getfullID(ID));
 }
+
+// str
 
 string MessageBook::str() const {
     string result;
@@ -149,10 +163,14 @@ string MessageBook::str() const {
     return result;
 }
 
+// operator<<
+
 std::ostream& operator<<(std::ostream& out, const MessageBook& mb) {
     out << mb.str();
     return out;
 }
+
+// getfullID
 
 string MessageBook::getfullID(string ID) {
     for(auto it = persons_.begin(); it != persons_.end(); ++it) {
