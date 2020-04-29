@@ -3,6 +3,7 @@
 #include <string>
 
 #include "messagebook.h"
+#include "person.h"
 
 using std::string;
 
@@ -23,6 +24,19 @@ bool PersonPtr::remove() {
     if (ID_ != "") {
         mb_.remove(ID_);
         ID_ = "";
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool PersonPtr::init() {
+    if (ID_ != "") {
+        auto person = mb_.get_raw(ID_);
+        person = Person(std::cin, std::cout);
+        mb_.remove(ID_);
+        mb_.addPerson(person);
+        ID_ = person.ID();
         return true;
     } else {
         return false;

@@ -11,6 +11,7 @@ public:
 
     void change(std::string key, std::string value);
     bool remove();
+    bool init();
 
     std::string str();
 
