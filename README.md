@@ -24,18 +24,21 @@ Aim
     [=] help
         [=] help comamnd
         [ ] help STRING command
-    [.] let
-    [=] [ hash ] -> some thing will have error
-    [=] interaction mode
-    [ ] attr
+    [=] attr
+    [W] let
+    [W] [ hash ] -> some thing will have error
+    [W] interaction mode
     [W] exit
     [W] useful error msg
     [W] add -> new
-[ ] Sreach
-[ ] Sort(need I sort it...?)
-[ ] change class Value's name
+[=] Sreach
+[=] Sort(need I sort it...?)
+[.] change class Value's name
+[ ] use raise..catch statement
+[.] do not make others use hash funtion of person -> should i?
+    PersonPtr need -> ID
+[ ] rename PersonPtr -> Person::Handle
 [W] delete some using statement in header file.
-[ ] do not make others use hash funtion of person -> should i?
 -------------------------------------------------------------------------------
 [ ] -> [.] -> [=] -> [W]
 ```
