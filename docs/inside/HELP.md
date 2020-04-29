@@ -56,6 +56,13 @@ like `[<hash-ID-string>]` to get it. For example:
 
 A string is include by two quotation marks, such as `"this"`, or like `'this'`
 
+### `Nil`
+
+When use a new variable, its value is always be a `nil`, like this:
+
+   >>> a_new_varilable
+     | nil
+
 -------------------------------------------------------------------------------
 
 

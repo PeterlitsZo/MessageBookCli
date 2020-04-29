@@ -26,7 +26,7 @@ Aim
         [ ] help STRING command
     [.] let
     [=] [ hash ] -> some thing will have error
-    [ ] interaction mode
+    [=] interaction mode
     [ ] attr
     [W] exit
     [W] useful error msg
