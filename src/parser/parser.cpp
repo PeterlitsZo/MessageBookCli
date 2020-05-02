@@ -70,28 +70,47 @@
 
 
 #include <string>
+#include <memory>
 
 #include "interface.h"
 #include "idmap.h"
-#include "../messagebook.h"
-#include "../person_ptr.h"
 #include "../units.h"
 
-Idmap       im;                       // use to hold all variable
-MessageBook mb("MessageBook.json");   // use to handle date
+#include "../val.h"
 
 #define YYERROR_VERBOSE
 
 extern void yyerror(const char *s);
 
+using std::make_shared;
+using std::shared_ptr;
+using std::dynamic_pointer_cast;
+
+using mbc::Val::Type;
+using mbc::Val::ValBase;
+using mbc::Val::Str;
+using mbc::Val::PersonHandle;
+using mbc::Val::MessageBook;
+
+// using units::mbc_exce;
+
+// shared_ptr<ValBase> book = 
+//     make_shared<mbc::Val::MessageBook>(std::string("MessageBook.json"));
+
+mbc::Val::MessageBook book("MessageBook.json");
+Idmap im;
+
 extern "C" {
     extern int yylex(void);
 }
 
+// ---[ type ]-----------------------------------------------------------------
+#define YYSTYPE std::shared_ptr<mbc::Val::ValBase>
+
 // ---[ better error msg ]-----------------------------------------------------
 
 
-#line 95 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:337  */
+#line 114 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:337  */
 # ifndef YY_NULLPTR
 #  if defined __cplusplus
 #   if 201103L <= __cplusplus
@@ -129,39 +148,29 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    PER_L = 258,
-    PER_R = 259,
-    HELP = 260,
-    LIST = 261,
-    NEW = 262,
-    DELETE = 263,
-    EXIT = 264,
-    LET = 265,
-    NEWLINE = 266,
-    INIT = 267,
-    UNKNOWED = 268,
-    SORT = 269,
-    DOT = 270,
-    SREACH = 271,
-    TOKEN = 272,
-    STRING = 273
+    HELP = 258,
+    LIST = 259,
+    NEW = 260,
+    DELETE = 261,
+    EXIT = 262,
+    LET = 263,
+    INIT = 264,
+    SORT = 265,
+    SREACH = 266,
+    LEFT_TRI_BRA = 267,
+    RIGHT_TRI_BRA = 268,
+    DOT = 269,
+    NEWLINE = 270,
+    UNKNOWED = 271,
+    STRING = 272,
+    VECSTR = 273,
+    TOKEN = 274
   };
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-
-union YYSTYPE
-{
-#line 26 "./src/parser/parser.y" /* yacc.c:352  */
-
-    std::string* strp;
-    PersonPtr*   pptr;
-
-#line 162 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:352  */
-};
-
-typedef union YYSTYPE YYSTYPE;
+typedef int YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
@@ -406,19 +415,19 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  2
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   50
+#define YYLAST   39
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  19
+#define YYNTOKENS  20
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  5
+#define YYNNTS  4
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  22
+#define YYNRULES  16
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  47
+#define YYNSTATES  30
 
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   273
+#define YYMAXUTOK   274
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
    as returned by yylex, with out-of-bounds checking.  */
@@ -456,16 +465,15 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
-      15,    16,    17,    18
+      15,    16,    17,    18,    19
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    42,    42,    44,    48,    55,    58,    61,    64,    67,
-      78,    87,    92,    98,   104,   107,   110,   117,   122,   125,
-     134,   137,   140
+       0,    58,    58,    60,    63,    70,    72,    75,    79,    82,
+      89,    95,    98,   101,   111,   114,   117
 };
 #endif
 
@@ -474,10 +482,10 @@ static const yytype_uint8 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "PER_L", "PER_R", "HELP", "LIST", "NEW",
-  "DELETE", "EXIT", "LET", "NEWLINE", "INIT", "UNKNOWED", "SORT", "DOT",
-  "SREACH", "TOKEN", "STRING", "$accept", "commands", "command",
-  "EXPR_RESULT", "PERSON", YY_NULLPTR
+  "$end", "error", "$undefined", "HELP", "LIST", "NEW", "DELETE", "EXIT",
+  "LET", "INIT", "SORT", "SREACH", "LEFT_TRI_BRA", "RIGHT_TRI_BRA", "DOT",
+  "NEWLINE", "UNKNOWED", "STRING", "VECSTR", "TOKEN", "$accept",
+  "commands", "command", "expr", YY_NULLPTR
 };
 #endif
 
@@ -487,14 +495,14 @@ static const char *const yytname[] =
 static const yytype_uint16 yytoknum[] =
 {
        0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
-     265,   266,   267,   268,   269,   270,   271,   272,   273
+     265,   266,   267,   268,   269,   270,   271,   272,   273,   274
 };
 # endif
 
-#define YYPACT_NINF -16
+#define YYPACT_NINF -14
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-16)))
+  (!!((Yystate) == (-14)))
 
 #define YYTABLE_NINF -1
 
@@ -505,11 +513,9 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-     -16,     6,   -16,   -10,   -15,    -6,    -3,   -16,    23,    -1,
-      24,   -16,    23,    10,    12,   -16,   -16,   -16,    21,   -16,
-     -16,    29,   -16,   -16,   -16,    26,   -16,    18,    19,    27,
-      28,    25,   -16,   -16,   -16,    31,    33,    30,   -16,   -16,
-      34,   -16,   -16,    32,   -16,    35,   -16
+     -14,     0,   -14,   -13,    -9,   -14,   -14,    -4,    17,    20,
+     -14,   -14,   -14,   -14,   -14,    -2,   -14,   -14,   -14,    20,
+       2,    10,   -14,    -1,     7,   -14,   -14,    20,    12,   -14
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -517,23 +523,21 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       2,     0,     1,     0,     0,     0,     0,    21,     0,     0,
-       0,    16,     0,     0,     0,    19,    18,     3,     0,    17,
-       4,     0,     5,     6,    22,     0,     7,    22,     0,     0,
-       0,     0,    11,    20,     9,     0,     0,     0,    10,     8,
-       0,    12,    13,     0,    15,     0,    14
+       2,     0,     1,     0,     0,    14,    15,     0,     0,     0,
+      10,    11,    12,    16,     3,     0,     4,     5,     6,    16,
+       0,     0,     7,     0,     0,    13,     8,     0,     0,     9
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -16,   -16,   -16,   -16,    -8
+     -14,   -14,   -14,     1
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     1,    17,    18,    19
+      -1,     1,    14,    15
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -541,49 +545,41 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-      25,    20,    28,    21,    29,    22,     2,     3,    23,     4,
-      26,     5,     6,     7,     8,     9,    10,    11,    12,    36,
-      13,     4,    14,    15,    16,     7,     4,     4,    30,    31,
-       7,     7,    32,    33,    37,    24,    35,    34,    38,    39,
-      24,    27,    41,    40,    42,    44,    46,    43,     0,     0,
-      45
+       2,     3,    16,     4,     5,     6,    17,     7,     8,    20,
+      21,    18,     9,    22,    26,    10,    24,    11,    12,    13,
+      23,     5,     6,    25,     5,     6,    27,    29,    28,     9,
+       0,     0,     9,     0,    11,    12,    19,    11,    12,    13
 };
 
 static const yytype_int8 yycheck[] =
 {
-       8,    11,    10,    18,    12,    11,     0,     1,    11,     3,
-      11,     5,     6,     7,     8,     9,    10,    11,    12,    27,
-      14,     3,    16,    17,    18,     7,     3,     3,    18,    17,
-       7,     7,    11,     4,    15,    17,    18,    11,    11,    11,
-      17,    17,    11,    18,    11,    11,    11,    17,    -1,    -1,
-      18
+       0,     1,    15,     3,     4,     5,    15,     7,     8,     8,
+       9,    15,    12,    15,    15,    15,    14,    17,    18,    19,
+      19,     4,     5,    13,     4,     5,    19,    15,    27,    12,
+      -1,    -1,    12,    -1,    17,    18,    19,    17,    18,    19
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,    20,     0,     1,     3,     5,     6,     7,     8,     9,
-      10,    11,    12,    14,    16,    17,    18,    21,    22,    23,
-      11,    18,    11,    11,    17,    23,    11,    17,    23,    23,
-      18,    17,    11,     4,    11,    18,    23,    15,    11,    11,
-      18,    11,    11,    17,    11,    18,    11
+       0,    21,     0,     1,     3,     4,     5,     7,     8,    12,
+      15,    17,    18,    19,    22,    23,    15,    15,    15,    19,
+      23,    23,    15,    23,    14,    13,    15,    19,    23,    15
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    19,    20,    20,    20,    21,    21,    21,    21,    21,
-      21,    21,    21,    21,    21,    21,    21,    22,    22,    22,
-      23,    23,    23
+       0,    20,    21,    21,    21,    22,    22,    22,    22,    22,
+      22,    23,    23,    23,    23,    23,    23
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     0,     2,     3,     2,     2,     2,     3,     3,
-       3,     2,     4,     4,     6,     4,     1,     1,     1,     1,
-       3,     1,     1
+       0,     2,     0,     2,     3,     2,     2,     2,     4,     6,
+       1,     1,     1,     3,     1,     1,     1
 };
 
 
@@ -1269,195 +1265,133 @@ yyreduce:
   switch (yyn)
     {
         case 3:
-#line 44 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 60 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         print_next_arraw();
-        save(mb);
     }
-#line 1278 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1273 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 4:
-#line 48 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 63 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         yyerrok;
         print_next_arraw();
     }
-#line 1287 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1282 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 5:
-#line 55 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 70 "./src/parser/parser.y" /* yacc.c:1652  */
     {
-        print_command(help(mb));
     }
-#line 1295 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1289 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 6:
-#line 58 "./src/parser/parser.y" /* yacc.c:1652  */
-    {
-        print_command(list(mb));
-    }
-#line 1303 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
-    break;
-
-  case 7:
-#line 61 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 72 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         return 0;
     }
-#line 1311 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1297 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+    break;
+
+  case 7:
+#line 75 "./src/parser/parser.y" /* yacc.c:1652  */
+    {
+        print_command(yyvsp[-1] -> str());
+    }
+#line 1305 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 8:
-#line 64 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 79 "./src/parser/parser.y" /* yacc.c:1652  */
     {
-        mb.sort(*(yyvsp[-1].strp));
+        im.update(dynamic_pointer_cast<Str>(yyvsp[-2]) -> raw(), yyvsp[-1]);
     }
-#line 1319 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1313 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 9:
-#line 67 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 82 "./src/parser/parser.y" /* yacc.c:1652  */
     {
-        if ((yyvsp[-1].pptr)) {
-            if (not (yyvsp[-1].pptr)->remove()) {
-                yyerror("runtime error: try to delete a [NULL person] person");
-            }
-        } else {
-            yyerror("runtime error: try to delete a nil");
-        }
-        // [delete]: PERSON
-        delete (yyvsp[-1].pptr);
+        std::cout << "the expr is " << dynamic_pointer_cast<Str>(yyvsp[-1]) -> str() << ".";
+        dynamic_pointer_cast<PersonHandle>(yyvsp[-4])
+            -> changeAttr(dynamic_pointer_cast<Str>(yyvsp[-2]) -> raw(),
+                          dynamic_pointer_cast<Str>(yyvsp[-1]) -> raw());
     }
-#line 1335 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1324 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 10:
-#line 78 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 89 "./src/parser/parser.y" /* yacc.c:1652  */
     {
-        if ((yyvsp[-1].pptr)) {
-            if (not (yyvsp[-1].pptr)->init()) {
-                yyerror("runtime error: try to init a [NULL person] person");
-            }
-        } else {
-            yyerror("runtime error: try to delete a nil");
-        }
+        // do nothing
     }
-#line 1349 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1332 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 11:
-#line 87 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 95 "./src/parser/parser.y" /* yacc.c:1652  */
     {
-        print_command(*(yyvsp[-1].strp));
-        // [delete]: EXPR
-        delete (yyvsp[-1].strp);
+        yyval = yyvsp[0];
     }
-#line 1359 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1340 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 12:
-#line 92 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 98 "./src/parser/parser.y" /* yacc.c:1652  */
     {
-        im.update(*((yyvsp[-2].strp)), new Val((yyvsp[-1].strp)));
-        // [delete]: TOKEN
-        delete (yyvsp[-2].strp);
-        // [do not delete]: STRING, because im handle it, im will delete auto
+        yyval = yyvsp[0];
     }
-#line 1370 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1348 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 13:
-#line 98 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 101 "./src/parser/parser.y" /* yacc.c:1652  */
     {
-        im.update(*((yyvsp[-2].strp)), new Val((yyvsp[-1].pptr)));
-        // [delete]: TOKEN
-        delete (yyvsp[-2].strp);
-        // [do not delete]: PERSON, because im handle it, im will delete it auto
+        if (yyvsp[-1] -> type() != Type::STR) {
+            // throw mbc_exce("wanna a str type object");
+            throw "wanna a str type object";
+        }
+
+        auto handle = book.getPerson(dynamic_pointer_cast<Str>(yyvsp[-1]) -> raw());
+        shared_ptr<ValBase> ptr(new PersonHandle(handle));
+        yyval = ptr;
     }
-#line 1381 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1363 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 14:
-#line 104 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 111 "./src/parser/parser.y" /* yacc.c:1652  */
     {
-        (yyvsp[-4].pptr) -> change(*(yyvsp[-2].strp), *(yyvsp[-1].strp));
+        yyval = make_shared<MessageBook>(book);
     }
-#line 1389 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1371 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 15:
-#line 107 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 114 "./src/parser/parser.y" /* yacc.c:1652  */
     {
-        print_command(mb.sreach(*(yyvsp[-2].strp), *(yyvsp[-1].strp)));
+        yyval = make_shared<PersonHandle>(book.newPerson());
     }
-#line 1397 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1379 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 16:
-#line 110 "./src/parser/parser.y" /* yacc.c:1652  */
-    {
-        // nothing input
-    }
-#line 1405 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
-    break;
-
-  case 17:
 #line 117 "./src/parser/parser.y" /* yacc.c:1652  */
     {
-        (yyval.strp) = new std::string((yyvsp[0].pptr)->str());
-        // [delete]: PERSON
-        delete (yyvsp[0].pptr);
+        try {
+            yyval = im.get(dynamic_pointer_cast<Str>(yyvsp[0]) -> raw());
+        } catch (const char* msg) {
+            yyerror(msg);
+        }
     }
-#line 1415 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
-    break;
-
-  case 18:
-#line 122 "./src/parser/parser.y" /* yacc.c:1652  */
-    {
-        (yyval.strp) = (yyvsp[0].strp);
-    }
-#line 1423 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
-    break;
-
-  case 19:
-#line 125 "./src/parser/parser.y" /* yacc.c:1652  */
-    {
-        (yyval.strp) = new std::string(im.get(*((yyvsp[0].strp)))->str());
-        // [delete]: TOKEN
-        delete (yyvsp[0].strp);
-    }
-#line 1433 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
-    break;
-
-  case 20:
-#line 134 "./src/parser/parser.y" /* yacc.c:1652  */
-    {
-        (yyval.pptr) = new PersonPtr(mb.get(*(yyvsp[-1].strp)));
-    }
-#line 1441 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
-    break;
-
-  case 21:
-#line 137 "./src/parser/parser.y" /* yacc.c:1652  */
-    {
-        (yyval.pptr) = mb.addPerson();
-    }
-#line 1449 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
-    break;
-
-  case 22:
-#line 140 "./src/parser/parser.y" /* yacc.c:1652  */
-    {
-        (yyval.pptr) = im.get(*((yyvsp[0].strp)))->getPersonPtr();
-    }
-#line 1457 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1391 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
 
-#line 1461 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1395 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1688,5 +1622,5 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 145 "./src/parser/parser.y" /* yacc.c:1918  */
+#line 126 "./src/parser/parser.y" /* yacc.c:1918  */
 
