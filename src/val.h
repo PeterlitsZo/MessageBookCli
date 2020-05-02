@@ -197,6 +197,7 @@ private:
 class MessageBook: public ValBase {
 public:
     MessageBook(const std::string& path);
+    MessageBook(const MessageBook& other);
     ~MessageBook();
 
     void save();
@@ -209,12 +210,12 @@ public:
     friend class PersonHandle;
 
 private:
-    std::string fullID(std::string ID);
+    Str fullID(Str ID);
     const std::string str_() const;
 
-    std::shared_ptr<Str> path_;
-    std::shared_ptr<std::map<Str, Person>> persons_;
-    std::shared_ptr<std::list<Str>> order_;
+    Str*                   path_;
+    std::map<Str, Person>* persons_;
+    std::list<Str>*        order_;
 
 };
 

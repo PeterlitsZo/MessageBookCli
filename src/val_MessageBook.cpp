@@ -26,6 +26,8 @@ using std::ifstream;
 using std::ofstream;
 using std::stringstream;
 using std::vector;
+using std::list;
+using std::map;
 
 using rapidjson::Value;
 using rapidjson::Document;
@@ -40,15 +42,24 @@ struct bad_ID : public std::exception {
     }
 };
 
-MessageBook::MessageBook(const string& path) {
+
+MessageBook::MessageBook(const MessageBook& other) : ValBase(other) {
+    path_ = other.path_;
+    persons_ = other.persons_;
+    order_ = other.order_;
+}
+
+MessageBook::MessageBook(const string& path) : ValBase() {
     using units::repr;
 
-    path_ = make_shared<std::string>(path);
-    invaild_waring_ = make_shared<string>("[ invaild message book ]");
-    is_vaild_ = true;
+    path_ = new Str();
+    path_ -> set(path);
 
-    order_ = make_shared<std::list<string>>();
-    persons_ = make_shared<std::map<string, Person>>();
+    order_ = new list<Str>();
+    persons_ = new map<Str, Person>();
+
+    *invaild_waring_ = "[ invaild message book ]";
+    *is_vaild_ = true;
 
     ifstream in(path);
     if(!in) {
@@ -62,31 +73,31 @@ MessageBook::MessageBook(const string& path) {
     doc_.Parse(content.c_str());
 
     for(auto it = doc_.Begin(); it != doc_.End(); ++it) {
-        auto classes_vecstr = [&]() {
-            // function to return it["classes"]'s string value
-            vector<string> result;
-            auto value = (*it)["classes"]["value"].GetArray();
-            for(auto itor = value.Begin(); itor != value.End(); ++itor) {
-                result.push_back(itor -> GetString());
-            }
-            return result;
-        } ();
+        vector<string> result;
+        auto value = (*it)["classes"]["value"].GetArray();
+        for(auto itor = value.Begin(); itor != value.End(); ++itor) {
+            result.push_back(itor -> GetString());
+        }
 
         newPerson()
-            .changeAttr("name", repr((*it)["name"]["value"].GetString()))
-            .changeAttr("sex", repr((*it)["sex"]["value"].GetString()))
-            .changeAttr("telephone", repr((*it)["telephone"]["value"].GetString()))
-            .changeAttr("location", repr((*it)["location"]["value"].GetString()))
-            .changeAttr("mail_number", repr((*it)["mail_number"]["value"].GetString()))
-            .changeAttr("email", repr((*it)["email"]["value"].GetString()))
-            .changeAttr("qq_number", repr((*it)["qq_number"]["value"].GetString()))
-            .changeAttr("classes", repr(classes_vecstr.begin(), classes_vecstr.end()))
+            .changeAttr("name", (*it)["name"]["value"].GetString())
+            .changeAttr("sex", (*it)["sex"]["value"].GetString())
+            .changeAttr("telephone", (*it)["telephone"]["value"].GetString())
+            .changeAttr("location", (*it)["location"]["value"].GetString())
+            .changeAttr("mail_number", (*it)["mail_number"]["value"].GetString())
+            .changeAttr("email", (*it)["email"]["value"].GetString())
+            .changeAttr("qq_number", (*it)["qq_number"]["value"].GetString())
+            .changeAttr("classes", repr(result.begin(), result.end()))
         ;
     }
 }
 
 MessageBook::~MessageBook() {
-    ; // do nothing;
+    if(*count_ == 1) {
+        delete path_;
+        delete persons_;
+        delete order_;
+    }
 }
 
 const string MessageBook::str_() const {
@@ -98,9 +109,9 @@ const string MessageBook::str_() const {
     return result;
 }
 
-string MessageBook::fullID(string ID) {
+Str MessageBook::fullID(Str ID) {
     for(auto it = order_ -> begin(); it != order_ -> end(); ++it) {
-        if (units::start_with(*it, ID)) {
+        if (units::start_with(it->raw(), ID.raw())) {
             return *it;
         }
     }
