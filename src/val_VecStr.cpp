@@ -20,27 +20,40 @@ namespace mbc { namespace Val { // begin for namespace mbc::Val
 // ---[ init and folding method ]----------------------------------------------
 // ----------------------------------------------------------------------------
 
-VecStr::VecStr() {
-    vaild_checker_  = [](const string& str){return true;};
-    invaild_waring_ = std::make_shared<string>("[invaild vecstr]");
-    value_          = std::make_shared<vecstr_Type>();
-    type_           = Type::VECSTR;
+VecStr::VecStr() : _ValAtom() {
+    value_          = new vector<string>();
+
+    *vaild_checker_  = [](const string& str){return true;};
+    *invaild_waring_ = "[invaild vecstr]";
+    *type_           = Type(VECSTR);
     
     set("[]");
 }
 
-VecStr::VecStr(std::function<bool(const std::string&)> vaild_checker) {
-    vaild_checker_  = vaild_checker;
-    invaild_waring_ = std::make_shared<string>("[invaild vecstr]");
-    value_          = std::make_shared<vecstr_Type>();
-    type_           = Type::VECSTR;
+
+VecStr::VecStr(std::function<bool(const std::string&)> vaild_checker) : _ValAtom() {
+    value_          = new vector<string>();
+
+    *vaild_checker_  = vaild_checker;
+    *invaild_waring_ = "[invaild vecstr]";
+    *type_           = Type(VECSTR);
 
     set("[]");
 }
 
 
+VecStr::VecStr(const VecStr& other) : _ValAtom(other) {
+    value_ = other.value_;
+    vaild_checker_ = other.vaild_checker_;
+    invaild_waring_ = other.invaild_waring_;
+    type_ = other.type_;
+}
+
+
 VecStr::~VecStr() {
-    ; // do nothing
+    if (*count_ == 1) {
+        delete value_;
+    }
 }
 
 // ----------------------------------------------------------------------------
@@ -58,7 +71,7 @@ const string VecStr::str_() const {
 
 // init self as deafult (called by function set)
 void VecStr::init_() {
-    *value_ = vecstr_Type();
+    *value_ = vector<string>();
 }
 
 // init self by string
@@ -76,7 +89,7 @@ shared_ptr<Value> VecStr::json_value() {
     auto& allo = doc_.GetAllocator();
 
     v -> SetObject();
-    v -> AddMember("valid", is_vaild_, allo);
+    v -> AddMember("valid", *is_vaild_, allo);
 
     auto vv = new Value();
     vv -> SetArray();

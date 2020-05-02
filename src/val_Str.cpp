@@ -25,10 +25,8 @@ namespace mbc { namespace Val { // begin for namespace mbc::Val
 Str::Str() {
     value_           = new string();
 
-    *vaild_checker_  = function<bool(const string& str)>(
-                            [](const string& str){return true;}
-                       );
-    *invaild_waring_ = string("[invaild str]");
+    *vaild_checker_  = [](const string& str){return true;};
+    *invaild_waring_ = "[invaild str]";
     *type_           = Type(STR);
 
     set("");
@@ -38,15 +36,20 @@ Str::Str() {
 Str::Str(std::function<bool(const string&)> vaild_checker) : _ValAtom(){
     value_           = new string();
 
-    *vaild_checker_  = function<bool(const string& str)>(
-                            vaild_checker
-                       );
-    *invaild_waring_ = string("[invaild str]");
+    *vaild_checker_  = vaild_checker;
+    *invaild_waring_ = "[invaild str]";
     *type_           = Type(STR);
 
     set("");
 }
 
+
+Str::Str(const Str& other) : _ValAtom(other) {
+    value_ = other.value_;
+    vaild_checker_ = other.vaild_checker_;
+    invaild_waring_ = other.invaild_waring_;
+    type_ = other.type_;
+}
 
 Str::~Str() {
     if(*count_ == 1) {

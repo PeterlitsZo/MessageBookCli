@@ -38,14 +38,14 @@ public:
     ValBase();
     ValBase(const ValBase& other);
 
-    const std::string& str() const;
+    const std::string str() const;
     bool vaild() const;
     const Type& type() const;
 
     virtual std::shared_ptr<rapidjson::Value> json_value() = 0;
 
 protected:
-    virtual const std::string& str_() const = 0;
+    virtual const std::string str_() const = 0;
 
     int*                         count_;
     std::string*                 invaild_waring_;
@@ -84,6 +84,7 @@ protected:
 class Str: public _ValAtom {
 public:
     Str();
+    Str(const Str& other);
     Str(std::function<bool(const std::string& str)> vaild_checker);
     ~Str();
 
@@ -110,6 +111,7 @@ private:
 class VecStr: public _ValAtom {
 public:
     VecStr();
+    VecStr(const VecStr& other);
     VecStr(std::function<bool(const std::string& str)> vaild_checker);
     ~VecStr();
 
@@ -121,8 +123,7 @@ private:
     void init_(const std::string& str);
     void init_();
 
-    typedef std::vector<std::string> vecstr_Type;
-    std::shared_ptr<vecstr_Type> value_;
+    std::vector<std::string>* value_;
 };
 
 
