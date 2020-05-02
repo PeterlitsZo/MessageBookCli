@@ -18,16 +18,22 @@ Document ValBase::doc_;
 
 // clear self
 ValBase::~ValBase() {
-    if(count_ == 0) {
+    if(*count_ == 1) {
         delete count_;
         delete invaild_waring_;
         delete is_vaild_;
         delete type_;
-    } else {
-        -- *count_;
     }
+    -- *count_;
 }
 
+
+ValBase::ValBase() {
+    count_          = new int(1);
+    invaild_waring_ = new string("[invaild val-base]");
+    is_vaild_       = new bool(false);
+    type_           = new Type(BASE);
+}
 
 ValBase::ValBase(const ValBase& other) {
     count_          = other.count_;

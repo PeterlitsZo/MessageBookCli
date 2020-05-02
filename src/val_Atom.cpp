@@ -1,5 +1,6 @@
 #include "val.h"
 
+#include <functional>
 #include <string>
 #include <iostream>
 #include "units.h"
@@ -15,15 +16,24 @@ namespace Val {
 
 // clear self
 _ValAtom::~_ValAtom() {
-    if (count_ == 0) {
+    if (*count_ == 1) {
         delete vaild_checker_;
     }
+}
+
+
+_ValAtom::_ValAtom() : ValBase() {
+    vaild_checker_ = new std::function<bool(const string& str)>(
+                            [](const string& str){return true;}
+                     );
+    *type_ = Type(ATOM);
 }
 
 
 _ValAtom::_ValAtom(const _ValAtom& other) : ValBase(other) {
     vaild_checker_ = other.vaild_checker_;
 }
+
 
 // Atom can set self by string (wow, it can deal with string)
 _ValAtom& _ValAtom::set(const string& str) {

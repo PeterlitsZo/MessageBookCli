@@ -19,6 +19,8 @@ namespace Val {
 // ----------------------------------------------------------------------------
 
 enum Type {
+    BASE,
+    ATOM,
     STR,
     VECSTR,
     PERSON,
@@ -33,6 +35,7 @@ enum Type {
 class ValBase {
 public:
     virtual ~ValBase();
+    ValBase();
     ValBase(const ValBase& other);
 
     const std::string& str() const;
@@ -60,6 +63,7 @@ protected:
 class _ValAtom : public ValBase {
 public:
     virtual ~_ValAtom();
+    _ValAtom();
     _ValAtom(const _ValAtom& other);
 
     _ValAtom& set(const std::string& str);
@@ -83,6 +87,8 @@ public:
     Str(std::function<bool(const std::string& str)> vaild_checker);
     ~Str();
 
+    _ValAtom& reprset(const std::string& str);
+
     const std::string& raw() const;
 
     std::shared_ptr<rapidjson::Value> json_value();
@@ -93,7 +99,7 @@ private:
     void init_(const std::string& str);
     void init_();
 
-    std::shared_ptr<std::string> value_;
+    std::string* value_;
 };
 
 

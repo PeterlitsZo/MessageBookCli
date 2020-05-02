@@ -23,27 +23,35 @@ namespace mbc { namespace Val { // begin for namespace mbc::Val
 // : init and folding
 
 Str::Str() {
-    vaild_checker_  = [](const string& str){return true;};
-    invaild_waring_ = std::make_shared<string>("[invaild str]");
-    value_          = std::make_shared<string>();
-    type_           = Type::STR;
+    value_           = new string();
 
-    set("\'\'");
+    *vaild_checker_  = function<bool(const string& str)>(
+                            [](const string& str){return true;}
+                       );
+    *invaild_waring_ = string("[invaild str]");
+    *type_           = Type(STR);
+
+    set("");
 }
 
 
-Str::Str(std::function<bool(const string&)> vaild_checker) {
-    vaild_checker_  = vaild_checker;
-    invaild_waring_ = std::make_shared<string>("[invaild str]");
-    value_          = std::make_shared<string>();
-    type_           = Type::STR;
+Str::Str(std::function<bool(const string&)> vaild_checker) : _ValAtom(){
+    value_           = new string();
 
-    set("\'\'");
+    *vaild_checker_  = function<bool(const string& str)>(
+                            vaild_checker
+                       );
+    *invaild_waring_ = string("[invaild str]");
+    *type_           = Type(STR);
+
+    set("");
 }
 
 
 Str::~Str() {
-    ; // do nothing because it is shared_ptr
+    if(*count_ == 1) {
+        delete value_;
+    }
 }
 
 
@@ -73,9 +81,18 @@ void Str::init_() {
 
 // init self by string
 void Str::init_(const std::string& str) {
-    *value_ = units::parse_str_repr(str);
+    *value_ = str;
 }
 
+
+_ValAtom& Str::reprset(const string& str) {
+    string result = units::parse_str_repr(str);
+    if((*vaild_checker_)(result)) {
+        *value_ = result;
+    } else {
+        *value_ = result;
+    }
+}
 
 // ----------------------------------------------------------------------------
 // ---[ interface method ]-----------------------------------------------------
@@ -93,7 +110,7 @@ shared_ptr<Value> Str::json_value() {
     auto& allo = doc_.GetAllocator();
 
     v -> SetObject();
-    v -> AddMember("valid", is_vaild_, allo);
+    v -> AddMember("valid", *is_vaild_, allo);
     v -> AddMember("value", Value(value_->c_str(), allo).Move(), allo);
 
     return v;
