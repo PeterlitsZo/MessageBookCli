@@ -1,41 +1,57 @@
 %{
 
 #include <string>
+#include <memory>
 
 #include "interface.h"
 #include "idmap.h"
-#include "../messagebook.h"
-#include "../person_ptr.h"
 #include "../units.h"
 
-Idmap       im;                       // use to hold all variable
-MessageBook mb("MessageBook.json");   // use to handle date
+#include "../val.h"
 
 #define YYERROR_VERBOSE
 
 extern void yyerror(const char *s);
 
+using std::make_shared;
+using std::shared_ptr;
+using std::dynamic_pointer_cast;
+
+using mbc::Val::Type;
+using mbc::Val::ValBase;
+using mbc::Val::Str;
+using mbc::Val::PersonHandle;
+using mbc::Val::MessageBook;
+
+// using units::mbc_exce;
+
+// shared_ptr<ValBase> book = 
+//     make_shared<mbc::Val::MessageBook>(std::string("MessageBook.json"));
+
+mbc::Val::MessageBook book("MessageBook.json");
+Idmap im;
+
 extern "C" {
     extern int yylex(void);
 }
+
+// ---[ type ]-----------------------------------------------------------------
+#define YYSTYPE std::shared_ptr<mbc::Val::ValBase>
 
 // ---[ better error msg ]-----------------------------------------------------
 
 %}
 
-%union {
-    std::string* strp;
-    PersonPtr*   pptr;
-}
+%token HELP LIST NEW DELETE EXIT LET INIT SORT SREACH 
 
-%token PER_L PER_R
-%token HELP LIST NEW DELETE EXIT LET NEWLINE INIT UNKNOWED SORT DOT SREACH
+%token LEFT_TRI_BRA RIGHT_TRI_BRA DOT
 
-%token <strp> TOKEN
-%token <strp> STRING;
+%token NEWLINE 
+%token UNKNOWED
+%token STRING
+%token VECSTR
 
-%type  <pptr> PERSON;
-%type  <strp> EXPR_RESULT;
+%token TOKEN
 
 %%
 
@@ -43,7 +59,6 @@ commands
     : // *empty*
     | commands command {
         print_next_arraw();
-        save(mb);
     }
     | commands error NEWLINE {
         yyerrok;
@@ -53,92 +68,58 @@ commands
 
 command
     : HELP NEWLINE {
-        print_command(help(mb));
-    }
-    | LIST NEWLINE {
-        print_command(list(mb));
     }
     | EXIT NEWLINE {
         return 0;
     }
-    | SORT STRING NEWLINE {
-        mb.sort(*$2);
+    | expr NEWLINE {
+        print_command($1 -> str());
     }
-    | DELETE PERSON NEWLINE {
-        if ($2) {
-            if (not $2->remove()) {
-                yyerror("runtime error: try to delete a [NULL person] person");
-            }
-        } else {
-            yyerror("runtime error: try to delete a nil");
-        }
-        // [delete]: PERSON
-        delete $2;
+
+    | LET TOKEN expr NEWLINE {
+        im.update(dynamic_pointer_cast<Str>($2) -> raw(), $3);
     }
-    | INIT PERSON NEWLINE {
-        if ($2) {
-            if (not $2->init()) {
-                yyerror("runtime error: try to init a [NULL person] person");
-            }
-        } else {
-            yyerror("runtime error: try to delete a nil");
-        }
+    | LET expr DOT TOKEN expr NEWLINE {
+        std::cout << "the expr is " << dynamic_pointer_cast<Str>($5) -> str() << ".";
+        dynamic_pointer_cast<PersonHandle>($2)
+            -> changeAttr(dynamic_pointer_cast<Str>($4) -> raw(),
+                          dynamic_pointer_cast<Str>($5) -> raw());
     }
-    | EXPR_RESULT NEWLINE {
-        print_command(*$1);
-        // [delete]: EXPR
-        delete $1;
-    }
-    | LET TOKEN STRING NEWLINE {
-        im.update(*($2), new Val($3));
-        // [delete]: TOKEN
-        delete $2;
-        // [do not delete]: STRING, because im handle it, im will delete auto
-    }
-    | LET TOKEN PERSON NEWLINE {
-        im.update(*($2), new Val($3));
-        // [delete]: TOKEN
-        delete $2;
-        // [do not delete]: PERSON, because im handle it, im will delete it auto
-    }
-    | LET PERSON DOT TOKEN STRING NEWLINE {
-        $2 -> change(*$4, *$5);
-    }
-    | SREACH TOKEN STRING NEWLINE {
-        print_command(mb.sreach(*$2, *$3));
-    }
+
     | NEWLINE {
-        // nothing input
+        // do nothing
     }
     ;
 
-/* need delete, type: string*: mean: return output */
-EXPR_RESULT
-    : PERSON {
-        $$ = new std::string($1->str());
-        // [delete]: PERSON
-        delete $1;
-    }
-    | STRING {
+expr
+    : STRING {
         $$ = $1;
     }
-    | TOKEN {
-        $$ = new std::string(im.get(*($1))->str());
-        // [delete]: TOKEN
-        delete $1;
+    | VECSTR {
+        $$ = $1;
     }
-    ;
+    | LEFT_TRI_BRA expr RIGHT_TRI_BRA {
+        if ($2 -> type() != Type::STR) {
+            // throw mbc_exce("wanna a str type object");
+            throw "wanna a str type object";
+        }
 
-/* need delete, type: personPtr* */
-PERSON
-    : PER_L STRING PER_R {
-        $$ = new PersonPtr(mb.get(*$2));
+        auto handle = book.getPerson(dynamic_pointer_cast<Str>($2) -> raw());
+        shared_ptr<ValBase> ptr(new PersonHandle(handle));
+        $$ = ptr;
+    }
+    | LIST {
+        $$ = make_shared<MessageBook>(book);
     }
     | NEW {
-        $$ = mb.addPerson();
+        $$ = make_shared<PersonHandle>(book.newPerson());
     }
     | TOKEN {
-        $$ = im.get(*($1))->getPersonPtr();
+        try {
+            $$ = im.get(dynamic_pointer_cast<Str>($1) -> raw());
+        } catch (const char* msg) {
+            yyerror(msg);
+        }
     }
     ;
 

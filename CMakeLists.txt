@@ -7,6 +7,9 @@ cmake_minimum_required (VERSION 3.13)
 
 project (MessageBookCli)
 
+set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -O0 -std=c++11 -Wall -g -ggdb")
+set (CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -O3 -std=c++11 -Wall")
+
 
 # ---[ help setting ]----------------------------------------------------------
 
@@ -49,24 +52,19 @@ if (FLEX_FOUND)
 endif ()
 endif ()
 
-set (PARSER_FILES ${CMAKE_SOURCE_DIR}/src/parser/lexer.cpp
-                  ${CMAKE_SOURCE_DIR}/src/parser/parser.cpp
-                  ${CMAKE_SOURCE_DIR}/src/parser/interface.cpp
-                  ${CMAKE_SOURCE_DIR}/src/parser/idmap.cpp
-                  ${CMAKE_SOURCE_DIR}/src/parser/lineno.cpp)
-
 ADD_FLEX_BISON_DEPENDENCY (MessageBookCli_lexer MessageBookCli_parser)
 
 
 # ---[ main setting ]----------------------------------------------------------
 
 include_directories (${CMAKE_CURRENT_BINARY_DIR})
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall")
-aux_source_directory (${CMAKE_SOURCE_DIR}/src      SRC_FILES)
-aux_source_directory (${CMAKE_SOURCE_DIR}/src/help SRC_FILES)
+aux_source_directory (${CMAKE_SOURCE_DIR}/src             SRC_FILES)
+aux_source_directory (${CMAKE_SOURCE_DIR}/src/help        SRC_FILES)
+aux_source_directory (${CMAKE_SOURCE_DIR}/include/logging SRC_FILES)
+aux_source_directory (${CMAKE_SOURCE_DIR}/src/parser      SRC_FILES)
 
 add_executable (
-    MessageBookCli ${SRC_FILES} ${PARSER_FILES}
+    MessageBookCli ${SRC_FILES} 
 )
 
 if (PythonInterp_FOUND)
@@ -83,6 +81,7 @@ if (GTest_FOUND)
 if (Threads_FOUND)
     # make test
     aux_source_directory (./src TEST_FILES)
+    aux_source_directory (${CMAKE_SOURCE_DIR}/include/logging TEST_FILES)
     list (REMOVE_ITEM TEST_FILES ./src/main.cpp)
     add_executable (Tests ${TEST_FILES} ./test/test.cpp)
 

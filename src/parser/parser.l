@@ -1,11 +1,25 @@
 %{
 
 #include <string>
-#include "../messagebook.h"
-#include "../person_ptr.h"
+#include <iostream>
 
 #include "interface.h"
+#include "../units.h"
+#include "../val.h"
+
+// this macro should be at the below of ../val.h
+#define YYSTYPE std::shared_ptr<mbc::Val::ValBase>
+// and is higher than parser.h
+
 #include "parser.h"
+
+using std::make_shared;
+using std::dynamic_pointer_cast;
+using std::string;
+
+using mbc::Val::Str;
+using mbc::Val::VecStr;
+
 
 extern "C" {
     int yywrap(void);
@@ -27,6 +41,14 @@ extern "C" {
 %x COMMENT
 
 %option nounput
+
+STRING_1 (\"([^\"\n]*(\\\")*)*\")
+STRING_2 (\'([^\'\n]*(\\\')*)*\')
+STRING ({STRING_1}|{STRING_2})
+WHITE ([ \n\t\r\v\f])
+
+STRING_LIST (({STRING}{WHITE}*,{WHITE}*)*{STRING})
+LIST (\[{WHITE}*{STRING_LIST}{WHITE}*\]|\[{WHITE}*\])
 
 %%
 
@@ -76,6 +98,7 @@ extern "C" {
 }
 
     /* ---[ comments ]------------------------------------------------------- */
+
 (;) {
     ln.update(yytext);
     BEGIN COMMENT;
@@ -92,43 +115,49 @@ extern "C" {
     // ignore all character but newline
 }
 
-
     /* ---[ others ]--------------------------------------------------------- */
-(\"([^\"\n]*(\\\")*)*\"|\'([^\'\n]*(\\\')*)*\') {
+
+{STRING} {
     // means: string
     ln.update(yytext);
 
-    std::string temp_string(yytext);
-    yylval.strp = new std::string(
-        temp_string.substr(1, temp_string.size() - 2)
-    );
+    yylval = make_shared<Str>();
+    dynamic_pointer_cast<Str>(yylval) -> set(yytext);
     return STRING;
 }
 
-([a-zA-Z_][a-zA-Z0-9_]*) {
+{LIST} {
+    // means: vecstr
     ln.update(yytext);
-    yylval.strp = new std::string(yytext);
+
+    yylval = make_shared<VecStr>();
+    dynamic_pointer_cast<VecStr>(yylval) -> set(yytext);
+    return VECSTR;
+}
+
+[a-zA-Z_][a-zA-Z0-9_]* {
+    ln.update(yytext);
+
+    yylval = make_shared<Str>();
+    dynamic_pointer_cast<Str>(yylval) -> set(units::repr(yytext));
     return TOKEN;
+}
+
+(<) {
+    return LEFT_TRI_BRA;
+}
+
+(>) {
+    return RIGHT_TRI_BRA;
+}
+
+(\.) {
+    return DOT;
 }
 
 (\n) {
     ln.update(yytext);
     return NEWLINE;
-}
-
-(\.) {
-    ln.update(yytext);
-    return DOT;
-}
-
-("[") {
-    ln.update(yytext);
-    return PER_L;
-}
-
-("]") {
-    ln.update(yytext);
-    return PER_R;
 }
 
 [ \t\r]+ {
@@ -140,7 +169,6 @@ extern "C" {
     // error
     return UNKNOWED;
 }
-
 
 %%
 

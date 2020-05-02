@@ -7,10 +7,10 @@ How to build this?
 Follow this:
 
 ``` shell
+$ git clone --depth=1 <url>
+$ cd MessageBookCli
 $ mkdir build
-$ cd build
-$ cmake ..
-$ make
+$ cd build && cmake .. && make
 ```
 
 Aim
