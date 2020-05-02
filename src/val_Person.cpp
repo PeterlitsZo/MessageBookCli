@@ -33,56 +33,64 @@ struct bad_attr : public std::exception {
     }
 };
 
-Person::Person() {
+Person::Person() : ValBase() {
     using namespace units;
-    auto& parse = parse_str_repr;
 
-    is_vaild_       = true;
-    invaild_waring_ = std::make_shared<string>("[invaild person]");
+    *is_vaild_       = true;
+    *invaild_waring_ = "[invaild person]";
 
-    ID_             = Str([](const string& str){return is_not_empty(parse(str));});
-    name_           = Str([](const string& str){return is_not_empty(parse(str));});
-    sex_            = Str([](const string& str){return str == "M" || str == "F";});
-    telephone_      = Str([](const string& str){return is_digit(parse(str));});
-    mail_number_    = Str([](const string& str){
-                            return is_digit(parse(str)) && parse(str).size() == 6;
+    ID_             = new Str([](const string& str){return is_not_empty(str);});
+    name_           = new Str([](const string& str){return is_not_empty(str);});
+    sex_            = new Str([](const string& str){return str == "M" || str == "F";});
+    telephone_      = new Str([](const string& str){return is_digit(str);});
+    mail_number_    = new Str([](const string& str){
+                            return is_digit(str) && str.size() == 6;
                             });
-    email_          = Str([](const string& str){return is_email(parse(str));});
-    qq_number_      = Str([](const string& str){return is_digit(parse(str));});
-    location_       = Str([](const string& str){return is_not_empty(parse(str));});
+    email_          = new Str([](const string& str){return is_email(str);});
+    qq_number_      = new Str([](const string& str){return is_digit(str);});
+    location_       = new Str([](const string& str){return is_not_empty(str);});
 
-    classes_        = VecStr();
+    classes_        = new VecStr();
 
     update_ID_();
 }
 
-Person::Person(const Person& person) {
-    using namespace units;
+Person::Person(const Person& other) {
+    ID_             = other.ID_;
+    name_           = other.name_;
+    sex_            = other.sex_;
+    telephone_      = other.telephone_;
+    mail_number_    = other.mail_number_;
+    email_          = other.email_;
+    qq_number_      = other.qq_number_;
+    location_       = other.location_;
+    classes_        = other.classes_;
 
-    is_vaild_       = true;
-    invaild_waring_ = person.invaild_waring_;
-    ID_             = person.ID_;
-    name_           = person.name_;
-    sex_            = person.sex_;
-    telephone_      = person.telephone_;
-    mail_number_    = person.mail_number_;
-    email_          = person.email_;
-    qq_number_      = person.qq_number_;
-    location_       = person.location_;
-    classes_        = person.classes_;
+    is_vaild_       = other.is_vaild_;
+    invaild_waring_ = other.invaild_waring_;
 }
 
 Person::~Person() {
-    ; // do nothing
+    if (*count_ == 1) {
+        delete ID_;
+        delete name_;
+        delete sex_;
+        delete telephone_;
+        delete mail_number_;
+        delete email_;
+        delete qq_number_;
+        delete location_;
+        delete classes_;
+    }
 }
 
 
 void Person::update_ID_() {
-    ID_.set(string("\"") + hash_() + "\"");
+    ID_ -> set(hash_());
 }
 
 const Str& Person::ID() const {
-    return ID_;
+    return *ID_;
 }
 
 // return string if it is vaild (called by function str)
@@ -91,12 +99,12 @@ const string Person::str_() const {
         "┌------| id: {} |------\n{}",
         // ┌——————————^           ^
         // |(id)                  │
-        ID_.str(),             // │(body)
+        ID_->str(),             // │(body)
         units::add_head( units::hard_warp( fmt::format(
             "name: {}, sex: {}, telephone: {}, mail_number: {}, email: {},"
             "qq_number: {}, location: {}, classes: {}", 
-            name_.str(), sex_.str(), telephone_.str(), mail_number_.str(),
-            email_.str(), qq_number_.str(), location_.str(), classes_.str()
+            name_->str(), sex_->str(), telephone_->str(), mail_number_->str(),
+            email_->str(), qq_number_->str(), location_->str(), classes_->str()
         ), 80), "| ")
         // ^------------------ hard wrap width
         //      ^------------- every line's head
@@ -113,14 +121,14 @@ string Person::hash_() {
 
 // get the attr of person
 _ValAtom* Person::attr(string attribute) {
-    if(attribute == "name")             return &name_;
-    if(attribute == "sex")              return &sex_;
-    if(attribute == "telephone")        return &telephone_;
-    if(attribute == "mail_number")      return &mail_number_;
-    if(attribute == "email")            return &email_;
-    if(attribute == "qq_number")        return &qq_number_;
-    if(attribute == "location")         return &location_;
-    if(attribute == "classes")          return &classes_;
+    if(attribute == "name")             return name_;
+    if(attribute == "sex")              return sex_;
+    if(attribute == "telephone")        return telephone_;
+    if(attribute == "mail_number")      return mail_number_;
+    if(attribute == "email")            return email_;
+    if(attribute == "qq_number")        return qq_number_;
+    if(attribute == "location")         return location_;
+    if(attribute == "classes")          return classes_;
 
     throw bad_attr();
 }
@@ -132,14 +140,14 @@ shared_ptr<Value> Person::json_value() {
     auto& allo = doc_.GetAllocator();
 
     v -> SetObject();
-    v -> AddMember("name",          *name_.json_value(),        allo);
-    v -> AddMember("sex",           *sex_.json_value(),         allo);
-    v -> AddMember("telephone",     *telephone_.json_value(),   allo);
-    v -> AddMember("mail_number",   *mail_number_.json_value(), allo);
-    v -> AddMember("email",         *email_.json_value(),       allo);
-    v -> AddMember("qq_number",     *qq_number_.json_value(),   allo);
-    v -> AddMember("location",      *location_.json_value(),    allo);
-    v -> AddMember("classes",       *classes_.json_value(),     allo);
+    v -> AddMember("name",          *name_->json_value(),        allo);
+    v -> AddMember("sex",           *sex_->json_value(),         allo);
+    v -> AddMember("telephone",     *telephone_->json_value(),   allo);
+    v -> AddMember("mail_number",   *mail_number_->json_value(), allo);
+    v -> AddMember("email",         *email_->json_value(),       allo);
+    v -> AddMember("qq_number",     *qq_number_->json_value(),   allo);
+    v -> AddMember("location",      *location_->json_value(),    allo);
+    v -> AddMember("classes",       *classes_->json_value(),     allo);
 
     return v;
 }

@@ -178,15 +178,15 @@ private:
     std::string hash_();
     void update_ID_();
 
-    Str ID_;
-    Str name_;
-    Str sex_;
-    Str telephone_;
-    Str mail_number_;
-    Str email_;
-    Str qq_number_;
-    Str location_;
-    VecStr classes_;
+    Str* ID_;
+    Str* name_;
+    Str* sex_;
+    Str* telephone_;
+    Str* mail_number_;
+    Str* email_;
+    Str* qq_number_;
+    Str* location_;
+    VecStr* classes_;
 };
 
 
