@@ -18,18 +18,36 @@ Document ValBase::doc_;
 
 // clear self
 ValBase::~ValBase() {
-    ; // do nothing
+    if(count_ == 0) {
+        delete count_;
+        delete invaild_waring_;
+        delete is_vaild_;
+        delete type_;
+    } else {
+        -- *count_;
+    }
+}
+
+
+ValBase::ValBase(const ValBase& other) {
+    count_          = other.count_;
+    invaild_waring_ = other.invaild_waring_;
+    is_vaild_       = other.is_vaild_;
+    type_           = other.type_;
+
+    // add the ref-counter with 1
+    ++ *count_;
 }
 
 
 // return self's type
 const Type& ValBase::type () const {
-    return type_;
+    return *type_;
 }
 
 
 // return self by the form of string
-const string ValBase::str() const {
+const string& ValBase::str() const {
     if (is_vaild_) {
         return str_();
     } else {
@@ -40,9 +58,10 @@ const string ValBase::str() const {
 
 // check if self is vaild.
 bool ValBase::vaild() const {
-    return is_vaild_;
+    return *is_vaild_;
 }
 
 } // for namespace Val
 
 } // for namespace mbc
+

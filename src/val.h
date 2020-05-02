@@ -1,7 +1,6 @@
 #ifndef PETERLITS_VAL_H__
 #define PETERLITS_VAL_H__
 
-#include <sched.h>
 #include <string>
 #include <functional>
 #include <memory>
@@ -34,19 +33,23 @@ enum Type {
 class ValBase {
 public:
     virtual ~ValBase();
-    const std::string str() const;
+    ValBase(const ValBase& other);
+
+    const std::string& str() const;
     bool vaild() const;
     const Type& type() const;
 
     virtual std::shared_ptr<rapidjson::Value> json_value() = 0;
 
 protected:
-    virtual const std::string str_() const = 0;
+    virtual const std::string& str_() const = 0;
 
-    std::shared_ptr<std::string> invaild_waring_;
-    bool                         is_vaild_;
+    int*                         count_;
+    std::string*                 invaild_waring_;
+    bool*                        is_vaild_;
+    Type*                        type_;
+
     static                       rapidjson::Document doc_;
-    Type                         type_;
 };
 
 
