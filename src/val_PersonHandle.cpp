@@ -25,27 +25,19 @@ struct nojson : public std::exception {
     }
 };
 
-PersonHandle::PersonHandle(shared_ptr<MessageBook> mb, const string& full_ID) {
+PersonHandle::PersonHandle(MessageBook* mb, Person* person) {
     mb_             = mb;
-    invaild_waring_ = std::make_shared<string>("[person handle -> invaild person]");
+    person_         = person;
+    *type_          = Type(PERSONHANDLE);
+    *invaild_waring_ = "[person handle -> invaild person]";
 
-    // reset person
-    if (mb_ -> persons_ -> count(full_ID)) {
-        is_vaild_       = true;
-        person_         = std::make_shared<Person>((*(mb_ -> persons_))[full_ID]);
-    } else {
-        is_vaild_       = false;
-        person_         = std::make_shared<Person>();
-    }
+    reset_();
 }
 
 
-PersonHandle::PersonHandle(const PersonHandle& personhandle) {
-    mb_ = personhandle.mb_;
-    invaild_waring_ = personhandle.invaild_waring_;
-
-    is_vaild_ = personhandle.is_vaild_;
-    person_ = personhandle.person_;
+PersonHandle::PersonHandle(const PersonHandle& other) : ValBase(other) {
+    mb_ = other.mb_;
+    person_ = other.person_;
 }
 
 
@@ -55,23 +47,30 @@ PersonHandle::~PersonHandle() {
 
 void PersonHandle::reset_() {
     // if person is vaild and mb_ has it, then it is vaild.
-    if(person_ -> ID().vaild() && mb_ -> persons_ -> count(person_ -> ID().raw()) ) {
-        is_vaild_ = true;
+    if(person_->ID() && mb_->persons_->count(person_->ID()) ) {
+        *is_vaild_ = true;
     } else {
-        is_vaild_ = false;
+        *is_vaild_ = false;
     }
 }
 
 PersonHandle& PersonHandle::remove() {
-    reset_();
     if(is_vaild_) {
-        auto it_persons = mb_ -> persons_ -> find(person_ -> ID().raw());
-        auto it_order = std::find(mb_->order_->begin(), mb_->order_->end(), 
-                                 (person_ -> ID().raw()));
+        // remove self in mb_ -> persons_
+        auto it_persons = mb_ -> persons_ -> find(person_ -> ID());
         mb_ -> persons_ -> erase(it_persons);
+
+        // remove self in mb_ -> order_
+        auto it_order = std::find(mb_->order_->begin(), mb_->order_->end(), 
+                                 (person_ -> ID()));
         mb_ -> order_ -> erase(it_order);
-        is_vaild_ = false;
+
+        // now it is invaild
+        *is_vaild_ = false;
+
+        // save messagebook and reset self
         mb_ -> save();
+        reset_();
     } else {
         ; // do nothing
     }
@@ -79,24 +78,20 @@ PersonHandle& PersonHandle::remove() {
 }
 
 PersonHandle& PersonHandle::changeAttr(string attribute, string value) {
-    reset_();
     if(is_vaild_) {
-        // after the person's ID is changed, update mb.
+        // remove self and then update deeply
         remove();
-        auto attr = person_ -> attr(attribute);
-        if(attr -> type() == mbc::Val::Type::STR) {
-            Str* temp = (Str*) attr;
-            temp -> set(value);
-        } else {
-            VecStr* temp = (VecStr*) attr;
-            temp -> set(value);
-        }
+        person_ -> attr(attribute) -> set(value);
         person_ -> update_ID_();
-        (*(mb_ -> persons_))[person_ -> ID().raw()] = *person_;
-        mb_ -> order_ -> push_back(person_ -> ID().raw());
-        is_vaild_ = true;
 
+        // after the person's ID is changed, update mb.
+        (*(mb_ -> persons_))[person_ -> ID()] = *person_;
+        mb_ -> order_ -> push_back(person_ -> ID());
+        *is_vaild_ = true;
+
+        // save messagebook and reset self
         mb_ -> save();
+        reset_();
     } else {
         ; // do nothing
     }
@@ -105,7 +100,7 @@ PersonHandle& PersonHandle::changeAttr(string attribute, string value) {
 
 // return string if it is vaild (called by function str)
 const string PersonHandle::str_() const {
-    return "[person handle -> ]\n" + units::add_head(person_ -> str(), "  ");
+    return "[person handle -> ]\n" + units::add_head(person_ -> str(), "....");
 }
 
 // return self's json value

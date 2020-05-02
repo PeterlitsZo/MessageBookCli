@@ -24,6 +24,7 @@ enum Type {
     STR,
     VECSTR,
     PERSON,
+    PERSONHANDLE,
     MESSAGEBOOK
 };
 
@@ -41,6 +42,8 @@ public:
     const std::string str() const;
     bool vaild() const;
     const Type& type() const;
+
+    operator bool() const;
 
     virtual std::shared_ptr<rapidjson::Value> json_value() = 0;
 
@@ -136,8 +139,8 @@ class Person;
 
 class PersonHandle: public ValBase {
 public:
-    PersonHandle(std::shared_ptr<MessageBook> mb, const std::string& full_id);
-    PersonHandle(const PersonHandle& personhandle);
+    PersonHandle(MessageBook* mb, Person* person);
+    PersonHandle(const PersonHandle& other);
     ~PersonHandle();
 
     PersonHandle& remove();
@@ -148,8 +151,8 @@ private:
     const std::string str_() const;
     void reset_();
 
-    std::shared_ptr<MessageBook>    mb_;
-    std::shared_ptr<Person>         person_;
+    MessageBook*                    mb_;
+    Person*                         person_;
 };
 
 
@@ -209,9 +212,9 @@ private:
     std::string fullID(std::string ID);
     const std::string str_() const;
 
-    std::shared_ptr<std::string> path_;
-    std::shared_ptr<std::map<std::string, Person>> persons_;
-    std::shared_ptr<std::list<std::string>> order_;
+    std::shared_ptr<Str> path_;
+    std::shared_ptr<std::map<Str, Person>> persons_;
+    std::shared_ptr<std::list<Str>> order_;
 
 };
 

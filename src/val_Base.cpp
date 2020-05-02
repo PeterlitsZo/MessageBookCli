@@ -67,6 +67,12 @@ bool ValBase::vaild() const {
     return *is_vaild_;
 }
 
+
+ValBase::operator bool() const {
+    return *is_vaild_;
+}
+
+
 } // for namespace Val
 
 } // for namespace mbc
