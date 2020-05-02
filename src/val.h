@@ -60,6 +60,8 @@ protected:
 class _ValAtom : public ValBase {
 public:
     virtual ~_ValAtom();
+    _ValAtom(const _ValAtom& other);
+
     _ValAtom& set(const std::string& str);
     _ValAtom& operator=(const std::string& str);
 
@@ -67,7 +69,7 @@ protected:
     virtual void init_(const std::string& str) = 0;
     virtual void init_() = 0;
 
-    std::function<bool(const std::string& str)> vaild_checker_;
+    std::function<bool(const std::string& str)>* vaild_checker_;
 };
 
 

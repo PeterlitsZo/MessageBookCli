@@ -15,20 +15,23 @@ namespace Val {
 
 // clear self
 _ValAtom::~_ValAtom() {
-    ; // do nothing
+    if (count_ == 0) {
+        delete vaild_checker_;
+    }
 }
 
 
+_ValAtom::_ValAtom(const _ValAtom& other) : ValBase(other) {
+    vaild_checker_ = other.vaild_checker_;
+}
+
 // Atom can set self by string (wow, it can deal with string)
 _ValAtom& _ValAtom::set(const string& str) {
-    std::cout << "the set value is " << str << "." << std::endl;
-    if (vaild_checker_(str)) {
-        std::cout << "it is vaild" << std::endl;
-        is_vaild_ = true;
+    if ((*vaild_checker_)(str)) {
+        *is_vaild_ = true;
         init_(str);
     } else {
-        std::cout << "it is not vaild" << std::endl;
-        is_vaild_ = false;
+        *is_vaild_ = false;
         init_();
     }
     return *this;
