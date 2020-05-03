@@ -134,24 +134,26 @@ void MessageBook::save() {
     Writer<StringBuffer> writer(buffer);
     json_value() -> Accept(writer);
 
-    ofstream out(path_ -> c_str());
+    ofstream out(path_ -> raw());
     out << buffer.GetString();
 }
 
 PersonHandle MessageBook::newPerson() {
     Person person;
-    if (not persons_ -> count(person.ID().raw())) {
-        order_ -> push_back(person.ID().raw());
+    if (not persons_ -> count(person.ID())) {
+        order_ -> push_back(person.ID());
     }
-    (*persons_)[person.ID().raw()] = person;
+    (*persons_)[person.ID()] = person;
     save();
-    return PersonHandle(std::make_shared<MessageBook>(*this),
-                        person.ID().raw());
+    return PersonHandle(this,
+                        &((*persons_)[person.ID()]) );
 }
 
 PersonHandle MessageBook::getPerson(string brokenID) {
-    return PersonHandle(std::make_shared<MessageBook>(*this),
-                        fullID(brokenID));
+    auto str = Str();
+    str.set(brokenID);
+    return PersonHandle(this,
+                        &(*persons_)[fullID(str)]);
 }
 
 }} // for namespace mbc::Val
