@@ -213,9 +213,9 @@ private:
     Str fullID(Str ID);
     const std::string str_() const;
 
-    Str*                   path_;
-    std::map<Str, Person>* persons_;
-    std::list<Str>*        order_;
+    Str*                     path_;
+    std::map<Str, Person>*   persons_;
+    std::list<Str>*          order_;
 
 };
 

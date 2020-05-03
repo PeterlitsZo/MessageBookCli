@@ -54,7 +54,7 @@ const Type& ValBase::type () const {
 
 // return self by the form of string
 const string ValBase::str() const {
-    if (is_vaild_) {
+    if (*is_vaild_) {
         return str_();
     } else {
         return *invaild_waring_;

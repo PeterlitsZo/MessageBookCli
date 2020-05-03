@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include <exception>
+#include <cstdio>
 
 #include "../src/info.h"
 #include "../src/units.h"
@@ -160,25 +161,39 @@ TEST(Tests, Val_VecStr) {
 TEST(Tests, Val_Person) {
     using namespace mbc;
     Val::Person p1;
-    std::cout << p1.str();
-    p1.attr("name") -> set("\'peter\'");
-    std::cout << p1.str();
-
-    Val::MessageBook mb("temp");
-    mb.newPerson()
-        .changeAttr("name", units::repr("peter"));
-    std::cout << mb.str();
+    p1.attr("name") -> set("peter");
+    EXPECT_EQ(p1.str(),
+        "\xE2\x94\x8C------| id: \'4605f1d81e986547d7229e95a094044d\' |------\n"
+        "| name: \'peter\', sex: [invaild str], telephone: [invaild str], mail_"
+        "number: [invai\n"
+        "| ld str], email: [invaild str],qq_number: [invaild str], location: [i"
+        "nvaild str],\n"
+        "|  classes: []"
+    );
 }
 
+// TEST: val::MessageBook
+TEST(Tests, Val_MessageBook_1) {
+    using namespace mbc;
+    remove("temp");
+    Val::MessageBook mb("temp");
+    remove("temp");
+}
 
+// TEST: val::MessageBook
+TEST(Tests, Val_MessageBook_2) {
+    using namespace mbc;
+    remove("temp");
+    Val::MessageBook mb("temp");
+    mb.newPerson()
+        .changeAttr("name", "peter");
+    remove("temp");
+}
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
 
     return RUN_ALL_TESTS();
 }
-
-
-
 
 

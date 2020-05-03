@@ -13,8 +13,6 @@
 #define FMT_HEADER_ONLY
 #include "../include/fmt/format.h"
 
-#include "../include/logging/easylogging++.h"
-
 #include "units.h"
 
 using std::string;
@@ -115,7 +113,8 @@ const string Person::str_() const {
 string Person::hash_() {
     rapidjson::StringBuffer buffer;
     rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-    json_value() -> Accept(writer);
+    // why I should add a prefix?
+    Person::json_value() -> Accept(writer);
     return units::md5(buffer.GetString());
 }
 
