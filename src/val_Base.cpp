@@ -18,12 +18,12 @@ Document ValBase::doc_;
 
 // clear self
 ValBase::~ValBase() {
-    if(*count_ == 1) {
-        delete count_;
-        delete invaild_waring_;
-        delete is_vaild_;
-        delete type_;
-    }
+    // if(*count_ == 1) {
+    //     delete count_;
+    //     delete invaild_waring_;
+    //     delete is_vaild_;
+    //     delete type_;
+    // }
     -- *count_;
 }
 

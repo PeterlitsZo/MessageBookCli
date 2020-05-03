@@ -51,9 +51,9 @@ VecStr::VecStr(const VecStr& other) : _ValAtom(other) {
 
 
 VecStr::~VecStr() {
-    if (*count_ == 1) {
-        delete value_;
-    }
+    // if (*count_ == 1) {
+    //     delete value_;
+    // }
 }
 
 // ----------------------------------------------------------------------------

@@ -52,9 +52,9 @@ Str::Str(const Str& other) : _ValAtom(other) {
 }
 
 Str::~Str() {
-    if(*count_ == 1) {
-        delete value_;
-    }
+    // if(*count_ == 1) {
+    //     delete value_;
+    // }
 }
 
 
@@ -95,6 +95,7 @@ _ValAtom& Str::reprset(const string& str) {
     } else {
         *value_ = result;
     }
+    return *this;
 }
 
 // ----------------------------------------------------------------------------

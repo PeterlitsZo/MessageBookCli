@@ -93,11 +93,11 @@ MessageBook::MessageBook(const string& path) : ValBase() {
 }
 
 MessageBook::~MessageBook() {
-    if(*count_ == 1) {
-        delete path_;
-        delete persons_;
-        delete order_;
-    }
+    // if(*count_ == 1) {
+    //     delete path_;
+    //     delete persons_;
+    //     delete order_;
+    // }
 }
 
 const string MessageBook::str_() const {

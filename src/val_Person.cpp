@@ -71,17 +71,17 @@ Person::Person(const Person& other) {
 }
 
 Person::~Person() {
-    if (*count_ == 1) {
-        delete ID_;
-        delete name_;
-        delete sex_;
-        delete telephone_;
-        delete mail_number_;
-        delete email_;
-        delete qq_number_;
-        delete location_;
-        delete classes_;
-    }
+    // if (*count_ == 1) {
+    //     delete ID_;
+    //     delete name_;
+    //     delete sex_;
+    //     delete telephone_;
+    //     delete mail_number_;
+    //     delete email_;
+    //     delete qq_number_;
+    //     delete location_;
+    //     delete classes_;
+    // }
 }
 
 

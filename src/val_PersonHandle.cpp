@@ -55,7 +55,7 @@ void PersonHandle::reset_() {
 }
 
 PersonHandle& PersonHandle::remove() {
-    if(is_vaild_) {
+    if(*is_vaild_) {
         // remove self in mb_ -> persons_
         auto it_persons = mb_ -> persons_ -> find(person_ -> ID());
         mb_ -> persons_ -> erase(it_persons);
@@ -78,7 +78,7 @@ PersonHandle& PersonHandle::remove() {
 }
 
 PersonHandle& PersonHandle::changeAttr(string attribute, string value) {
-    if(is_vaild_) {
+    if(*is_vaild_) {
         // remove self and then update deeply
         remove();
         person_ -> attr(attribute) -> set(value);

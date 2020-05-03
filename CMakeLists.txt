@@ -49,11 +49,16 @@ if (FLEX_FOUND)
                   DEFINES_FILE ${CMAKE_SOURCE_DIR}/src/parser/parser.h)
     FLEX_TARGET (MessageBookCli_lexer ./src/parser/parser.l
                  ${CMAKE_SOURCE_DIR}/src/parser/lexer.cpp)
+    ADD_FLEX_BISON_DEPENDENCY (MessageBookCli_lexer MessageBookCli_parser)
 endif ()
 endif ()
 
-ADD_FLEX_BISON_DEPENDENCY (MessageBookCli_lexer MessageBookCli_parser)
-
+set (PARSER_FILES   ${CMAKE_SOURCE_DIR}/src/parser/lexer.cpp
+                    ${CMAKE_SOURCE_DIR}/src/parser/parser.cpp
+                    ${CMAKE_SOURCE_DIR}/src/parser/interface.cpp
+                    ${CMAKE_SOURCE_DIR}/src/parser/idmap.cpp
+                    ${CMAKE_SOURCE_DIR}/src/parser/lineno.cpp
+)
 
 # ---[ main setting ]----------------------------------------------------------
 
@@ -61,10 +66,9 @@ include_directories (${CMAKE_CURRENT_BINARY_DIR})
 aux_source_directory (${CMAKE_SOURCE_DIR}/src             SRC_FILES)
 aux_source_directory (${CMAKE_SOURCE_DIR}/src/help        SRC_FILES)
 aux_source_directory (${CMAKE_SOURCE_DIR}/include/logging SRC_FILES)
-aux_source_directory (${CMAKE_SOURCE_DIR}/src/parser      SRC_FILES)
 
 add_executable (
-    MessageBookCli ${SRC_FILES} 
+    MessageBookCli ${SRC_FILES} ${PARSER_FILES}
 )
 
 if (PythonInterp_FOUND)
