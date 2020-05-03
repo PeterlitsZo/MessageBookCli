@@ -963,7 +963,7 @@ YY_RULE_SETUP
     ln.update(yytext);
 
     yylval = make_shared<Str>();
-    dynamic_pointer_cast<Str>(yylval) -> set(yytext);
+    dynamic_pointer_cast<Str>(yylval) -> reprset(yytext);
     return STRING;
 }
 	YY_BREAK
@@ -987,7 +987,7 @@ YY_RULE_SETUP
     ln.update(yytext);
 
     yylval = make_shared<Str>();
-    dynamic_pointer_cast<Str>(yylval) -> set(units::repr(yytext));
+    dynamic_pointer_cast<Str>(yylval) -> set(yytext);
     return TOKEN;
 }
 	YY_BREAK

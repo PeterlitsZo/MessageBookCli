@@ -116,40 +116,27 @@ TEST(Tests, Units_parser_vecstr_repr) {
 // TEST: val::Str;
 TEST(Tests, Val_Str) {
     using namespace mbc;
-    int part = 0;
-    try {
-        part = 1;
-        Val::Str s1;
-        Val::Str s2([](const string& str){return true;});
-        Val::Str s3([](const string& str){return false;});
+    Val::Str s1;
+    Val::Str s2([](const string& str){return true;});
+    Val::Str s3([](const string& str){return false;});
 
-        part = 2;
-        s1.set(R"("this")");
-        s2.set(R"("this")");
-        s3.set(R"("this")");
+    s1.set("this");
+    s2.set("this");
+    s3.set("this");
 
-        part = 3;
-        EXPECT_EQ(s1.str(), "\'this\'");
-        EXPECT_EQ(s2.str(), "\'this\'");
-        EXPECT_EQ(s3.str(), "[invaild str]");
+    EXPECT_EQ(s1.str(), "\'this\'");
+    EXPECT_EQ(s2.str(), "\'this\'");
+    EXPECT_EQ(s3.str(), "[invaild str]");
 
-        part = 4;
-        Val::Str s4(s2);
-        EXPECT_EQ(s2.str(), "\'this\'");
-        s4.set(R"('that')");
-        EXPECT_EQ(s2.str(), "\'that\'");
+    Val::Str s4(s2);
+    EXPECT_EQ(s2.str(), "\'this\'");
+    s4.set("that");
+    EXPECT_EQ(s2.str(), "\'that\'");
 
-        part = 5;
-        EXPECT_EQ(s1.type(), Val::Type::STR);
-    } catch (const char* str) {
-        cout << "finish part " << part << ": ";
-        cout << str << std::endl;
-    } catch (const std::exception& error) {
-        cout << "finish part " << part << ": ";
-        cout << error.what() << std::endl;
-    } catch (...) {
-        cout << "finish part " << part << ";" << std::endl;
-    }
+    s4.reprset(R"("that")");
+    EXPECT_EQ(s2.str(), "\'that\'");
+
+    EXPECT_EQ(s1.type(), Val::Type::STR);
 }
 
 

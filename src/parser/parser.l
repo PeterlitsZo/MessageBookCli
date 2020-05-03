@@ -122,7 +122,7 @@ LIST (\[{WHITE}*{STRING_LIST}{WHITE}*\]|\[{WHITE}*\])
     ln.update(yytext);
 
     yylval = make_shared<Str>();
-    dynamic_pointer_cast<Str>(yylval) -> set(yytext);
+    dynamic_pointer_cast<Str>(yylval) -> reprset(yytext);
     return STRING;
 }
 
@@ -139,7 +139,7 @@ LIST (\[{WHITE}*{STRING_LIST}{WHITE}*\]|\[{WHITE}*\])
     ln.update(yytext);
 
     yylval = make_shared<Str>();
-    dynamic_pointer_cast<Str>(yylval) -> set(units::repr(yytext));
+    dynamic_pointer_cast<Str>(yylval) -> set(yytext);
     return TOKEN;
 }
 
