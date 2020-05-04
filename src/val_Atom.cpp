@@ -16,9 +16,9 @@ namespace Val {
 
 // clear self
 _ValAtom::~_ValAtom() {
-    // if (*count_ == 1) {
-    //     delete vaild_checker_;
-    // }
+    if (*count_ == 1) {
+        delete vaild_checker_;
+    }
 }
 
 

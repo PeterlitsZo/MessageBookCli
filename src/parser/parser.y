@@ -80,7 +80,6 @@ command
         im.update(dynamic_pointer_cast<Str>($2) -> raw(), $3);
     }
     | LET expr DOT TOKEN expr NEWLINE {
-        std::cout << "the expr is " << dynamic_pointer_cast<Str>($5) -> str() << ".";
         dynamic_pointer_cast<PersonHandle>($2)
             -> changeAttr(dynamic_pointer_cast<Str>($4) -> raw(),
                           dynamic_pointer_cast<Str>($5) -> raw());

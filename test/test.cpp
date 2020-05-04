@@ -147,7 +147,7 @@ TEST(Tests, Val_Str) {
 TEST(Tests, Val_VecStr) {
     using namespace mbc;
     Val::VecStr v1;
-    // Val::VecStr v2(v1);
+    Val::VecStr v2(v1);
 
     v1.set(R"(["this", "is", "me"])");
     EXPECT_EQ(v1.str(), "[\'this\', \'is\', \'me\']");
@@ -187,6 +187,29 @@ TEST(Tests, Val_MessageBook_2) {
     Val::MessageBook mb("temp");
     mb.newPerson()
         .changeAttr("name", "peter");
+    remove("temp");
+}
+
+// TEST: val_MessageBook
+TEST(Tests, Val_MessageBook_3) {
+    using namespace mbc;
+    remove("temp");
+    {
+        Val::MessageBook mb("temp");
+        mb.newPerson()
+            .changeAttr("name", "peter");
+    }
+    {
+        Val::MessageBook mb("temp");
+        EXPECT_EQ(mb.str(),
+        "\xE2\x94\x8C------| id: \'4605f1d81e986547d7229e95a094044d\' |------\n"
+        "| name: \'peter\', sex: [invaild str], telephone: [invaild str], mail_"
+            "number: [invai\n"
+        "| ld str], email: [invaild str],qq_number: [invaild str], location: [i"
+            "nvaild str],\n"
+        "|  classes: []"
+        );
+    }
     remove("temp");
 }
 

@@ -79,25 +79,30 @@ MessageBook::MessageBook(const string& path) : ValBase() {
             result.push_back(itor -> GetString());
         }
 
+        auto name = (*it)["name"]["value"].GetString();
+        auto sex = (*it)["sex"]["value"].GetString();
+        auto telephone = (*it)["telephone"]["value"].GetString();
+        auto location = (*it)["location"]["value"].GetString();
+
         newPerson()
-            .changeAttr("name", (*it)["name"]["value"].GetString())
-            .changeAttr("sex", (*it)["sex"]["value"].GetString())
-            .changeAttr("telephone", (*it)["telephone"]["value"].GetString())
-            .changeAttr("location", (*it)["location"]["value"].GetString())
+            .changeAttr("name",        (*it)["name"]["value"].GetString())
+            .changeAttr("sex",         (*it)["sex"]["value"].GetString())
+            .changeAttr("telephone",   (*it)["telephone"]["value"].GetString())
+            .changeAttr("location",    (*it)["location"]["value"].GetString())
             .changeAttr("mail_number", (*it)["mail_number"]["value"].GetString())
-            .changeAttr("email", (*it)["email"]["value"].GetString())
-            .changeAttr("qq_number", (*it)["qq_number"]["value"].GetString())
-            .changeAttr("classes", repr(result.begin(), result.end()))
+            .changeAttr("email",       (*it)["email"]["value"].GetString())
+            .changeAttr("qq_number",   (*it)["qq_number"]["value"].GetString())
+            .changeAttr("classes",     repr(result.begin(), result.end()))
         ;
     }
 }
 
 MessageBook::~MessageBook() {
-    // if(*count_ == 1) {
-    //     delete path_;
-    //     delete persons_;
-    //     delete order_;
-    // }
+    if(*count_ == 1) {
+        delete path_;
+        delete persons_;
+        delete order_;
+    }
 }
 
 const string MessageBook::str_() const {

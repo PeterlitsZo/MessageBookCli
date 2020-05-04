@@ -69,17 +69,17 @@ Person::Person(const Person& other) {
 }
 
 Person::~Person() {
-    // if (*count_ == 1) {
-    //     delete ID_;
-    //     delete name_;
-    //     delete sex_;
-    //     delete telephone_;
-    //     delete mail_number_;
-    //     delete email_;
-    //     delete qq_number_;
-    //     delete location_;
-    //     delete classes_;
-    // }
+    if (*count_ == 1) {
+        delete ID_;
+        delete name_;
+        delete sex_;
+        delete telephone_;
+        delete mail_number_;
+        delete email_;
+        delete qq_number_;
+        delete location_;
+        delete classes_;
+    }
 }
 
 
@@ -123,10 +123,10 @@ _ValAtom* Person::attr(string attribute) {
     if(attribute == "name")             return name_;
     if(attribute == "sex")              return sex_;
     if(attribute == "telephone")        return telephone_;
+    if(attribute == "location")         return location_;
     if(attribute == "mail_number")      return mail_number_;
     if(attribute == "email")            return email_;
     if(attribute == "qq_number")        return qq_number_;
-    if(attribute == "location")         return location_;
     if(attribute == "classes")          return classes_;
 
     throw bad_attr();
@@ -139,14 +139,14 @@ shared_ptr<Value> Person::json_value() {
     auto& allo = doc_.GetAllocator();
 
     v -> SetObject();
-    v -> AddMember("name",          *name_->json_value(),        allo);
-    v -> AddMember("sex",           *sex_->json_value(),         allo);
-    v -> AddMember("telephone",     *telephone_->json_value(),   allo);
-    v -> AddMember("mail_number",   *mail_number_->json_value(), allo);
-    v -> AddMember("email",         *email_->json_value(),       allo);
-    v -> AddMember("qq_number",     *qq_number_->json_value(),   allo);
-    v -> AddMember("location",      *location_->json_value(),    allo);
-    v -> AddMember("classes",       *classes_->json_value(),     allo);
+    v -> AddMember("name",          *(name_->json_value()),        allo);
+    v -> AddMember("sex",           *(sex_->json_value()),         allo);
+    v -> AddMember("telephone",     *(telephone_->json_value()),   allo);
+    v -> AddMember("location",      *(location_->json_value()),    allo);
+    v -> AddMember("mail_number",   *(mail_number_->json_value()), allo);
+    v -> AddMember("email",         *(email_->json_value()),       allo);
+    v -> AddMember("qq_number",     *(qq_number_->json_value()),   allo);
+    v -> AddMember("classes",       *(classes_->json_value()),     allo);
 
     return v;
 }

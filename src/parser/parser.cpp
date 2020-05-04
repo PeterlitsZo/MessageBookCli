@@ -473,7 +473,7 @@ static const yytype_uint8 yytranslate[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    58,    58,    60,    63,    70,    72,    75,    79,    82,
-      89,    95,    98,   101,   111,   114,   117
+      88,    94,    97,   100,   110,   113,   116
 };
 #endif
 
@@ -1315,40 +1315,39 @@ yyreduce:
   case 9:
 #line 82 "./src/parser/parser.y" /* yacc.c:1652  */
     {
-        std::cout << "the expr is " << dynamic_pointer_cast<Str>(yyvsp[-1]) -> str() << ".";
         dynamic_pointer_cast<PersonHandle>(yyvsp[-4])
             -> changeAttr(dynamic_pointer_cast<Str>(yyvsp[-2]) -> raw(),
                           dynamic_pointer_cast<Str>(yyvsp[-1]) -> raw());
     }
-#line 1324 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1323 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 10:
-#line 89 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 88 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         // do nothing
     }
-#line 1332 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1331 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 11:
-#line 95 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 94 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         yyval = yyvsp[0];
     }
-#line 1340 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1339 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 12:
-#line 98 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 97 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         yyval = yyvsp[0];
     }
-#line 1348 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1347 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 13:
-#line 101 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 100 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         if (yyvsp[-1] -> type() != Type::STR) {
             // throw mbc_exce("wanna a str type object");
@@ -1359,27 +1358,27 @@ yyreduce:
         shared_ptr<ValBase> ptr(new PersonHandle(handle));
         yyval = ptr;
     }
-#line 1363 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1362 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 14:
-#line 111 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 110 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         yyval = make_shared<MessageBook>(book);
     }
-#line 1371 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1370 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 15:
-#line 114 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 113 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         yyval = make_shared<PersonHandle>(book.newPerson());
     }
-#line 1379 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1378 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 16:
-#line 117 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 116 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         try {
             yyval = im.get(dynamic_pointer_cast<Str>(yyvsp[0]) -> raw());
@@ -1387,11 +1386,11 @@ yyreduce:
             yyerror(msg);
         }
     }
-#line 1391 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1390 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
 
-#line 1395 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1394 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1622,5 +1621,5 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 126 "./src/parser/parser.y" /* yacc.c:1918  */
+#line 125 "./src/parser/parser.y" /* yacc.c:1918  */
 
