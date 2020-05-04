@@ -425,7 +425,7 @@ union yyalloc
 /* YYNRULES -- Number of rules.  */
 #define YYNRULES  19
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  40
+#define YYNSTATES  39
 
 #define YYUNDEFTOK  2
 #define YYMAXUTOK   274
@@ -517,7 +517,7 @@ static const yytype_int8 yypact[] =
      -15,     7,   -15,   -14,   -12,   -15,   -15,    16,    -9,    26,
      -10,    16,    16,   -15,   -15,   -15,   -15,   -15,     8,   -15,
      -15,    17,   -15,    16,    22,    24,    21,    28,   -15,   -15,
-      27,    29,   -15,    31,   -15,   -15,    16,   -15,    32,   -15
+      27,    29,   -15,   -15,   -15,   -15,    16,    31,   -15
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -528,7 +528,7 @@ static const yytype_uint8 yydefact[] =
        2,     0,     1,     0,     0,    16,    17,     0,     0,     0,
        0,     0,     0,    12,    13,    14,    18,     3,     0,     4,
        5,     0,     6,    18,     0,     0,     0,     0,     9,     8,
-       0,     0,     7,     0,    15,    10,     0,    19,     0,    11
+       0,     0,     7,    19,    15,    10,     0,     0,    11
 };
 
   /* YYPGOTO[NTERM-NUM].  */
@@ -550,18 +550,18 @@ static const yytype_uint8 yytable[] =
 {
       21,    19,    24,    20,    26,    27,    22,     2,     3,    25,
        4,     5,     6,     7,     8,     9,    30,    10,    11,    12,
-       5,     6,    13,    28,    14,    15,    16,    11,    12,    38,
+       5,     6,    13,    28,    14,    15,    16,    11,    12,    37,
        5,     6,    29,    14,    15,    16,    31,    11,    12,    32,
-      33,    34,    35,    14,    15,    23,    37,    39,    36
+      33,    34,    35,    14,    15,    23,    38,     0,    36
 };
 
-static const yytype_uint8 yycheck[] =
+static const yytype_int8 yycheck[] =
 {
        7,    15,     9,    15,    11,    12,    15,     0,     1,    19,
        3,     4,     5,     6,     7,     8,    23,    10,    11,    12,
        4,     5,    15,    15,    17,    18,    19,    11,    12,    36,
        4,     5,    15,    17,    18,    19,    14,    11,    12,    15,
-      19,    13,    15,    17,    18,    19,    15,    15,    19
+      19,    13,    15,    17,    18,    19,    15,    -1,    19
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -571,7 +571,7 @@ static const yytype_uint8 yystos[] =
        0,    21,     0,     1,     3,     4,     5,     6,     7,     8,
       10,    11,    12,    15,    17,    18,    19,    22,    23,    15,
       15,    23,    15,    19,    23,    19,    23,    23,    15,    15,
-      23,    14,    15,    19,    13,    15,    19,    15,    23,    15
+      23,    14,    15,    19,    13,    15,    19,    23,    15
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
@@ -585,7 +585,7 @@ static const yytype_uint8 yyr1[] =
 static const yytype_uint8 yyr2[] =
 {
        0,     2,     0,     2,     3,     2,     2,     3,     3,     2,
-       4,     6,     1,     1,     1,     3,     1,     1,     1,     4
+       4,     6,     1,     1,     1,     3,     1,     1,     1,     3
 };
 
 
@@ -1305,7 +1305,7 @@ yyreduce:
   case 7:
 #line 76 "./src/parser/parser.y" /* yacc.c:1652  */
     {
-        // assrt that expr$1 is LIST and the expr$2 is STRING
+        book.sort(dynamic_pointer_cast<Str>(yyvsp[-1]) -> raw());
     }
 #line 1311 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
@@ -1432,11 +1432,11 @@ yyreduce:
 #line 148 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         // assert that expr is LIST
-        if (yyvsp[-2] -> type() != Type::STR) {
+        if (yyvsp[-1] -> type() != Type::STR) {
             yyerror("wanna a string after `sreach\'");
         }
-        auto handle = book.sreach(dynamic_pointer_cast<Str>(yyvsp[-3]) -> raw(),
-                                  dynamic_pointer_cast<Str>(yyvsp[-1]) -> raw());
+        auto handle = book.sreach(dynamic_pointer_cast<Str>(yyvsp[-2]) -> raw(),
+                                  dynamic_pointer_cast<Str>(yyvsp[0]) -> raw());
         shared_ptr<ValBase> ptr(new PersonHandle(handle));
         yyval = ptr;
     }

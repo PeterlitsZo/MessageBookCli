@@ -74,7 +74,7 @@ command
         return 0;
     }
     | SORT TOKEN NEWLINE {
-        // assrt that expr$1 is LIST and the expr$2 is STRING
+        book.sort(dynamic_pointer_cast<Str>($2) -> raw());
     }
     | DELETE expr NEWLINE {
         // assert that expr is PERSONHANDLE

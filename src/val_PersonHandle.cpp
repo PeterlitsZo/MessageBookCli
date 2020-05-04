@@ -112,5 +112,8 @@ shared_ptr<Value> PersonHandle::json_value() {
     throw nojson();
 }
 
+string PersonHandle::attr(string attr_) {
+    return person_ -> attr(attr_) -> str();
+}
 
 }} // for namespace mbc::Val

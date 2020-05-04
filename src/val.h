@@ -172,6 +172,7 @@ public:
     ~PersonHandle();
 
     PersonHandle& remove();
+    std::string attr(std::string attr);
     PersonHandle& changeAttr(std::string attribute, std::string value);
     std::shared_ptr<rapidjson::Value> json_value();
 
@@ -233,7 +234,7 @@ public:
     ~MessageBook();
 
     void save();
-    void sort(std::string attr){};
+    void sort(std::string attr);
     PersonHandle sreach(std::string attr, std::string thing);
 
     PersonHandle newPerson();
@@ -250,7 +251,7 @@ private:
     const std::string str_() const;
 
     Str*                     path_;
-    std::map<Str, Person*>*   persons_;
+    std::map<Str, Person*>*  persons_;
     std::list<Str>*          order_;
 
 };

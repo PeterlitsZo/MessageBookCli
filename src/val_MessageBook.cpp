@@ -170,6 +170,12 @@ PersonHandle MessageBook::sreach(string thing, string attr_) {
     }
 }
 
+void MessageBook::sort(string attr_) {
+    order_ -> sort([&](const Str& a, const Str& b) {
+        return getPerson(a.raw()).attr(attr_) < getPerson(b.raw()).attr(attr_);
+    });
+}
+
 }} // for namespace mbc::Val
 
 
