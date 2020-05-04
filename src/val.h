@@ -232,6 +232,8 @@ public:
     ~MessageBook();
 
     void save();
+    void sort(std::string attr){};
+    PersonHandle sreach(std::string attr, std::string thing){};
 
     PersonHandle newPerson();
     PersonHandle getPerson(std::string brokenID);

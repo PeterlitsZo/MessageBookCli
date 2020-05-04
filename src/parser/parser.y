@@ -73,11 +73,8 @@ command
     | EXIT NEWLINE {
         return 0;
     }
-    | SORT expr TOKEN NEWLINE {
+    | SORT TOKEN NEWLINE {
         // assrt that expr$1 is LIST and the expr$2 is STRING
-        if ($2 -> type() != Type::MESSAGEBOOK) {
-            yyerror("wanna a list after `soft\'");
-        }
     }
     | SREACH expr TOKEN NEWLINE {
         // assert that expr is LIST
@@ -90,6 +87,7 @@ command
         if ($2 -> type() != Type::PERSONHANDLE) {
             yyerror("wanna a PersonHandle after `delete\'");
         }
+        dynamic_pointer_cast<PersonHandle>($2) -> remove();
     }
 
     | expr NEWLINE {
