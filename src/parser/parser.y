@@ -76,12 +76,6 @@ command
     | SORT TOKEN NEWLINE {
         // assrt that expr$1 is LIST and the expr$2 is STRING
     }
-    | SREACH expr TOKEN NEWLINE {
-        // assert that expr is LIST
-        if ($2 -> type() != Type::MESSAGEBOOK) {
-            yyerror("wanna a list after `sreach\'");
-        }
-    }
     | DELETE expr NEWLINE {
         // assert that expr is PERSONHANDLE
         if ($2 -> type() != Type::PERSONHANDLE) {
@@ -150,6 +144,16 @@ expr
         } catch (const char* msg) {
             yyerror(msg);
         }
+    }
+    | SREACH expr TOKEN {
+        // assert that expr is LIST
+        if ($2 -> type() != Type::STR) {
+            yyerror("wanna a string after `sreach\'");
+        }
+        auto handle = book.sreach(dynamic_pointer_cast<Str>($1) -> raw(),
+                                  dynamic_pointer_cast<Str>($3) -> raw());
+        shared_ptr<ValBase> ptr(new PersonHandle(handle));
+        $$ = ptr;
     }
     ;
 

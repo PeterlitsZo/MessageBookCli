@@ -1,5 +1,6 @@
 #include "val.h"
 
+#include <algorithm>
 #include <cstdio>
 #include <iostream>
 #include <fstream>
@@ -155,6 +156,18 @@ PersonHandle MessageBook::getPerson(string brokenID) {
     str.set(brokenID);
     return PersonHandle(this,
                         (*persons_)[fullID(str)]);
+}
+
+PersonHandle MessageBook::sreach(string thing, string attr_) {
+    auto it = std::find_if(persons_ -> begin(), persons_ -> end(),
+            [&](const std::pair<Str, Person*>& pair) {
+                return pair.second -> attr(attr_) -> raw() == thing;
+            });
+    if(it != persons_ -> end()) {
+        return PersonHandle(this, it -> second);
+    } else {
+        return newPerson();
+    }
 }
 
 }} // for namespace mbc::Val

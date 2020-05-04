@@ -88,6 +88,7 @@ public:
     virtual ~_ValAtom();
     _ValAtom();
     _ValAtom(const _ValAtom& other);
+    virtual const std::string& raw() const = 0;
 
     _ValAtom& set(const std::string& str);
     _ValAtom& operator=(const std::string& str);
@@ -233,7 +234,7 @@ public:
 
     void save();
     void sort(std::string attr){};
-    PersonHandle sreach(std::string attr, std::string thing){};
+    PersonHandle sreach(std::string attr, std::string thing);
 
     PersonHandle newPerson();
     PersonHandle getPerson(std::string brokenID);
