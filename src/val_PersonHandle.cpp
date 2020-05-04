@@ -116,4 +116,34 @@ string PersonHandle::attr(string attr_) {
     return person_ -> attr(attr_) -> str();
 }
 
+void PersonHandle::init() {
+    units::Input input(std::cin, std::cout);
+    string name, sex, telephone, location, mail_number, email, qq_number, classes;
+
+    input(" | please enter name") >> name;
+    input(" | please enter sex [M/F]") >> sex;;
+    input(" | please enter telephone [only include digit]") >> telephone;
+    input(" | please enter location") >> location;
+    input(" | please enter postal number [6-length number]") >> mail_number;
+    input(" | please enter email") >> email;
+    input(" | please enter qq number") >> qq_number;
+    input(" | please enter classes");
+    std::cin >> std::ws;
+    std::getline(std::cin, classes);
+    input(" | ");
+
+    (*this)
+        .changeAttr("name", name)
+        .changeAttr("sex",  sex)
+        .changeAttr("telephone", telephone)
+        .changeAttr("location", location)
+        .changeAttr("mail_number", mail_number)
+        .changeAttr("email", email)
+        .changeAttr("qq_number", qq_number)
+        .changeAttr("classes", classes)
+    ;
+
+    return;
+}
+
 }} // for namespace mbc::Val

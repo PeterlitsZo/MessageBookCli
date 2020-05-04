@@ -151,6 +151,14 @@ LIST (\[{WHITE}*{STRING_LIST}{WHITE}*\]|\[{WHITE}*\])
     return RIGHT_TRI_BRA;
 }
 
+(\() {
+    return LEFT_BRA;
+}
+
+(\)) {
+    return RIGHT_BRA;
+}
+
 (\.) {
     return DOT;
 }

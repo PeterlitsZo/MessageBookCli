@@ -45,7 +45,7 @@ extern "C" {
 
 %token HELP LIST NEW DELETE EXIT LET INIT SORT SREACH
 
-%token LEFT_TRI_BRA RIGHT_TRI_BRA DOT
+%token LEFT_TRI_BRA RIGHT_TRI_BRA LEFT_BRA RIGHT_BRA DOT
 
 %token NEWLINE 
 %token UNKNOWED
@@ -87,6 +87,9 @@ command
     | expr NEWLINE {
         print_command($1 -> str());
     }
+    | subcommand NEWLINE {
+        print_command($1 -> str());
+    }
 
     | LET TOKEN expr NEWLINE {
         im.update(dynamic_pointer_cast<Str>($2) -> raw(), $3);
@@ -116,7 +119,10 @@ command
     ;
 
 expr
-    : STRING {
+    : LEFT_BRA subcommand RIGHT_BRA {
+        $$ = $1;
+    }
+    | STRING {
         $$ = $1;
     }
     | VECSTR {
@@ -145,7 +151,11 @@ expr
             yyerror(msg);
         }
     }
-    | SREACH expr TOKEN {
+    ;
+
+
+subcommand
+    : SREACH expr TOKEN {
         // assert that expr is LIST
         if ($2 -> type() != Type::STR) {
             yyerror("wanna a string after `sreach\'");
@@ -154,6 +164,10 @@ expr
                                   dynamic_pointer_cast<Str>($3) -> raw());
         shared_ptr<ValBase> ptr(new PersonHandle(handle));
         $$ = ptr;
+    }
+    | INIT expr {
+        dynamic_pointer_cast<PersonHandle>($2) -> init();
+        $$ = $2;
     }
     ;
 

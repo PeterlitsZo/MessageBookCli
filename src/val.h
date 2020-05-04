@@ -176,6 +176,8 @@ public:
     PersonHandle& changeAttr(std::string attribute, std::string value);
     std::shared_ptr<rapidjson::Value> json_value();
 
+    void init();
+
     PersonHandle& operator = (const PersonHandle& other) = delete;
 
 private:
@@ -208,6 +210,7 @@ public:
 
 private:
     const std::string str_() const;
+    const std::string str_width(int width) const;
     std::string hash_();
     void update_ID_();
 

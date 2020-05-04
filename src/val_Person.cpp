@@ -103,6 +103,27 @@ const string Person::str_() const {
     );
 }
 
+// return string if it is vaild (called by function str)
+const string Person::str_width(int width) const {
+    if (*is_vaild_) {
+        return fmt::format(
+            "┌------| id: {} |------\n{}",
+            // ┌——————————^           ^
+            // |(id)                  │
+            ID_->str(),             // │(body)
+            units::add_head( units::hard_warp( fmt::format(
+                "name: {}, sex: {}, telephone: {}, mail_number: {}, email: {},"
+                "qq_number: {}, location: {}, classes: {}", 
+                name_->str(), sex_->str(), telephone_->str(), mail_number_->str(),
+                email_->str(), qq_number_->str(), location_->str(), classes_->str()
+            ), width), "| ")
+            // ^------------------ hard wrap width
+            //      ^------------- every line's head
+        );
+    } else {
+        return *invaild_waring_;
+    }
+}
 
 string Person::hash_() {
     rapidjson::StringBuffer buffer;

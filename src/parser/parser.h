@@ -60,12 +60,14 @@ extern int yydebug;
     SREACH = 266,
     LEFT_TRI_BRA = 267,
     RIGHT_TRI_BRA = 268,
-    DOT = 269,
-    NEWLINE = 270,
-    UNKNOWED = 271,
-    STRING = 272,
-    VECSTR = 273,
-    TOKEN = 274
+    LEFT_BRA = 269,
+    RIGHT_BRA = 270,
+    DOT = 271,
+    NEWLINE = 272,
+    UNKNOWED = 273,
+    STRING = 274,
+    VECSTR = 275,
+    TOKEN = 276
   };
 #endif
 

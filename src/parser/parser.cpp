@@ -160,12 +160,14 @@ extern int yydebug;
     SREACH = 266,
     LEFT_TRI_BRA = 267,
     RIGHT_TRI_BRA = 268,
-    DOT = 269,
-    NEWLINE = 270,
-    UNKNOWED = 271,
-    STRING = 272,
-    VECSTR = 273,
-    TOKEN = 274
+    LEFT_BRA = 269,
+    RIGHT_BRA = 270,
+    DOT = 271,
+    NEWLINE = 272,
+    UNKNOWED = 273,
+    STRING = 274,
+    VECSTR = 275,
+    TOKEN = 276
   };
 #endif
 
@@ -416,19 +418,19 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  2
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   48
+#define YYLAST   62
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  20
+#define YYNTOKENS  22
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  4
+#define YYNNTS  5
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  19
+#define YYNRULES  22
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  39
+#define YYNSTATES  46
 
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   274
+#define YYMAXUTOK   276
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
    as returned by yylex, with out-of-bounds checking.  */
@@ -466,7 +468,7 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
-      15,    16,    17,    18,    19
+      15,    16,    17,    18,    19,    20,    21
 };
 
 #if YYDEBUG
@@ -474,7 +476,8 @@ static const yytype_uint8 yytranslate[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    59,    59,    61,    64,    71,    73,    76,    79,    87,
-      91,    94,   113,   119,   122,   125,   135,   138,   141,   148
+      90,    94,    97,   116,   122,   125,   128,   131,   141,   144,
+     147,   158,   168
 };
 #endif
 
@@ -484,9 +487,10 @@ static const yytype_uint8 yyrline[] =
 static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "HELP", "LIST", "NEW", "DELETE", "EXIT",
-  "LET", "INIT", "SORT", "SREACH", "LEFT_TRI_BRA", "RIGHT_TRI_BRA", "DOT",
-  "NEWLINE", "UNKNOWED", "STRING", "VECSTR", "TOKEN", "$accept",
-  "commands", "command", "expr", YY_NULLPTR
+  "LET", "INIT", "SORT", "SREACH", "LEFT_TRI_BRA", "RIGHT_TRI_BRA",
+  "LEFT_BRA", "RIGHT_BRA", "DOT", "NEWLINE", "UNKNOWED", "STRING",
+  "VECSTR", "TOKEN", "$accept", "commands", "command", "expr",
+  "subcommand", YY_NULLPTR
 };
 #endif
 
@@ -496,14 +500,15 @@ static const char *const yytname[] =
 static const yytype_uint16 yytoknum[] =
 {
        0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
-     265,   266,   267,   268,   269,   270,   271,   272,   273,   274
+     265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
+     275,   276
 };
 # endif
 
-#define YYPACT_NINF -15
+#define YYPACT_NINF -17
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-15)))
+  (!!((Yystate) == (-17)))
 
 #define YYTABLE_NINF -1
 
@@ -514,10 +519,11 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-     -15,     7,   -15,   -14,   -12,   -15,   -15,    16,    -9,    26,
-     -10,    16,    16,   -15,   -15,   -15,   -15,   -15,     8,   -15,
-     -15,    17,   -15,    16,    22,    24,    21,    28,   -15,   -15,
-      27,    29,   -15,   -15,   -15,   -15,    16,    31,   -15
+     -17,    20,   -17,   -16,   -13,   -17,   -17,    38,    -9,    41,
+      38,   -11,    38,    38,    -2,   -17,   -17,   -17,   -17,   -17,
+      -6,    -5,   -17,   -17,    -4,   -17,    38,    -1,   -17,    -3,
+       1,     3,     2,   -17,   -17,   -17,    16,    14,   -17,   -17,
+     -17,   -17,   -17,    38,    21,   -17
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -525,22 +531,23 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       2,     0,     1,     0,     0,    16,    17,     0,     0,     0,
-       0,     0,     0,    12,    13,    14,    18,     3,     0,     4,
-       5,     0,     6,    18,     0,     0,     0,     0,     9,     8,
-       0,     0,     7,    19,    15,    10,     0,     0,    11
+       2,     0,     1,     0,     0,    18,    19,     0,     0,     0,
+       0,     0,     0,     0,     0,    13,    15,    16,    20,     3,
+       0,     0,     4,     5,     0,     6,    20,     0,    22,     0,
+       0,     0,     0,     9,    10,     8,     0,     0,     7,    21,
+      17,    14,    11,     0,     0,    12
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -15,   -15,   -15,    -7
+     -17,   -17,   -17,    -7,     4
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     1,    17,    18
+      -1,     1,    19,    20,    21
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -548,44 +555,51 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-      21,    19,    24,    20,    26,    27,    22,     2,     3,    25,
-       4,     5,     6,     7,     8,     9,    30,    10,    11,    12,
-       5,     6,    13,    28,    14,    15,    16,    11,    12,    37,
-       5,     6,    29,    14,    15,    16,    31,    11,    12,    32,
-      33,    34,    35,    14,    15,    23,    38,     0,    36
+      24,    22,    27,    28,    23,    30,    31,    10,    25,    12,
+      29,    33,    34,    35,    38,    37,    40,    41,    32,    36,
+       2,     3,    39,     4,     5,     6,     7,     8,     9,    10,
+      11,    12,    13,    42,    14,    43,    44,    15,    45,    16,
+      17,    18,     5,     6,     0,     5,     6,     0,     0,     0,
+      13,     0,    14,    13,     0,    14,     0,    16,    17,    18,
+      16,    17,    26
 };
 
 static const yytype_int8 yycheck[] =
 {
-       7,    15,     9,    15,    11,    12,    15,     0,     1,    19,
-       3,     4,     5,     6,     7,     8,    23,    10,    11,    12,
-       4,     5,    15,    15,    17,    18,    19,    11,    12,    36,
-       4,     5,    15,    17,    18,    19,    14,    11,    12,    15,
-      19,    13,    15,    17,    18,    19,    15,    -1,    19
+       7,    17,     9,    10,    17,    12,    13,     9,    17,    11,
+      21,    17,    17,    17,    17,    16,    13,    15,    14,    26,
+       0,     1,    21,     3,     4,     5,     6,     7,     8,     9,
+      10,    11,    12,    17,    14,    21,    43,    17,    17,    19,
+      20,    21,     4,     5,    -1,     4,     5,    -1,    -1,    -1,
+      12,    -1,    14,    12,    -1,    14,    -1,    19,    20,    21,
+      19,    20,    21
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,    21,     0,     1,     3,     4,     5,     6,     7,     8,
-      10,    11,    12,    15,    17,    18,    19,    22,    23,    15,
-      15,    23,    15,    19,    23,    19,    23,    23,    15,    15,
-      23,    14,    15,    19,    13,    15,    19,    23,    15
+       0,    23,     0,     1,     3,     4,     5,     6,     7,     8,
+       9,    10,    11,    12,    14,    17,    19,    20,    21,    24,
+      25,    26,    17,    17,    25,    17,    21,    25,    25,    21,
+      25,    25,    26,    17,    17,    17,    25,    16,    17,    21,
+      13,    15,    17,    21,    25,    17
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    20,    21,    21,    21,    22,    22,    22,    22,    22,
-      22,    22,    22,    23,    23,    23,    23,    23,    23,    23
+       0,    22,    23,    23,    23,    24,    24,    24,    24,    24,
+      24,    24,    24,    24,    25,    25,    25,    25,    25,    25,
+      25,    26,    26
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
        0,     2,     0,     2,     3,     2,     2,     3,     3,     2,
-       4,     6,     1,     1,     1,     3,     1,     1,     1,     3
+       2,     4,     6,     1,     3,     1,     1,     3,     1,     1,
+       1,     3,     2
 };
 
 
@@ -1275,7 +1289,7 @@ yyreduce:
     {
         print_next_arraw();
     }
-#line 1279 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1293 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 4:
@@ -1284,14 +1298,14 @@ yyreduce:
         yyerrok;
         print_next_arraw();
     }
-#line 1288 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1302 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 5:
 #line 71 "./src/parser/parser.y" /* yacc.c:1652  */
     {
     }
-#line 1295 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1309 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 6:
@@ -1299,7 +1313,7 @@ yyreduce:
     {
         return 0;
     }
-#line 1303 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1317 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 7:
@@ -1307,7 +1321,7 @@ yyreduce:
     {
         book.sort(dynamic_pointer_cast<Str>(yyvsp[-1]) -> raw());
     }
-#line 1311 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1325 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 8:
@@ -1319,7 +1333,7 @@ yyreduce:
         }
         dynamic_pointer_cast<PersonHandle>(yyvsp[-1]) -> remove();
     }
-#line 1323 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1337 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 9:
@@ -1327,19 +1341,27 @@ yyreduce:
     {
         print_command(yyvsp[-1] -> str());
     }
-#line 1331 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1345 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 10:
-#line 91 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 90 "./src/parser/parser.y" /* yacc.c:1652  */
     {
-        im.update(dynamic_pointer_cast<Str>(yyvsp[-2]) -> raw(), yyvsp[-1]);
+        print_command(yyvsp[-1] -> str());
     }
-#line 1339 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1353 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 11:
 #line 94 "./src/parser/parser.y" /* yacc.c:1652  */
+    {
+        im.update(dynamic_pointer_cast<Str>(yyvsp[-2]) -> raw(), yyvsp[-1]);
+    }
+#line 1361 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+    break;
+
+  case 12:
+#line 97 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         // assert that the expr$1 is PERSONHANDLE and the $2 is a STRING, or VECSTR
         if (yyvsp[-4] -> type() != Type::PERSONHANDLE) {
@@ -1358,35 +1380,43 @@ yyreduce:
             yyerror("wanna a Str or VecStr after dot - `.\'");
         }
     }
-#line 1362 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
-    break;
-
-  case 12:
-#line 113 "./src/parser/parser.y" /* yacc.c:1652  */
-    {
-        // do nothing
-    }
-#line 1370 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1384 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 13:
-#line 119 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 116 "./src/parser/parser.y" /* yacc.c:1652  */
     {
-        yyval = yyvsp[0];
+        // do nothing
     }
-#line 1378 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1392 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 14:
 #line 122 "./src/parser/parser.y" /* yacc.c:1652  */
     {
-        yyval = yyvsp[0];
+        yyval = yyvsp[-2];
     }
-#line 1386 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1400 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 15:
 #line 125 "./src/parser/parser.y" /* yacc.c:1652  */
+    {
+        yyval = yyvsp[0];
+    }
+#line 1408 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+    break;
+
+  case 16:
+#line 128 "./src/parser/parser.y" /* yacc.c:1652  */
+    {
+        yyval = yyvsp[0];
+    }
+#line 1416 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+    break;
+
+  case 17:
+#line 131 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         if (yyvsp[-1] -> type() != Type::STR) {
             // throw mbc_exce("wanna a str type object");
@@ -1397,27 +1427,27 @@ yyreduce:
         shared_ptr<ValBase> ptr(new PersonHandle(handle));
         yyval = ptr;
     }
-#line 1401 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
-    break;
-
-  case 16:
-#line 135 "./src/parser/parser.y" /* yacc.c:1652  */
-    {
-        yyval = make_shared<MessageBook>(book);
-    }
-#line 1409 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
-    break;
-
-  case 17:
-#line 138 "./src/parser/parser.y" /* yacc.c:1652  */
-    {
-        yyval = make_shared<PersonHandle>(book.newPerson());
-    }
-#line 1417 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1431 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 18:
 #line 141 "./src/parser/parser.y" /* yacc.c:1652  */
+    {
+        yyval = make_shared<MessageBook>(book);
+    }
+#line 1439 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+    break;
+
+  case 19:
+#line 144 "./src/parser/parser.y" /* yacc.c:1652  */
+    {
+        yyval = make_shared<PersonHandle>(book.newPerson());
+    }
+#line 1447 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+    break;
+
+  case 20:
+#line 147 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         try {
             yyval = im.get(dynamic_pointer_cast<Str>(yyvsp[0]) -> raw());
@@ -1425,11 +1455,11 @@ yyreduce:
             yyerror(msg);
         }
     }
-#line 1429 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1459 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
-  case 19:
-#line 148 "./src/parser/parser.y" /* yacc.c:1652  */
+  case 21:
+#line 158 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         // assert that expr is LIST
         if (yyvsp[-1] -> type() != Type::STR) {
@@ -1440,11 +1470,20 @@ yyreduce:
         shared_ptr<ValBase> ptr(new PersonHandle(handle));
         yyval = ptr;
     }
-#line 1444 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1474 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+    break;
+
+  case 22:
+#line 168 "./src/parser/parser.y" /* yacc.c:1652  */
+    {
+        dynamic_pointer_cast<PersonHandle>(yyvsp[0]) -> init();
+        yyval = yyvsp[0];
+    }
+#line 1483 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
 
-#line 1448 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1487 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1675,5 +1714,5 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 160 "./src/parser/parser.y" /* yacc.c:1918  */
+#line 174 "./src/parser/parser.y" /* yacc.c:1918  */
 
