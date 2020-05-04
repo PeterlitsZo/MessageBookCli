@@ -65,6 +65,11 @@ const string VecStr::str_() const {
     return units::repr(value_->cbegin(), value_->cend());
 }
 
+const string& VecStr::raw() const {
+    shared_ptr<string> value = std::make_shared<string>(str_());
+    return *value;
+}
+
 // ----------------------------------------------------------------------------
 // ---[ init/reset method ]----------------------------------------------------
 // ----------------------------------------------------------------------------

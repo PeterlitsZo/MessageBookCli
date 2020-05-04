@@ -20,6 +20,7 @@ using std::dynamic_pointer_cast;
 using mbc::Val::Type;
 using mbc::Val::ValBase;
 using mbc::Val::Str;
+using mbc::Val::VecStr;
 using mbc::Val::PersonHandle;
 using mbc::Val::MessageBook;
 
@@ -42,7 +43,7 @@ extern "C" {
 
 %}
 
-%token HELP LIST NEW DELETE EXIT LET INIT SORT SREACH 
+%token HELP LIST NEW DELETE EXIT LET INIT SORT SREACH
 
 %token LEFT_TRI_BRA RIGHT_TRI_BRA DOT
 
@@ -72,6 +73,25 @@ command
     | EXIT NEWLINE {
         return 0;
     }
+    | SORT expr TOKEN NEWLINE {
+        // assrt that expr$1 is LIST and the expr$2 is STRING
+        if ($2 -> type() != Type::MESSAGEBOOK) {
+            yyerror("wanna a list after `soft\'");
+        }
+    }
+    | SREACH expr TOKEN NEWLINE {
+        // assert that expr is LIST
+        if ($2 -> type() != Type::MESSAGEBOOK) {
+            yyerror("wanna a list after `sreach\'");
+        }
+    }
+    | DELETE expr NEWLINE {
+        // assert that expr is PERSONHANDLE
+        if ($2 -> type() != Type::PERSONHANDLE) {
+            yyerror("wanna a PersonHandle after `delete\'");
+        }
+    }
+
     | expr NEWLINE {
         print_command($1 -> str());
     }
@@ -80,9 +100,22 @@ command
         im.update(dynamic_pointer_cast<Str>($2) -> raw(), $3);
     }
     | LET expr DOT TOKEN expr NEWLINE {
-        dynamic_pointer_cast<PersonHandle>($2)
-            -> changeAttr(dynamic_pointer_cast<Str>($4) -> raw(),
-                          dynamic_pointer_cast<Str>($5) -> raw());
+        // assert that the expr$1 is PERSONHANDLE and the $2 is a STRING, or VECSTR
+        if ($2 -> type() != Type::PERSONHANDLE) {
+            yyerror("wanna a PersonHandle after `let\'");
+        }
+
+        if ($4 -> type() == Type::STR) {
+            dynamic_pointer_cast<PersonHandle>($2)
+                -> changeAttr(dynamic_pointer_cast<Str>($4) -> raw(),
+                              dynamic_pointer_cast<Str>($5) -> raw());
+        } else if ($4 -> type() == Type::VECSTR) {
+            dynamic_pointer_cast<PersonHandle>($2)
+                -> changeAttr(dynamic_pointer_cast<Str>($4) -> raw(),
+                              dynamic_pointer_cast<VecStr>($5) -> raw());
+        } else {
+            yyerror("wanna a Str or VecStr after dot - `.\'");
+        }
     }
 
     | NEWLINE {

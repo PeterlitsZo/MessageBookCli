@@ -141,6 +141,8 @@ public:
     VecStr(std::function<bool(const std::string& str)> vaild_checker);
     ~VecStr();
 
+    const std::string& raw() const; 
+
     std::shared_ptr<rapidjson::Value> json_value();
 
     VecStr& operator = (const VecStr& other) = delete;
