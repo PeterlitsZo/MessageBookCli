@@ -70,26 +70,26 @@ MessageBook::MessageBook(const string& path) : ValBase() {
     buffer << in.rdbuf();
     string content(buffer.str());
 
-    // doc_.Parse(content.c_str());
+    doc_.Parse(content.c_str());
 
-    // for(auto it = doc_.Begin(); it != doc_.End(); ++it) {
-    //     vector<string> result;
-    //     auto value = (*it)["classes"]["value"].GetArray();
-    //     for(auto itor = value.Begin(); itor != value.End(); ++itor) {
-    //         result.push_back(itor -> GetString());
-    //     }
+    for(auto it = doc_.Begin(); it != doc_.End(); ++it) {
+        vector<string> result;
+        auto value = (*it)["classes"]["value"].GetArray();
+        for(auto itor = value.Begin(); itor != value.End(); ++itor) {
+            result.push_back(itor -> GetString());
+        }
 
-    //     newPerson()
-    //         .changeAttr("name",        (*it)["name"]["value"].GetString())
-    //         .changeAttr("sex",         (*it)["sex"]["value"].GetString())
-    //         .changeAttr("telephone",   (*it)["telephone"]["value"].GetString())
-    //         .changeAttr("location",    (*it)["location"]["value"].GetString())
-    //         .changeAttr("mail_number", (*it)["mail_number"]["value"].GetString())
-    //         .changeAttr("email",       (*it)["email"]["value"].GetString())
-    //         .changeAttr("qq_number",   (*it)["qq_number"]["value"].GetString())
-    //         .changeAttr("classes",     repr(result.begin(), result.end()))
-    //     ;
-    // }
+        newPerson()
+            .changeAttr("name",        (*it)["name"]["value"].GetString())
+            .changeAttr("sex",         (*it)["sex"]["value"].GetString())
+            .changeAttr("telephone",   (*it)["telephone"]["value"].GetString())
+            .changeAttr("location",    (*it)["location"]["value"].GetString())
+            .changeAttr("mail_number", (*it)["mail_number"]["value"].GetString())
+            .changeAttr("email",       (*it)["email"]["value"].GetString())
+            .changeAttr("qq_number",   (*it)["qq_number"]["value"].GetString())
+            .changeAttr("classes",     repr(result.begin(), result.end()))
+        ;
+    }
 }
 
 MessageBook::~MessageBook() {
