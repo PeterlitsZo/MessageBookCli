@@ -31,6 +31,9 @@ PersonHandle::PersonHandle(MessageBook* mb, Person* person) {
     *type_          = Type(PERSONHANDLE);
     *invaild_waring_ = "[person handle -> invaild person]";
 
+    ++ *(mb_ -> count_);
+    ++ *(person_ -> count_);
+
     reset_();
 }
 
@@ -38,11 +41,15 @@ PersonHandle::PersonHandle(MessageBook* mb, Person* person) {
 PersonHandle::PersonHandle(const PersonHandle& other) : ValBase(other) {
     mb_ = other.mb_;
     person_ = other.person_;
+
+    ++ *(mb_ -> count_);
+    ++ *(person_ -> count_);
 }
 
 
 PersonHandle::~PersonHandle() {
-    ; // do nothing
+    -- *(mb_ -> count_);
+    -- *(person_ -> count_);
 }
 
 void PersonHandle::reset_() {
@@ -65,10 +72,7 @@ PersonHandle& PersonHandle::remove() {
                                  (person_ -> ID()));
         mb_ -> order_ -> erase(it_order);
 
-        // now it is invaild
-        *is_vaild_ = false;
-
-        // save messagebook and reset self
+        // save messagebook and reset self, now it is unvaild
         mb_ -> save();
         reset_();
     } else {
@@ -85,7 +89,7 @@ PersonHandle& PersonHandle::changeAttr(string attribute, string value) {
         person_ -> update_ID_();
 
         // after the person's ID is changed, update mb.
-        (*(mb_ -> persons_))[person_ -> ID()] = *person_;
+        mb_ -> persons_ -> insert({person_ -> ID(), person_});
         mb_ -> order_ -> push_back(person_ -> ID());
         *is_vaild_ = true;
 

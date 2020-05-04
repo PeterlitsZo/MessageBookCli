@@ -1,11 +1,14 @@
 #include <gtest/gtest.h>
 #include <gtest/gtest_pred_impl.h>
 
+#include <gtest/internal/gtest-internal.h>
 #include <vector>
 #include <iostream>
 #include <string>
 #include <exception>
 #include <cstdio>
+#include <fstream>
+#include <sstream>
 
 #include "../src/info.h"
 #include "../src/units.h"
@@ -163,7 +166,7 @@ TEST(Tests, Val_Person) {
     Val::Person p1;
     p1.attr("name") -> set("peter");
     EXPECT_EQ(p1.str(),
-        "\xE2\x94\x8C------| id: \'4605f1d81e986547d7229e95a094044d\' |------\n"
+        "\xE2\x94\x8C------| id: \'54cfaf2e410f7965700dfb941a0b79c3\' |------\n"
         "| name: \'peter\', sex: [invaild str], telephone: [invaild str], mail_"
         "number: [invai\n"
         "| ld str], email: [invaild str],qq_number: [invaild str], location: [i"
@@ -199,18 +202,86 @@ TEST(Tests, Val_MessageBook_3) {
         mb.newPerson()
             .changeAttr("name", "peter");
     }
+    std::fstream file("temp");
+    std::stringstream content_ss;
+    content_ss << file.rdbuf();
+
+    std::string content(content_ss.str());
+    EXPECT_EQ(
+        content, 
+        "[{\"name\":{\"valid\":true,\"value\":\"peter\"},\"sex\":{\"valid\""
+        ":false,\"value\":\"\"},\"telephone\":{\"valid\":false,\"value\":\""
+        "\"},\"location\":{\"valid\":false,\"value\":\"\"},\"mail_number\":"
+        "{\"valid\":false,\"value\":\"\"},\"email\":{\"valid\":false,\"valu"
+        "e\":\"\"},\"qq_number\":{\"valid\":false,\"value\":\"\"},\"classes"
+        "\":{\"valid\":true,\"value\":[]}}]"
+    );
+
+    remove("temp");
+}
+
+// TEST: val_MessageBook
+TEST(Tests, Val_MessageBook_4) {
+    using namespace mbc;
+    remove("temp");
+    Val::MessageBook mb("temp");
+    bool PART_1 = false;
+    try {
+        mb.newPerson()
+            .changeAttr("classes", "[");
+    } catch (const Val::bad_value& e) {
+        // std::cerr << e.what() << std::endl;
+        std::cout << "bad value" << std::endl;
+        PART_1 = true;
+    }
+    EXPECT_EQ(PART_1, true);
+
+    bool PART_2 = false;
+    try {
+        mb.newPerson()
+            .changeAttr("fuck", "this");
+    } catch (const Val::bad_attr& e) {
+        // std::cerr << e.what() << std::endl;
+        std::cout << "bad attr" << std::endl;
+        PART_2 = true;
+    }
+    EXPECT_EQ(PART_2, true);
+
+    remove("temp");
+}
+
+// TEST: val_MessageBook
+TEST(Tests, Val_MessageBook_5) {
+    using namespace mbc;
+    remove("temp");
+    Val::MessageBook mb("temp");
+    mb.newPerson()
+        .changeAttr("name", "peter")
+        .changeAttr("sex",  "")
+        .changeAttr("telephone", "")
+        .changeAttr("mail_number", "")
+        .changeAttr("email", "")
+        .changeAttr("qq_number", "")
+        .changeAttr("location", "")
+        .changeAttr("classes", "[]");
+    remove("temp");
+    // assert that there is not anything core dumped
+}
+
+// TEST: val_MessageBook
+TEST(Tests, Val_MessageBook_6) {
+    using namespace mbc;
+    remove("temp");
     {
         Val::MessageBook mb("temp");
-        EXPECT_EQ(mb.str(),
-        "\xE2\x94\x8C------| id: \'4605f1d81e986547d7229e95a094044d\' |------\n"
-        "| name: \'peter\', sex: [invaild str], telephone: [invaild str], mail_"
-            "number: [invai\n"
-        "| ld str], email: [invaild str],qq_number: [invaild str], location: [i"
-            "nvaild str],\n"
-        "|  classes: []"
-        );
+        mb.newPerson()
+            .changeAttr("name", "peter");
+    }
+    {
+        Val::MessageBook mb("temp");
     }
     remove("temp");
+    // assert that there is not anything core dumped
 }
 
 int main(int argc, char **argv) {

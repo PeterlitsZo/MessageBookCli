@@ -21,16 +21,6 @@ using std::stringstream;
 
 namespace units {
 
-class mbc_exce : public std::exception {
-public:
-    mbc_exce(string msg) { msg_ = msg; }
-    const char* what() throw() {
-        return ("[mbc_exception]: " + msg_).c_str();
-    }
-
-private:
-    string msg_;
-};
 
 // ----------------------------------------------------------------------------
 // ---[ function for has ]-----------------------------------------------------
@@ -197,7 +187,7 @@ string parse_str_repr(string str) {
                 // it must be at the last one index.
                 // assert(it - str.begin() == str.size() - 1);
                 if (it + 1 != str.end() ) {
-                    throw mbc_exce(
+                    throw bad_parser(
                             "parse error. except meet useable edge token at end"
                             " (meet \'" + string() + *it + "\')"
                           );
@@ -251,7 +241,7 @@ vector<string> parse_vecstr_repr(string str) {
                 status.IN_LIST = S::in_list;
                 status.OK_FOR_NEXT = S::ok_both;
             } else {
-                throw mbc_exce("prase error. except the first token is \'[\'");
+                throw bad_parser("prase error. except the first token is \'[\'");
             }
 
         // ---[ going to be in string or get the end of string ]
@@ -265,7 +255,7 @@ vector<string> parse_vecstr_repr(string str) {
                 atom += *it;
                 edge_token = *it;
             } else {
-                throw mbc_exce("parse error. except a string");
+                throw bad_parser("parse error. except a string");
             }
         // at the inside of list and except a token ']' or ','
         } else if (status == S(S::in_list, S::not_ok_next, S::out_str)) {
@@ -279,7 +269,7 @@ vector<string> parse_vecstr_repr(string str) {
                 // ------------------------------------------------------------
                 status.IN_LIST = S::out_list;
             } else {
-                throw mbc_exce("parse error, except a token \',\' or \']\'");
+                throw bad_parser("parse error, except a token \',\' or \']\'");
             }
         // at the inside of list and except a token ']' or a string
         } else if (status == S(S::in_list, S::ok_both, S::out_str)) {
@@ -296,7 +286,7 @@ vector<string> parse_vecstr_repr(string str) {
                 // ------------------------------------------------------------
                 status.IN_LIST = S::out_list;
             } else {
-                throw mbc_exce("parser error, except a token \']\' or a string");
+                throw bad_parser("parser error, except a token \']\' or a string");
             }
 
         // ---[ in string ]----------------------------------------------------
@@ -322,7 +312,7 @@ vector<string> parse_vecstr_repr(string str) {
 
         // ---[ error ]--------------------------------------------------------
         } else {
-            throw mbc_exce("unexcept status");
+            throw bad_parser("unexcept status");
         }
     }
 

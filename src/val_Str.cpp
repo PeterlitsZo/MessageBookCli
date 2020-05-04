@@ -89,7 +89,12 @@ void Str::init_(const std::string& str) {
 
 
 _ValAtom& Str::reprset(const string& str) {
-    string result = units::parse_str_repr(str);
+    string result = "";
+    try {
+        result = units::parse_str_repr(str);
+    } catch (const units::bad_parser& e) {
+        throw Val::bad_value();
+    }
     if((*vaild_checker_)(result)) {
         *value_ = result;
     } else {
@@ -110,7 +115,7 @@ const string& Str::raw() const {
 
 // return self's json value
 shared_ptr<Value> Str::json_value() {
-    shared_ptr<Value> v(new Value());
+    shared_ptr<Value> v = std::make_shared<Value>();
     auto& allo = doc_.GetAllocator();
 
     v -> SetObject();

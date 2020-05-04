@@ -56,7 +56,7 @@ MessageBook::MessageBook(const string& path) : ValBase() {
     path_ -> set(path);
 
     order_ = new list<Str>();
-    persons_ = new map<Str, Person>();
+    persons_ = new map<Str, Person*>();
 
     *invaild_waring_ = "[ invaild message book ]";
     *is_vaild_ = true;
@@ -70,31 +70,26 @@ MessageBook::MessageBook(const string& path) : ValBase() {
     buffer << in.rdbuf();
     string content(buffer.str());
 
-    doc_.Parse(content.c_str());
+    // doc_.Parse(content.c_str());
 
-    for(auto it = doc_.Begin(); it != doc_.End(); ++it) {
-        vector<string> result;
-        auto value = (*it)["classes"]["value"].GetArray();
-        for(auto itor = value.Begin(); itor != value.End(); ++itor) {
-            result.push_back(itor -> GetString());
-        }
+    // for(auto it = doc_.Begin(); it != doc_.End(); ++it) {
+    //     vector<string> result;
+    //     auto value = (*it)["classes"]["value"].GetArray();
+    //     for(auto itor = value.Begin(); itor != value.End(); ++itor) {
+    //         result.push_back(itor -> GetString());
+    //     }
 
-        auto name = (*it)["name"]["value"].GetString();
-        auto sex = (*it)["sex"]["value"].GetString();
-        auto telephone = (*it)["telephone"]["value"].GetString();
-        auto location = (*it)["location"]["value"].GetString();
-
-        newPerson()
-            .changeAttr("name",        (*it)["name"]["value"].GetString())
-            .changeAttr("sex",         (*it)["sex"]["value"].GetString())
-            .changeAttr("telephone",   (*it)["telephone"]["value"].GetString())
-            .changeAttr("location",    (*it)["location"]["value"].GetString())
-            .changeAttr("mail_number", (*it)["mail_number"]["value"].GetString())
-            .changeAttr("email",       (*it)["email"]["value"].GetString())
-            .changeAttr("qq_number",   (*it)["qq_number"]["value"].GetString())
-            .changeAttr("classes",     repr(result.begin(), result.end()))
-        ;
-    }
+    //     newPerson()
+    //         .changeAttr("name",        (*it)["name"]["value"].GetString())
+    //         .changeAttr("sex",         (*it)["sex"]["value"].GetString())
+    //         .changeAttr("telephone",   (*it)["telephone"]["value"].GetString())
+    //         .changeAttr("location",    (*it)["location"]["value"].GetString())
+    //         .changeAttr("mail_number", (*it)["mail_number"]["value"].GetString())
+    //         .changeAttr("email",       (*it)["email"]["value"].GetString())
+    //         .changeAttr("qq_number",   (*it)["qq_number"]["value"].GetString())
+    //         .changeAttr("classes",     repr(result.begin(), result.end()))
+    //     ;
+    // }
 }
 
 MessageBook::~MessageBook() {
@@ -108,7 +103,7 @@ MessageBook::~MessageBook() {
 const string MessageBook::str_() const {
     string result;
     for(auto it = order_ -> cbegin(); it != order_ -> cend(); ++ it) {
-        result += persons_ -> find(*it) -> second.str();
+        result += persons_ -> find(*it) -> second -> str();
         result += "\n\n";
     }
     return result;
@@ -129,7 +124,7 @@ shared_ptr<Value> MessageBook::json_value() {
     auto& allo = doc_.GetAllocator();
 
     for(auto it = persons_ -> begin(); it != persons_ -> end(); ++it) {
-        value -> PushBack(*(it -> second.json_value()), allo);
+        value -> PushBack(*(it -> second -> json_value()), allo);
     }
     return value;
 }
@@ -144,21 +139,24 @@ void MessageBook::save() {
 }
 
 PersonHandle MessageBook::newPerson() {
-    Person person;
-    if (not persons_ -> count(person.ID())) {
-        order_ -> push_back(person.ID());
+    Person* person = new Person();
+    if (not persons_ -> count(person -> ID())) {
+        order_ -> push_back(person -> ID());
     }
-    (*persons_)[person.ID()] = person;
+    persons_ -> insert({person -> ID(), person});
     save();
     return PersonHandle(this,
-                        &((*persons_)[person.ID()]) );
+                        (*persons_)[person -> ID()] );
+    // [WARNING] I don't delete it!!!
 }
 
 PersonHandle MessageBook::getPerson(string brokenID) {
     auto str = Str();
     str.set(brokenID);
     return PersonHandle(this,
-                        &(*persons_)[fullID(str)]);
+                        (*persons_)[fullID(str)]);
 }
 
 }} // for namespace mbc::Val
+
+

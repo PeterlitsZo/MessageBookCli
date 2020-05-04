@@ -76,7 +76,11 @@ void VecStr::init_() {
 
 // init self by string
 void VecStr::init_(const std::string& str) {
-    *value_ = units::parse_vecstr_repr(str);
+    try {
+        *value_ = units::parse_vecstr_repr(str);
+    } catch (const units::bad_parser& e) {
+        throw Val::bad_value();
+    }
 }
 
 // ----------------------------------------------------------------------------
@@ -85,7 +89,7 @@ void VecStr::init_(const std::string& str) {
 
 // return self's json value
 shared_ptr<Value> VecStr::json_value() {
-    shared_ptr<Value> v(new Value());
+    shared_ptr<Value> v = std::make_shared<Value>();
     auto& allo = doc_.GetAllocator();
 
     v -> SetObject();

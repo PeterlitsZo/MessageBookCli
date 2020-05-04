@@ -1,6 +1,7 @@
 #include "val.h"
 
 #include <string>
+#include <iostream>
 
 #include "../include/rapidjson/document.h"
 

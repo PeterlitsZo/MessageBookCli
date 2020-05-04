@@ -25,12 +25,6 @@ using rapidjson::StringBuffer;
 
 namespace mbc { namespace Val { // begin for namespace mbc::Val
 
-struct bad_attr : public std::exception {
-    const char* what() throw() {
-        return "the attribute is unused";
-    }
-};
-
 Person::Person() : ValBase() {
     using namespace units;
 
@@ -53,7 +47,7 @@ Person::Person() : ValBase() {
     update_ID_();
 }
 
-Person::Person(const Person& other) {
+Person::Person(const Person& other) : ValBase(other) {
     ID_             = other.ID_;
     name_           = other.name_;
     sex_            = other.sex_;
@@ -135,18 +129,18 @@ _ValAtom* Person::attr(string attribute) {
 
 // return self's json value
 shared_ptr<Value> Person::json_value() {
-    shared_ptr<Value> v(new Value());
+    shared_ptr<Value> v = std::make_shared<Value>();
     auto& allo = doc_.GetAllocator();
 
     v -> SetObject();
-    v -> AddMember("name",          *(name_->json_value()),        allo);
-    v -> AddMember("sex",           *(sex_->json_value()),         allo);
-    v -> AddMember("telephone",     *(telephone_->json_value()),   allo);
-    v -> AddMember("location",      *(location_->json_value()),    allo);
-    v -> AddMember("mail_number",   *(mail_number_->json_value()), allo);
-    v -> AddMember("email",         *(email_->json_value()),       allo);
-    v -> AddMember("qq_number",     *(qq_number_->json_value()),   allo);
-    v -> AddMember("classes",       *(classes_->json_value()),     allo);
+    v -> AddMember("name",        name_->json_value()        -> Move(), allo);
+    v -> AddMember("sex",         sex_->json_value()         -> Move(), allo);
+    v -> AddMember("telephone",   telephone_->json_value()   -> Move(), allo);
+    v -> AddMember("location",    location_->json_value()    -> Move(), allo);
+    v -> AddMember("mail_number", mail_number_->json_value() -> Move(), allo);
+    v -> AddMember("email",       email_->json_value()       -> Move(), allo);
+    v -> AddMember("qq_number",   qq_number_->json_value()   -> Move(), allo);
+    v -> AddMember("classes",     classes_->json_value()     -> Move(), allo);
 
     return v;
 }

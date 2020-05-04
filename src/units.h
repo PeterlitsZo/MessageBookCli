@@ -6,8 +6,23 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
+#include <exception>
 
 namespace units {
+
+// ----------------------------------------------------------------------------
+// ---[ exception ]------------------------------------------------------------
+// ----------------------------------------------------------------------------
+
+struct bad_parser : public std::exception {
+    std::string msg_;
+
+    bad_parser(const char* msg) : msg_(msg) {}
+    bad_parser(std::string msg) : msg_(msg) {}
+    const char* what() throw() {
+        return msg_.c_str();
+    }
+};
 
 // ----------------------------------------------------------------------------
 // ---[ hash ]-----------------------------------------------------------------
