@@ -104,7 +104,9 @@ PersonHandle& PersonHandle::changeAttr(string attribute, string value) {
 
 // return string if it is vaild (called by function str)
 const string PersonHandle::str_() const {
-    return "[person handle -> ]\n" + units::add_head(person_ -> str(), "....");
+    return "[person handle -> ]\n" + units::add_head(
+                person_ -> str_width(76), "...."
+            );
 }
 
 // return self's json value

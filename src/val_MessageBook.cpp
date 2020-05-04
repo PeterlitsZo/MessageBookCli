@@ -143,8 +143,8 @@ PersonHandle MessageBook::newPerson() {
     Person* person = new Person();
     if (not persons_ -> count(person -> ID())) {
         order_ -> push_back(person -> ID());
+        persons_ -> insert({person -> ID(), person});
     }
-    persons_ -> insert({person -> ID(), person});
     save();
     return PersonHandle(this,
                         (*persons_)[person -> ID()] );

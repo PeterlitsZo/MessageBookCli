@@ -136,7 +136,7 @@ string hard_warp(string str, int width) {
         if (*it == '\n') {
             pos = 0;            // if there is a soft here, then reset pos
         }
-        if (pos == 80 and it + 1 != str.end()) {
+        if (pos == width and it + 1 != str.end()) {
             pos = 0;            // reset
             result += '\n';
         }
