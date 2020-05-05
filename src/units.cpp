@@ -249,7 +249,7 @@ vector<string> parse_vecstr_repr(string str) {
         } else if (status == S(S::in_list, S::ok_next, S::out_str)) {
             if (is_space(*it)) {
                 ; // do nothing
-            } else if (*it == '\'' or *it == '\"') {
+            } else if (*it == '\'' || *it == '\"') {
                 status.OK_FOR_NEXT = S::not_ok_next;
                 status.IN_STRING = S::in_str;
                 atom += *it;
@@ -275,7 +275,7 @@ vector<string> parse_vecstr_repr(string str) {
         } else if (status == S(S::in_list, S::ok_both, S::out_str)) {
             if (is_space(*it)) {
                 ; // do nothing
-            } else if (*it == '\'' or *it == '\"') {
+            } else if (*it == '\'' || *it == '\"') {
                 status.OK_FOR_NEXT = S::not_ok_next;
                 status.IN_STRING = S::in_str;
                 atom += *it;

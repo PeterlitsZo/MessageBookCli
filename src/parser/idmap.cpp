@@ -5,7 +5,6 @@
 #include <memory>
 
 #include "../val/val.h"
-#include <pthread.h>
 
 using std::string;
 using std::shared_ptr;
