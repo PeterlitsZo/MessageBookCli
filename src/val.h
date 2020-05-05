@@ -33,6 +33,12 @@ struct bad_value : public std::exception {
 };
 
 
+struct too_little : public std::exception {
+    const char * what () throw() {
+        return "the result's number is too little";
+    }
+};
+
 // ----------------------------------------------------------------------------
 // ---[ mbc::Val::Type ]-------------------------------------------------------
 // ----------------------------------------------------------------------------

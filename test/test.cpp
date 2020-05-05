@@ -279,9 +279,22 @@ TEST(Tests, Val_MessageBook_6) {
     }
     {
         Val::MessageBook mb("temp");
+        mb.newPerson()
+            .changeAttr("name", "marry")
+            .changeAttr("sex",  "")
+            .changeAttr("telephone", "")
+            .changeAttr("mail_number", "")
+            .changeAttr("email", "")
+            .changeAttr("qq_number", "")
+            .changeAttr("location", "")
+            .changeAttr("classes", "[]");
+        EXPECT_EQ(mb.sreach("marry", "name").attr("name"), "marry");
     }
     remove("temp");
     // assert that there is not anything core dumped
+}
+
+TEST(Tests, Val_MessageBook_7) {
 }
 
 int main(int argc, char **argv) {

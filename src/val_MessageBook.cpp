@@ -168,6 +168,7 @@ PersonHandle MessageBook::sreach(string thing, string attr_) {
         return PersonHandle(this, it -> second);
     } else {
         return newPerson();
+        // throw "the result of sreach is too little";
     }
 }
 

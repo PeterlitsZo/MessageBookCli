@@ -2,6 +2,7 @@
 
 #include <string>
 #include <memory>
+#include <exception>
 
 #include "interface.h"
 #include "idmap.h"
@@ -93,7 +94,7 @@ command
 
     | LET TOKEN expr NEWLINE {
         im.update(dynamic_pointer_cast<Str>($2) -> raw(), $3);
-    }
+    } 
     | LET expr DOT TOKEN expr NEWLINE {
         // assert that the expr$1 is PERSONHANDLE and the $2 is a STRING, or VECSTR
         if ($2 -> type() != Type::PERSONHANDLE) {
@@ -120,7 +121,7 @@ command
 
 expr
     : LEFT_BRA subcommand RIGHT_BRA {
-        $$ = $1;
+        $$ = $2;
     }
     | STRING {
         $$ = $1;
@@ -130,8 +131,7 @@ expr
     }
     | LEFT_TRI_BRA expr RIGHT_TRI_BRA {
         if ($2 -> type() != Type::STR) {
-            // throw mbc_exce("wanna a str type object");
-            throw "wanna a str type object";
+            yyerror("wanna a str type object");
         }
 
         auto handle = book.getPerson(dynamic_pointer_cast<Str>($2) -> raw());
@@ -160,14 +160,26 @@ subcommand
         if ($2 -> type() != Type::STR) {
             yyerror("wanna a string after `sreach\'");
         }
-        auto handle = book.sreach(dynamic_pointer_cast<Str>($1) -> raw(),
-                                  dynamic_pointer_cast<Str>($3) -> raw());
-        shared_ptr<ValBase> ptr(new PersonHandle(handle));
-        $$ = ptr;
+        try {
+            auto handle = book.sreach(dynamic_pointer_cast<Str>($2) -> raw(),
+                                      dynamic_pointer_cast<Str>($3) -> raw());
+            shared_ptr<ValBase> ptr = make_shared<PersonHandle>(handle);
+            $$ = ptr;
+        } catch(const char* msg) {
+            yyerror(msg);
+        }
     }
     | INIT expr {
-        dynamic_pointer_cast<PersonHandle>($2) -> init();
-        $$ = $2;
+        yyerror("init");
+        if ($2 -> type() != Type::PERSONHANDLE) {
+            yyerror("wanna a PersonHandle after `init\'");
+        }
+        try {
+            dynamic_pointer_cast<PersonHandle>($2) -> init();
+            $$ = $2;
+        } catch (...) {
+            yyerror( "the value is not in right syntax" );
+        }
     }
     ;
 
