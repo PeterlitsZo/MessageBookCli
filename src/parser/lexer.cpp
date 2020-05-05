@@ -570,6 +570,61 @@ extern "C" {
     int yylex(void);
 }
 
+// ---[ for unistd.h on Windows ]----------------------------------------------
+
+#define YY_NO_UNISTD_H
+
+#ifndef PETERLITS_UNISTD_H__
+#define PETERLITS_UNISTD_H__
+
+/* This is intended as a drop-in replacement for unistd.h on Windows.
+ * Please add functionality as neeeded.
+ * https://stackoverflow.com/a/826027/1202830
+ */
+
+#include <stdlib.h>
+#include <io.h>
+// #include "getopt.h" /* getopt at: https://gist.github.com/ashelly/7776712 */
+#include <process.h> /* for getpid() and the exec..() family */
+#include <direct.h> /* for _getcwd() and _chdir() */
+
+#define srandom srand
+#define random rand
+
+ /* Values for the second argument to access.
+    These may be OR'd together.  */
+#define R_OK    4       /* Test for read permission.  */
+#define W_OK    2       /* Test for write permission.  */
+    //#define   X_OK    1       /* execute permission - unsupported in windows*/
+#define F_OK    0       /* Test for existence.  */
+
+#define access _access
+#define dup2 _dup2
+#define execve _execve
+#define ftruncate _chsize
+#define unlink _unlink
+#define fileno _fileno
+#define getcwd _getcwd
+#define chdir _chdir
+#define isatty _isatty
+#define lseek _lseek
+/* read, write, and close are NOT being #defined here, because while there are
+   file handle specific versions for Windows, they probably don't work for
+   sockets. You need to look at your app and consider whether to call e.g.
+   closesocket(). */
+
+#ifdef _WIN64
+#define ssize_t __int64
+#else
+#define ssize_t long
+#endif
+
+#define STDIN_FILENO 0
+#define STDOUT_FILENO 1
+#define STDERR_FILENO 2
+
+#endif // !PETERLITS_UNISTD_H__
+
 // ---[ defines ]--------------------------------------------------------------
 
 // better YY_INPUT
@@ -580,9 +635,9 @@ extern "C" {
         result = YY_NULL;                      \
 }
 
-#line 584 "/home/peter/proj/MessageBookCli/src/parser/lexer.cpp"
+#line 639 "/home/peter/proj/MessageBookCli/src/parser/lexer.cpp"
 
-#line 586 "/home/peter/proj/MessageBookCli/src/parser/lexer.cpp"
+#line 641 "/home/peter/proj/MessageBookCli/src/parser/lexer.cpp"
 
 #define INITIAL 0
 #define COMMENT 1
@@ -798,13 +853,13 @@ YY_DECL
 		}
 
 	{
-#line 53 "./src/parser/parser.l"
+#line 108 "./src/parser/parser.l"
 
 
-#line 56 "./src/parser/parser.l"
+#line 111 "./src/parser/parser.l"
     /* ---[ key words ]------------------------------------------------------ */
 
-#line 808 "/home/peter/proj/MessageBookCli/src/parser/lexer.cpp"
+#line 863 "/home/peter/proj/MessageBookCli/src/parser/lexer.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -863,7 +918,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 58 "./src/parser/parser.l"
+#line 113 "./src/parser/parser.l"
 {
     ln.update(yytext);
     return HELP;
@@ -871,7 +926,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 63 "./src/parser/parser.l"
+#line 118 "./src/parser/parser.l"
 {
     ln.update(yytext);
     return LIST;
@@ -879,7 +934,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 68 "./src/parser/parser.l"
+#line 123 "./src/parser/parser.l"
 {
     ln.update(yytext);
     return NEW;
@@ -887,7 +942,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 73 "./src/parser/parser.l"
+#line 128 "./src/parser/parser.l"
 {
     ln.update(yytext);
     return DELETE;
@@ -895,7 +950,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 78 "./src/parser/parser.l"
+#line 133 "./src/parser/parser.l"
 {
     ln.update(yytext);
     return EXIT;
@@ -903,7 +958,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 83 "./src/parser/parser.l"
+#line 138 "./src/parser/parser.l"
 {
     ln.update(yytext);
     return LET;
@@ -911,7 +966,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 88 "./src/parser/parser.l"
+#line 143 "./src/parser/parser.l"
 {
     ln.update(yytext);
     return INIT;
@@ -919,7 +974,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 92 "./src/parser/parser.l"
+#line 147 "./src/parser/parser.l"
 {
     ln.update(yytext);
     return SORT;
@@ -927,7 +982,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 96 "./src/parser/parser.l"
+#line 151 "./src/parser/parser.l"
 {
     ln.update(yytext);
     return SREACH;
@@ -936,7 +991,7 @@ YY_RULE_SETUP
 /* ---[ comments ]------------------------------------------------------- */
 case 10:
 YY_RULE_SETUP
-#line 103 "./src/parser/parser.l"
+#line 158 "./src/parser/parser.l"
 {
     ln.update(yytext);
     BEGIN COMMENT;
@@ -945,7 +1000,7 @@ YY_RULE_SETUP
 case 11:
 /* rule 11 can match eol */
 YY_RULE_SETUP
-#line 108 "./src/parser/parser.l"
+#line 163 "./src/parser/parser.l"
 {
     ln.update(yytext);
     BEGIN INITIAL;
@@ -954,7 +1009,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 114 "./src/parser/parser.l"
+#line 169 "./src/parser/parser.l"
 {
     ln.update(yytext);
     // ignore all character but newline
@@ -963,7 +1018,7 @@ YY_RULE_SETUP
 /* ---[ others ]--------------------------------------------------------- */
 case 13:
 YY_RULE_SETUP
-#line 121 "./src/parser/parser.l"
+#line 176 "./src/parser/parser.l"
 {
     // means: string
     ln.update(yytext);
@@ -976,7 +1031,7 @@ YY_RULE_SETUP
 case 14:
 /* rule 14 can match eol */
 YY_RULE_SETUP
-#line 130 "./src/parser/parser.l"
+#line 185 "./src/parser/parser.l"
 {
     // means: vecstr
     ln.update(yytext);
@@ -988,7 +1043,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 139 "./src/parser/parser.l"
+#line 194 "./src/parser/parser.l"
 {
     ln.update(yytext);
 
@@ -999,35 +1054,35 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 147 "./src/parser/parser.l"
+#line 202 "./src/parser/parser.l"
 {
     return LEFT_TRI_BRA;
 }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 151 "./src/parser/parser.l"
+#line 206 "./src/parser/parser.l"
 {
     return RIGHT_TRI_BRA;
 }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 155 "./src/parser/parser.l"
+#line 210 "./src/parser/parser.l"
 {
     return LEFT_BRA;
 }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 159 "./src/parser/parser.l"
+#line 214 "./src/parser/parser.l"
 {
     return RIGHT_BRA;
 }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 163 "./src/parser/parser.l"
+#line 218 "./src/parser/parser.l"
 {
     return DOT;
 }
@@ -1035,7 +1090,7 @@ YY_RULE_SETUP
 case 21:
 /* rule 21 can match eol */
 YY_RULE_SETUP
-#line 167 "./src/parser/parser.l"
+#line 222 "./src/parser/parser.l"
 {
     ln.update(yytext);
     return NEWLINE;
@@ -1043,7 +1098,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 172 "./src/parser/parser.l"
+#line 227 "./src/parser/parser.l"
 {
     ln.update(yytext);
     // skip when meet white space (but not newline)
@@ -1051,7 +1106,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 177 "./src/parser/parser.l"
+#line 232 "./src/parser/parser.l"
 {
     // error
     return UNKNOWED;
@@ -1059,10 +1114,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 182 "./src/parser/parser.l"
+#line 237 "./src/parser/parser.l"
 ECHO;
 	YY_BREAK
-#line 1066 "/home/peter/proj/MessageBookCli/src/parser/lexer.cpp"
+#line 1121 "/home/peter/proj/MessageBookCli/src/parser/lexer.cpp"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(COMMENT):
 	yyterminate();
@@ -2031,7 +2086,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 182 "./src/parser/parser.l"
+#line 237 "./src/parser/parser.l"
 
 
 int yywrap(void) {

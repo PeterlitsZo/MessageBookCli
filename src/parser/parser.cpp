@@ -94,11 +94,6 @@ using mbc::Val::VecStr;
 using mbc::Val::PersonHandle;
 using mbc::Val::MessageBook;
 
-// using units::mbc_exce;
-
-// shared_ptr<ValBase> book = 
-//     make_shared<mbc::Val::MessageBook>(std::string("MessageBook.json"));
-
 mbc::Val::MessageBook book("MessageBook.json");
 Idmap im;
 
@@ -112,7 +107,7 @@ extern "C" {
 // ---[ better error msg ]-----------------------------------------------------
 
 
-#line 116 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:337  */
+#line 111 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:337  */
 # ifndef YY_NULLPTR
 #  if defined __cplusplus
 #   if 201103L <= __cplusplus
@@ -476,9 +471,9 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    60,    60,    62,    65,    72,    74,    77,    80,    88,
-      91,    95,    98,   117,   123,   126,   129,   132,   141,   144,
-     147,   158,   172
+       0,    55,    55,    57,    60,    67,    69,    72,    75,    83,
+      86,    90,    93,   112,   118,   121,   124,   127,   136,   139,
+     142,   153,   167
 };
 #endif
 
@@ -1286,47 +1281,47 @@ yyreduce:
   switch (yyn)
     {
         case 3:
-#line 62 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 57 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         print_next_arraw();
     }
-#line 1294 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1289 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 4:
-#line 65 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 60 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         yyerrok;
         print_next_arraw();
     }
-#line 1303 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1298 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 5:
-#line 72 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 67 "./src/parser/parser.y" /* yacc.c:1652  */
     {
     }
-#line 1310 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1305 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 6:
-#line 74 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 69 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         return 0;
     }
-#line 1318 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1313 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 7:
-#line 77 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 72 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         book.sort(dynamic_pointer_cast<Str>(yyvsp[-1]) -> raw());
     }
-#line 1326 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1321 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 8:
-#line 80 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 75 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         // assert that expr is PERSONHANDLE
         if (yyvsp[-1] -> type() != Type::PERSONHANDLE) {
@@ -1334,35 +1329,35 @@ yyreduce:
         }
         dynamic_pointer_cast<PersonHandle>(yyvsp[-1]) -> remove();
     }
-#line 1338 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1333 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 9:
-#line 88 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 83 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         print_command(yyvsp[-1] -> str());
     }
-#line 1346 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1341 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 10:
-#line 91 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 86 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         print_command(yyvsp[-1] -> str());
     }
-#line 1354 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1349 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 11:
-#line 95 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 90 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         im.update(dynamic_pointer_cast<Str>(yyvsp[-2]) -> raw(), yyvsp[-1]);
     }
-#line 1362 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1357 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 12:
-#line 98 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 93 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         // assert that the expr$1 is PERSONHANDLE and the $2 is a STRING, or VECSTR
         if (yyvsp[-4] -> type() != Type::PERSONHANDLE) {
@@ -1381,43 +1376,43 @@ yyreduce:
             yyerror("wanna a Str or VecStr after dot - `.\'");
         }
     }
-#line 1385 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1380 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 13:
-#line 117 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 112 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         // do nothing
     }
-#line 1393 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1388 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 14:
-#line 123 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 118 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         yyval = yyvsp[-1];
     }
-#line 1401 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1396 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 15:
-#line 126 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 121 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         yyval = yyvsp[0];
     }
-#line 1409 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1404 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 16:
-#line 129 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 124 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         yyval = yyvsp[0];
     }
-#line 1417 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1412 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 17:
-#line 132 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 127 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         if (yyvsp[-1] -> type() != Type::STR) {
             yyerror("wanna a str type object");
@@ -1427,27 +1422,27 @@ yyreduce:
         shared_ptr<ValBase> ptr(new PersonHandle(handle));
         yyval = ptr;
     }
-#line 1431 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1426 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 18:
-#line 141 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 136 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         yyval = make_shared<MessageBook>(book);
     }
-#line 1439 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1434 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 19:
-#line 144 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 139 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         yyval = make_shared<PersonHandle>(book.newPerson());
     }
-#line 1447 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1442 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 20:
-#line 147 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 142 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         try {
             yyval = im.get(dynamic_pointer_cast<Str>(yyvsp[0]) -> raw());
@@ -1455,11 +1450,11 @@ yyreduce:
             yyerror(msg);
         }
     }
-#line 1459 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1454 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 21:
-#line 158 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 153 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         // assert that expr is LIST
         if (yyvsp[-1] -> type() != Type::STR) {
@@ -1474,11 +1469,11 @@ yyreduce:
             yyerror(msg);
         }
     }
-#line 1478 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1473 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 22:
-#line 172 "./src/parser/parser.y" /* yacc.c:1652  */
+#line 167 "./src/parser/parser.y" /* yacc.c:1652  */
     {
         yyerror("init");
         if (yyvsp[0] -> type() != Type::PERSONHANDLE) {
@@ -1491,11 +1486,11 @@ yyreduce:
             yyerror( "the value is not in right syntax" );
         }
     }
-#line 1495 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1490 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
     break;
 
 
-#line 1499 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
+#line 1494 "/home/peter/proj/MessageBookCli/src/parser/parser.cpp" /* yacc.c:1652  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1726,5 +1721,5 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 186 "./src/parser/parser.y" /* yacc.c:1918  */
+#line 181 "./src/parser/parser.y" /* yacc.c:1918  */
 
