@@ -5,8 +5,6 @@
 #include <iostream>
 #include "units.h"
 
-#include "../include/logging/easylogging++.h"
-
 using std::string;
 
 namespace mbc {

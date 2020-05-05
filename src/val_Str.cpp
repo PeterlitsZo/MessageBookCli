@@ -6,7 +6,6 @@
 
 #include "units.h"
 #include "../include/rapidjson/document.h"
-#include "../include/logging/easylogging++.h"
 
 using std::string;
 using std::function;

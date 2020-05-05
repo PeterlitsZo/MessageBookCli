@@ -14,10 +14,6 @@
 #include "../src/units.h"
 #include "../src/val.h"
 
-#include "../include/logging/easylogging++.h"
-
-INITIALIZE_EASYLOGGINGPP
-
 using std::string;
 using std::vector;
 using std::cout;

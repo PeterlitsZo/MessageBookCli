@@ -67,7 +67,6 @@ set (PARSER_FILES   ${CMAKE_SOURCE_DIR}/src/parser/lexer.cpp
 include_directories (${CMAKE_CURRENT_BINARY_DIR})
 aux_source_directory (${CMAKE_SOURCE_DIR}/src             SRC_FILES)
 aux_source_directory (${CMAKE_SOURCE_DIR}/src/help        SRC_FILES)
-aux_source_directory (${CMAKE_SOURCE_DIR}/include/logging SRC_FILES)
 
 add_executable (
     MessageBookCli ${SRC_FILES} ${PARSER_FILES}

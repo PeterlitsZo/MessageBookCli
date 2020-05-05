@@ -2,7 +2,6 @@
 #include <string>
 
 #include "../include/cmdline/cmdline.h"
-#include "../include/logging/easylogging++.h"
 
 #include "units.h"
 #include "info.h"
@@ -25,8 +24,6 @@ void interaction() {
 }
 
 // ---[ the main part: main function ]-----------------------------------------
-
-INITIALIZE_EASYLOGGINGPP
 
 int main(int argc, char **argv) {
     // parse the command line
