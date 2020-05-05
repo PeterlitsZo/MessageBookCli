@@ -77,7 +77,7 @@
 #include "idmap.h"
 #include "../units.h"
 
-#include "../val.h"
+#include "../val/val.h"
 
 #define YYERROR_VERBOSE
 

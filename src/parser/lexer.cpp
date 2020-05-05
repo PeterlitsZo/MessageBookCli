@@ -549,7 +549,7 @@ char *yytext;
 
 #include "interface.h"
 #include "../units.h"
-#include "../val.h"
+#include "../val/val.h"
 
 // this macro should be at the below of ../val.h
 #define YYSTYPE std::shared_ptr<mbc::Val::ValBase>

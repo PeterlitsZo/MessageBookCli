@@ -12,7 +12,7 @@
 
 #include "../src/info.h"
 #include "../src/units.h"
-#include "../src/val.h"
+#include "../src/val/val.h"
 
 using std::string;
 using std::vector;

@@ -9,7 +9,7 @@
 #include <map>
 #include <exception>
 
-#include "../include/rapidjson/document.h"
+#include "../../include/rapidjson/document.h"
 
 namespace mbc {
 

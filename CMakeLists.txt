@@ -67,6 +67,7 @@ set (PARSER_FILES   ${CMAKE_SOURCE_DIR}/src/parser/lexer.cpp
 include_directories (${CMAKE_CURRENT_BINARY_DIR})
 aux_source_directory (${CMAKE_SOURCE_DIR}/src             SRC_FILES)
 aux_source_directory (${CMAKE_SOURCE_DIR}/src/help        SRC_FILES)
+aux_source_directory (${CMAKE_SOURCE_DIR}/src/val         SRC_FILES)
 
 add_executable (
     MessageBookCli ${SRC_FILES} ${PARSER_FILES}
@@ -85,7 +86,8 @@ find_package (Threads REQUIRED)
 if (GTest_FOUND)
 if (Threads_FOUND)
     # make test
-    aux_source_directory (./src TEST_FILES)
+    aux_source_directory (./src                           TEST_FILES)
+    aux_source_directory (./src/val                       TEST_FILES)
     aux_source_directory (${CMAKE_SOURCE_DIR}/include/logging TEST_FILES)
     list (REMOVE_ITEM TEST_FILES ./src/main.cpp)
     add_executable (Tests ${TEST_FILES} ./test/test.cpp)

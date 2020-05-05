@@ -3,7 +3,7 @@
 #include <string>
 #include <iostream>
 
-#include "../include/rapidjson/document.h"
+#include "../../include/rapidjson/document.h"
 
 using std::string;
 

@@ -12,11 +12,11 @@
 #include <type_traits>
 #include <exception>
 
-#include "../include/rapidjson/writer.h"
-#include "../include/rapidjson/document.h"
-#include "../include/rapidjson/stringbuffer.h"
+#include "../../include/rapidjson/writer.h"
+#include "../../include/rapidjson/document.h"
+#include "../../include/rapidjson/stringbuffer.h"
 
-#include "units.h"
+#include "../units.h"
 
 using std::string;
 using std::function;
