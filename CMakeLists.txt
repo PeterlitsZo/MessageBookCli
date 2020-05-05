@@ -17,15 +17,15 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 -std=c++11 -Wall -ggdb")
 
 find_package (PythonInterp 3)
 
-set  (
-    ALL_MD_TARGET ${CMAKE_SOURCE_DIR}/src/help/help.h
-                  ${CMAKE_SOURCE_DIR}/src/help/HELP.cpp
-)
-
 set (Peter FALSE)
 
 if (Peter)
 if (PythonInterp_FOUND)
+    set  (
+        ALL_MD_TARGET ${CMAKE_SOURCE_DIR}/src/help/help.h
+                      ${CMAKE_SOURCE_DIR}/src/help/HELP.cpp
+    )
+
     file (GLOB ALL_MD_FILE ${CMAKE_SOURCE_DIR}/docs/insides/*.md)
     add_custom_target (
         HELP_DOCUMENTS
@@ -77,9 +77,11 @@ add_executable (
     MessageBookCli ${SRC_FILES} ${PARSER_FILES}
 )
 
+if (Peter)
 if (PythonInterp_FOUND)
     add_dependencies (MessageBookCli HELP_DOCUMENTS)
-endif()
+endif ()
+endif ()
 
 
 # ---[ test setting ]----------------------------------------------------------
