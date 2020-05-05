@@ -25,11 +25,6 @@ using mbc::Val::VecStr;
 using mbc::Val::PersonHandle;
 using mbc::Val::MessageBook;
 
-// using units::mbc_exce;
-
-// shared_ptr<ValBase> book = 
-//     make_shared<mbc::Val::MessageBook>(std::string("MessageBook.json"));
-
 mbc::Val::MessageBook book("MessageBook.json");
 Idmap im;
 
