@@ -1,1 +1,23 @@
+# for my build/test folder
 build/
+
+# for CMake's output
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
+
+# for MSVC
+*.vcxproj
+*.vcxproj.filters
+*.sln
+*.db
+*.opendb
+*.db-*
