@@ -37,7 +37,7 @@ bool Lineno::getNextLine(void) {
     ++lineno_;
 
     // read line
-    if ( not getline(file_, line_) ) {
+    if ( ! getline(file_, line_) ) {
         // touch the EOF.
         return false;
     }
@@ -58,7 +58,7 @@ int  Lineno::getNextChar(char* buffer, int maxBuffer) {
 
     // if at the line's end, then try to get the next line
     if ( pos_ >= line_.size() ) {
-        if ( not getNextLine() ) {
+        if ( ! getNextLine() ) {
             return FAIL;
         }
     }

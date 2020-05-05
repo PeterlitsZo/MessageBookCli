@@ -1,6 +1,5 @@
 #include "val.h"
 
-#include <linux/limits.h>
 #include <string>
 #include <functional>
 #include <memory>

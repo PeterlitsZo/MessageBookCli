@@ -141,7 +141,7 @@ void MessageBook::save() {
 
 PersonHandle MessageBook::newPerson() {
     Person* person = new Person();
-    if (not persons_ -> count(person -> ID().raw())) {
+    if (! persons_ -> count(person -> ID().raw())) {
         order_ -> push_back(person -> ID().raw());
         persons_ -> insert({person -> ID().raw(), person});
         save();
