@@ -120,6 +120,7 @@ public:
     std::shared_ptr<rapidjson::Value> json_value();
 
     Str& operator = (const Str& other) = delete;
+    bool operator < (const Str& other);
 
 private:
     const std::string str_() const;
@@ -253,9 +254,9 @@ private:
     Str fullID(Str ID);
     const std::string str_() const;
 
-    Str*                     path_;
-    std::map<Str, Person*>*  persons_;
-    std::list<Str>*          order_;
+    Str*                             path_;
+    std::map<std::string, Person*>*  persons_;
+    std::list<std::string>*          order_;
 
 };
 

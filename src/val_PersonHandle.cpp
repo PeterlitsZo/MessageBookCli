@@ -54,7 +54,7 @@ PersonHandle::~PersonHandle() {
 
 void PersonHandle::reset_() {
     // if person is vaild and mb_ has it, then it is vaild.
-    if(person_->ID() && mb_->persons_->count(person_->ID()) ) {
+    if(person_->ID() && mb_->persons_->count(person_->ID().raw()) ) {
         *is_vaild_ = true;
     } else {
         *is_vaild_ = false;
@@ -64,12 +64,12 @@ void PersonHandle::reset_() {
 PersonHandle& PersonHandle::remove() {
     if(*is_vaild_) {
         // remove self in mb_ -> persons_
-        auto it_persons = mb_ -> persons_ -> find(person_ -> ID());
+        auto it_persons = mb_ -> persons_ -> find(person_ -> ID().raw());
         mb_ -> persons_ -> erase(it_persons);
 
         // remove self in mb_ -> order_
         auto it_order = std::find(mb_->order_->begin(), mb_->order_->end(), 
-                                 (person_ -> ID()));
+                                 person_ -> ID().raw() );
         mb_ -> order_ -> erase(it_order);
 
         // save messagebook and reset self, now it is unvaild
@@ -89,8 +89,8 @@ PersonHandle& PersonHandle::changeAttr(string attribute, string value) {
         person_ -> update_ID_();
 
         // after the person's ID is changed, update mb.
-        mb_ -> persons_ -> insert({person_ -> ID(), person_});
-        mb_ -> order_ -> push_back(person_ -> ID());
+        mb_ -> persons_ -> insert({person_ -> ID().raw(), person_});
+        mb_ -> order_ -> push_back(person_ -> ID().raw());
         *is_vaild_ = true;
 
         // save messagebook and reset self

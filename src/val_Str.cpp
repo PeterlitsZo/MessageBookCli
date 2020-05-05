@@ -126,4 +126,10 @@ shared_ptr<Value> Str::json_value() {
 }
 
 
+bool Str::operator<(const Str& other) {
+    string this_string = this -> str() + this -> raw();
+    string other_string = other.str()  + other.raw();
+    return this_string < other_string;
+};
+
 }} // for namespace mbc::Val

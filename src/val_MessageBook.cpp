@@ -38,7 +38,7 @@ using rapidjson::Writer;
 namespace mbc { namespace Val { // begin for namespace mbc::Val
 
 struct bad_ID : public std::exception {
-    const char* what() const throw() {
+    const char* what() throw() {
         return "the broken ID has not its full ID";
     }
 };
@@ -55,9 +55,8 @@ MessageBook::MessageBook(const string& path) : ValBase() {
 
     path_ = new Str();
     path_ -> set(path);
-
-    order_ = new list<Str>();
-    persons_ = new map<Str, Person*>();
+    order_ = new list<string>();
+    persons_ = new map<string, Person*>();
 
     *invaild_waring_ = "[ invaild message book ]";
     *is_vaild_ = true;
@@ -112,8 +111,10 @@ const string MessageBook::str_() const {
 
 Str MessageBook::fullID(Str ID) {
     for(auto it = order_ -> begin(); it != order_ -> end(); ++it) {
-        if (units::start_with(it->raw(), ID.raw())) {
-            return *it;
+        if (units::start_with(*it, ID.raw())) {
+            Str result;
+            result.set(*it);
+            return result;
         }
     }
     throw bad_ID();
@@ -141,13 +142,13 @@ void MessageBook::save() {
 
 PersonHandle MessageBook::newPerson() {
     Person* person = new Person();
-    if (not persons_ -> count(person -> ID())) {
-        order_ -> push_back(person -> ID());
-        persons_ -> insert({person -> ID(), person});
+    if (not persons_ -> count(person -> ID().raw())) {
+        order_ -> push_back(person -> ID().raw());
+        persons_ -> insert({person -> ID().raw(), person});
+        save();
     }
-    save();
     return PersonHandle(this,
-                        (*persons_)[person -> ID()] );
+                        (*persons_)[person -> ID().raw()] );
     // [WARNING] I don't delete it!!!
 }
 
@@ -155,12 +156,12 @@ PersonHandle MessageBook::getPerson(string brokenID) {
     auto str = Str();
     str.set(brokenID);
     return PersonHandle(this,
-                        (*persons_)[fullID(str)]);
+                        (*persons_)[fullID(str).raw()]);
 }
 
 PersonHandle MessageBook::sreach(string thing, string attr_) {
     auto it = std::find_if(persons_ -> begin(), persons_ -> end(),
-            [&](const std::pair<Str, Person*>& pair) {
+            [&](const std::pair<string, Person*>& pair) {
                 return pair.second -> attr(attr_) -> raw() == thing;
             });
     if(it != persons_ -> end()) {
@@ -171,8 +172,8 @@ PersonHandle MessageBook::sreach(string thing, string attr_) {
 }
 
 void MessageBook::sort(string attr_) {
-    order_ -> sort([&](const Str& a, const Str& b) {
-        return getPerson(a.raw()).attr(attr_) < getPerson(b.raw()).attr(attr_);
+    order_ -> sort([&](const string& a, const string& b) {
+        return getPerson(a).attr(attr_) < getPerson(b).attr(attr_);
     });
 }
 
