@@ -22,6 +22,9 @@ set  (
                   ${CMAKE_SOURCE_DIR}/src/help/HELP.cpp
 )
 
+set (Peter FALSE)
+
+if (Peter)
 if (PythonInterp_FOUND)
     file (GLOB ALL_MD_FILE ${CMAKE_SOURCE_DIR}/docs/insides/*.md)
     add_custom_target (
@@ -35,6 +38,7 @@ if (PythonInterp_FOUND)
         DEPENDS ${ALL_MD_FILE}
         COMMENT "making help source file"
     )
+endif ()
 endif ()
 
 
