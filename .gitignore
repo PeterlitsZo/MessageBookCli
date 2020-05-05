@@ -16,8 +16,12 @@ _deps
 
 # for MSVC
 *.vcxproj
-*.vcxproj.filters
+*.vcxproj.*
 *.sln
 *.db
 *.opendb
 *.db-*
+.vs/
+[Dd]ebug/
+[Ww]in32/
+MessageBookCli.dir/
