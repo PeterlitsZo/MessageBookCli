@@ -80,8 +80,8 @@ endif()
 
 # ---[ test setting ]----------------------------------------------------------
 
-find_package (GTest REQUIRED)
-find_package (Threads REQUIRED)
+find_package (GTest)
+find_package (Threads)
 
 if (GTest_FOUND)
 if (Threads_FOUND)
