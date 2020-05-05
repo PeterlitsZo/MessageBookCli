@@ -7,6 +7,7 @@
 #include "interface.h"
 #include "idmap.h"
 #include "../units.h"
+#include "../help/help.h"
 
 #include "../val/val.h"
 
@@ -65,6 +66,7 @@ commands
 
 command
     : HELP NEWLINE {
+        print_command(HELP_DOC::HELP);
     }
     | EXIT NEWLINE {
         return 0;

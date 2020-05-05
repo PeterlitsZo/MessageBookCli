@@ -1,4 +1,4 @@
-namespace HELP {
+namespace HELP_DOC {
 const char* HELP =
    "Help Doc for *\n"
    "===============================================================================\n"

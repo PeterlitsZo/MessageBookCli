@@ -73,6 +73,9 @@ aux_source_directory (${CMAKE_SOURCE_DIR}/src             SRC_FILES)
 aux_source_directory (${CMAKE_SOURCE_DIR}/src/help        SRC_FILES)
 aux_source_directory (${CMAKE_SOURCE_DIR}/src/val         SRC_FILES)
 
+set (SRC_FILES  ${SRC_FILES}
+                ${CMAKE_SOURCE_DIR}/src/help/HELP.cpp)
+
 add_executable (
     MessageBookCli ${SRC_FILES} ${PARSER_FILES}
 )

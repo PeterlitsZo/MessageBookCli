@@ -4,7 +4,7 @@ c_header = '''\
 #ifndef PETERLITS_HELP_INFO_H__
 #define PETERLITS_HELP_INFO_H__
 
-namespace HELP {{
+namespace HELP_DOC {{
 
 {}
 
@@ -48,8 +48,9 @@ in_folder  = Path(__file__).parent / '..' / 'src' / 'help'
 for file_ in out_folder.iterdir():
     with    open(file_) as out_file, \
             open(in_folder / (file_.stem + '.cpp'), 'w') as in_file:
+        print (f"writing to file {in_file.name}...")
         all_file_name.append(file_.stem)
-        in_file.write ("namespace HELP {\n")
+        in_file.write ("namespace HELP_DOC {\n")
         in_file.write (f"const char* {file_.stem} =\n");
         in_file.write (make_cpp_str(out_file.read()))
         in_file.write (";");
