@@ -144,7 +144,7 @@ PersonHandle MessageBook::newPerson() {
     Person* person = new Person();
     if (! persons_ -> count(person -> ID().raw())) {
         order_ -> push_back(person -> ID().raw());
-		persons_ -> insert(std::pair<string, Person*>(person -> ID(), person));
+		persons_ -> insert(std::pair<string, Person*>(person -> ID().raw(), person));
         save();
     }
     return PersonHandle(this,
