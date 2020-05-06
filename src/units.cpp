@@ -10,7 +10,7 @@
 #include <vector>
 #include <exception>
 
-#include "../include/digestpp/digestpp.hpp"
+#include "../include/md5/md5.h"
 
 using std::string;
 using std::vector;
@@ -27,7 +27,7 @@ namespace units {
 // ----------------------------------------------------------------------------
 
 string md5(string str) {
-    return digestpp::md5().absorb(str).hexdigest();
+    return MD5::MD5(str).toStr();
 }
 
 // ----------------------------------------------------------------------------
