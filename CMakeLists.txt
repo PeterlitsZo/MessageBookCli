@@ -69,15 +69,22 @@ set (PARSER_FILES   ${CMAKE_SOURCE_DIR}/src/parser/lexer.cpp
 # ---[ main setting ]----------------------------------------------------------
 
 include_directories (${CMAKE_CURRENT_BINARY_DIR})
-aux_source_directory (${CMAKE_SOURCE_DIR}/src             SRC_FILES)
-aux_source_directory (${CMAKE_SOURCE_DIR}/src/help        SRC_FILES)
-aux_source_directory (${CMAKE_SOURCE_DIR}/src/val         SRC_FILES)
 
-set (SRC_FILES  ${SRC_FILES}
-                ${CMAKE_SOURCE_DIR}/src/help/HELP.cpp)
+aux_source_directory (${CMAKE_SOURCE_DIR}/src               SRC_FILES)
+aux_source_directory (${CMAKE_SOURCE_DIR}/src/help          SRC_FILES)
+aux_source_directory (${CMAKE_SOURCE_DIR}/src/val           SRC_FILES)
+
+set (MD5 ${CMAKE_SOURCE_DIR}/include/md5)
+aux_source_directory (${MD5} INCLUDE_FILES)
+
+set (
+    SRC_FILES  
+        ${SRC_FILES}
+        ${CMAKE_SOURCE_DIR}/src/help/HELP.cpp
+)
 
 add_executable (
-    MessageBookCli ${SRC_FILES} ${PARSER_FILES}
+    MessageBookCli ${SRC_FILES} ${PARSER_FILES} ${INCLUDE_FILES}
 )
 
 if (Peter)
@@ -99,7 +106,7 @@ if (Threads_FOUND)
     aux_source_directory (./src/val                       TEST_FILES)
     aux_source_directory (${CMAKE_SOURCE_DIR}/include/logging TEST_FILES)
     list (REMOVE_ITEM TEST_FILES ./src/main.cpp)
-    add_executable (Tests ${TEST_FILES} ./test/test.cpp)
+    add_executable (Tests ${TEST_FILES} ./test/test.cpp ${INCLUDE_FILES})
 
     target_link_libraries (Tests ${GTEST_BOTH_LIBRARIES})
     target_link_libraries (Tests ${CMAKE_THREAD_LIBS_INIT})
