@@ -88,7 +88,7 @@ PersonHandle& PersonHandle::changeAttr(string attribute, string value) {
         person_ -> update_ID_();
 
         // after the person's ID is changed, update mb.
-        mb_ -> persons_ -> insert({person_ -> ID().raw(), person_});
+        mb_ -> persons_ -> insert(std::pair<string, Person*>(person_ -> ID().raw(), person_));
         mb_ -> order_ -> push_back(person_ -> ID().raw());
         *is_vaild_ = true;
 

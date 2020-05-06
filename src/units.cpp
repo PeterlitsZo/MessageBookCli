@@ -55,7 +55,7 @@ bool is_digit(string str) {
 
 bool is_email(string str) {
     // if the format is like "abc@abc.abc"
-    regex EmailPattern(R"(^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$)");
+    regex EmailPattern("^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$");
     std::match_results<string::const_iterator> Result;
     if(std::regex_match(str, Result, EmailPattern)) {
         return true;
@@ -119,7 +119,7 @@ string repr(const char* str) {
 // ---[ function for string ]--------------------------------------------------
 // ----------------------------------------------------------------------------
 vector<string> split(string str) {
-    regex space_re(R"(\s+)");
+    regex space_re("\\s+");
     return vector<string>(
         std::sregex_token_iterator(str.begin(), str.end(), space_re, -1),
         std::sregex_token_iterator()

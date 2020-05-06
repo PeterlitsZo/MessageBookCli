@@ -4,6 +4,7 @@
 #include <cstdio>
 #include <iostream>
 #include <fstream>
+#include <utility>
 #include <list>
 #include <sstream>
 #include <string>
@@ -143,7 +144,7 @@ PersonHandle MessageBook::newPerson() {
     Person* person = new Person();
     if (! persons_ -> count(person -> ID().raw())) {
         order_ -> push_back(person -> ID().raw());
-        persons_ -> insert({person -> ID().raw(), person});
+		persons_ -> insert(std::pair<string, Person*>(person -> ID(), person));
         save();
     }
     return PersonHandle(this,

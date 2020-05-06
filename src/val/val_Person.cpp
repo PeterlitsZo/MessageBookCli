@@ -9,9 +9,6 @@
 #include "../../include/rapidjson/stringbuffer.h"
 #include "../../include/rapidjson/writer.h"
 
-#define FMT_HEADER_ONLY
-#include "../../include/fmt/format.h"
-
 #include "../units.h"
 
 using std::string;
@@ -86,39 +83,25 @@ const Str& Person::ID() const {
 
 // return string if it is vaild (called by function str)
 const string Person::str_() const {
-    return fmt::format(
-        "┌------| id: {} |------\n{}",
-        // ┌——————————^           ^
-        // |(id)                  │
-        ID_->str(),             // │(body)
-        units::add_head( units::hard_warp( fmt::format(
-            "name: {}, sex: {}, telephone: {}, mail_number: {}, email: {},"
-            "qq_number: {}, location: {}, classes: {}", 
-            name_->str(), sex_->str(), telephone_->str(), mail_number_->str(),
-            email_->str(), qq_number_->str(), location_->str(), classes_->str()
-        ), 80), "| ")
-        // ^------------------ hard wrap width
-        //      ^------------- every line's head
-    );
+    string body_string =
+        "name: " + name_->str() + ", sex: " + sex_->str() + ", telephone: " +
+        telephone_->str() + ", mail_number: " + mail_number_->str() + ", email:" +
+        email_->str() + ", qq_number: " + qq_number_->str() + ", location: " +
+        location_->str() + ", classes: " + classes_->str();
+    return "+------| id: " + ID_->str() + " |------\n"
+		   + units::add_head(units::hard_warp(body_string, 80), "| ");
 }
 
 // return string if it is vaild (called by function str)
 const string Person::str_width(int width) const {
     if (*is_vaild_) {
-        return fmt::format(
-            "┌------| id: {} |------\n{}",
-            // ┌——————————^           ^
-            // |(id)                  │
-            ID_->str(),             // │(body)
-            units::add_head( units::hard_warp( fmt::format(
-                "name: {}, sex: {}, telephone: {}, mail_number: {}, email: {},"
-                "qq_number: {}, location: {}, classes: {}", 
-                name_->str(), sex_->str(), telephone_->str(), mail_number_->str(),
-                email_->str(), qq_number_->str(), location_->str(), classes_->str()
-            ), width), "| ")
-            // ^------------------ hard wrap width
-            //      ^------------- every line's head
-        );
+		string body_string =
+			"name: " + name_->str() + ", sex: " + sex_->str() + ", telephone: " +
+			telephone_->str() + ", mail_number: " + mail_number_->str() + ", email:" +
+			email_->str() + ", qq_number: " + qq_number_->str() + ", location: " +
+			location_->str() + ", classes: " + classes_->str();
+		return "+------| id: " + ID_->str() + " |------\n"
+			   + units::add_head(units::hard_warp(body_string, width), "| ");
     } else {
         return *invaild_waring_;
     }

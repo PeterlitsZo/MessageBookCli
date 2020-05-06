@@ -69,7 +69,6 @@ public:
     const Type& type() const;
 
     operator bool() const;
-    ValBase& operator = (const ValBase& other) = delete;
 
     virtual std::shared_ptr<rapidjson::Value> json_value() = 0;
 
@@ -98,7 +97,6 @@ public:
 
     _ValAtom& set(const std::string& str);
     _ValAtom& operator=(const std::string& str);
-    _ValAtom& operator = (const _ValAtom& other) = delete;
 
 protected:
     virtual void init_(const std::string& str) = 0;
@@ -125,7 +123,6 @@ public:
 
     std::shared_ptr<rapidjson::Value> json_value();
 
-    Str& operator = (const Str& other) = delete;
     bool operator < (const Str& other);
 
 private:
@@ -152,8 +149,6 @@ public:
     const std::string& raw() const; 
 
     std::shared_ptr<rapidjson::Value> json_value();
-
-    VecStr& operator = (const VecStr& other) = delete;
 
 private:
     const std::string str_() const;
@@ -185,8 +180,6 @@ public:
 
     void init();
 
-    PersonHandle& operator = (const PersonHandle& other) = delete;
-
 private:
     const std::string str_() const;
     void reset_();
@@ -210,8 +203,6 @@ public:
     _ValAtom* attr(std::string attribute);
 
     std::shared_ptr<rapidjson::Value> json_value();
-
-    Person& operator = (const Person& other) = delete;
 
     friend class PersonHandle;
 
@@ -251,8 +242,6 @@ public:
     PersonHandle getPerson(std::string brokenID);
 
     std::shared_ptr<rapidjson::Value> json_value();
-
-    MessageBook& operator = (const MessageBook& other) = delete;
 
     friend class PersonHandle;
 
